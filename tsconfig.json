@@ -1,0 +1,27 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES2023",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowUnreachableCode": false,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noResolve": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/**/*.ts",
+    "**/**/*.tsx",
+    "./src/index.ts"
+  ],
+  "exclude": ["./node_modules/**/*"]
+}
