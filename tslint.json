@@ -1,0 +1,1 @@
+{ "ts-loader": true, "rulesDirectory": ["./tools/tslint-rules/"] }
