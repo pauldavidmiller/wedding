@@ -1,149 +1,74 @@
-/*Subscribe to my youtube Channel U CAN CODE for more Awesome codes*/
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+body {
+  @apply bg-red-400;
 }
-.container {
-  width: 100%;
-  height: auto;
-  font-family: "cookie", cursive;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  background-color: #ff99b6;
-  overflow: hidden;
+
+.app {
+  @apply content-center;
+  @apply w-screen h-screen;
 }
+
 .banner {
-  width: 100%;
-  height: 650px;
-  background-image: url();
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  @apply w-full h-full;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  border-radius: 0 0 500px 0;
 }
 .nav {
-  width: 90%;
-  height: auto;
-  background-color: rgba(255, 200, 200, 0.7);
-  border-radius: 30px;
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  @apply bg-pink-200;
+  @apply rounded-full pl-4;
+  @apply flex flex-wrap items-center justify-between opacity-75;
 }
-.nav b {
-  font-size: 40px;
-  margin-left: 20px;
+.tab-list {
+  @apply bg-pink-200;
+  @apply rounded-full px-4;
+  @apply flex flex-wrap items-center justify-between;
 }
-.menu {
-  width: 50%;
-  height: 60px;
-  border-radius: 30px;
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-  transition-duration: 0.5s;
+.tab-list-item {
+  @apply text-xl font-bold;
+  @apply transition-transform;
 }
-.menu a {
-  text-decoration: none;
-  font-size: 30px;
-  color: #333;
-  font-weight: bolder;
-  transition-duration: 0.5s;
+.tab-list-item-active {
+  @apply text-xl font-bold;
+  @apply border-4 border-b-red-500;
+  @apply border-t-0 border-r-0 border-l-0;
 }
-.menu a:hover {
-  border-bottom: 5px solid #f15;
+.tab-list-item:hover {
+  @apply border-2 border-b-pink-500;
+  @apply border-t-0 border-r-0 border-l-0;
 }
-.text {
-  width: 100%;
+
+.home {
+  @apply w-full h-full;
   font-size: 50px;
   text-align: center;
 }
-.text h1 {
+.home-pic1 {
+  background-image: url("images/homes-main-bg.jpg");
+  @apply bg-center bg-auto bg-no-repeat;
+}
+.home h1 {
   color: #f15;
   text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
-.text .date {
+.home .date {
   color: #fff;
   background-color: #f15;
   padding: 5px;
   border-radius: 40px 0 40px 0;
   transition-duration: 0.5s;
 }
-.text .date:hover {
+.home .date:hover {
   background-color: #fff;
   color: #f15;
 }
-.container {
-  width: 100%;
-  height: auto;
-  background-color: #efefef;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
 
-.container h2 {
-  width: 100%;
+.ourstory {
+  @apply w-full h-full;
+  font-size: 50px;
   text-align: center;
-  color: #f15;
-  font-size: 60px;
 }
-
-.section {
-  width: 80%;
-  height: auto;
-  background-color: #fff;
-  border-radius: 20px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 30px;
-  box-shadow: 0 3px 10px 0 rgba(100, 100, 100, 0.3);
-}
-.section img {
-  width: 50%;
-  height: 300px;
-  display: inline;
-  border: 2px solid #f15;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-.section p {
-  font-size: 35px;
-  line-height: 30px;
-  color: #333;
-}
-
-footer {
-  width: 100%;
-  height: auto;
-  color: #ddd;
-  font-size: 30px;
-  font-family: monospace;
-  background-color: #555;
-  margin-top: 20px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-footer i {
-  color: skyblue;
-  font-size: 30px;
-  margin-left: 20px;
+.ourstory-pic1 {
+  background-image: url("images/homes-bg.jpg");
+  @apply bg-center bg-auto bg-no-repeat;
 }

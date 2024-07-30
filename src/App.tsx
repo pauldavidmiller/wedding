@@ -1,35 +1,66 @@
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+} from "react-router-dom";
+import Home from "./components/home";
+import OurStory from "./components/our-story";
+import Venue from "./components/venue";
+import Rsvp from "./components/rsvp";
+
 import "./App.css";
 
 const App = () => {
   return (
-    <div className="container">
+    <div className="app">
       <div className="banner bg-pink-300">
-        <div className="nav">
-          <b>Paul and Margot</b>
-          <div className="menu">
-            <a href="#">Home</a>
-            <a href="#us">Us</a>
-            <a href="#venue">Venue</a>
-            <a href="#party">Party</a>
+        <Router>
+          <div className="nav w-5/6 mt-4">
+            <b className="text-3xl font-serif w-1/2">Paul & Margot</b>
+            <nav className="tab-list w-1/2 shadow drop-shadow-lg">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "tab-list-item-active" : "tab-list-item"
+                }
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/our-story"
+                className={({ isActive }) =>
+                  isActive ? "tab-list-item-active" : "tab-list-item"
+                }
+              >
+                Our Story
+              </NavLink>
+              <NavLink
+                to="/venue"
+                className={({ isActive }) =>
+                  isActive ? "tab-list-item-active" : "tab-list-item"
+                }
+              >
+                Venue
+              </NavLink>
+              <NavLink
+                to="/rsvp"
+                className={({ isActive }) =>
+                  isActive ? "tab-list-item-active" : "tab-list-item"
+                }
+              >
+                RSVP
+              </NavLink>
+            </nav>
           </div>
-        </div>
-        <div className="text">
-          <h1>Paul & Margot</h1>
-          <span className="date">Coming soon Summer 2025</span>
-        </div>
-      </div>
-      <div className="container">
-        <div className="section gap-8">
-          <h2>Venue</h2>
-          {/* Image Here */}
-          <p>Where are we having our wedding?</p>
-        </div>
-        <div className="section gap-8">
-          <h2>Party</h2>
-          {/* Image Here */}
-          <p>After Party?</p>
-        </div>
-        <footer>Yep Paul made this website by himself! ;)</footer>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/our-story" element={<OurStory />} />
+            <Route path="/venue" element={<Venue />} />
+            <Route path="/rsvp" element={<Rsvp />} />
+          </Routes>
+        </Router>
       </div>
     </div>
   );
