@@ -1,74 +1,174 @@
-body {
-  @apply bg-red-400;
+/* src/styles.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles */
+.header {
+  background-color: #d32f2f; /* Red-600 */
+  color: #ffffff;
+  padding: 1rem;
 }
 
-.app {
-  @apply content-center;
-  @apply w-screen h-screen;
-}
-
-.banner {
-  @apply w-full h-full;
+.header-nav {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-.nav {
-  @apply bg-pink-200;
-  @apply rounded-full pl-4;
-  @apply flex flex-wrap items-center justify-between opacity-75;
-}
-.tab-list {
-  @apply bg-pink-200;
-  @apply rounded-full px-4;
-  @apply flex flex-wrap items-center justify-between;
-}
-.tab-list-item {
-  @apply text-xl font-bold;
-  @apply transition-transform;
-}
-.tab-list-item-active {
-  @apply text-xl font-bold;
-  @apply border-4 border-b-red-500;
-  @apply border-t-0 border-r-0 border-l-0;
-}
-.tab-list-item:hover {
-  @apply border-2 border-b-pink-500;
-  @apply border-t-0 border-r-0 border-l-0;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.home {
-  @apply w-full h-full;
-  font-size: 50px;
-  text-align: center;
-}
-.home-pic1 {
-  background-image: url("images/homes-main-bg.jpg");
-  @apply bg-center bg-auto bg-no-repeat;
-}
-.home h1 {
-  color: #f15;
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-}
-.home .date {
-  color: #fff;
-  background-color: #f15;
-  padding: 5px;
-  border-radius: 40px 0 40px 0;
-  transition-duration: 0.5s;
-}
-.home .date:hover {
-  background-color: #fff;
-  color: #f15;
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center; /* Vertically center the heart with the text */
 }
 
-.ourstory {
-  @apply w-full h-full;
-  font-size: 50px;
+.heart-symbol {
+  margin-left: 0.5rem; /* Add space between text and heart */
+  font-size: 1.5rem; /* Adjust size to match header text */
+}
+
+.header-menu {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.header-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header-button:hover {
+  background-color: #ff4081; /* Light Pink for hover */
+  color: #ffffff; /* Ensure text remains readable */
+  border-radius: 0.25rem;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  color: #ffffff;
   text-align: center;
 }
-.ourstory-pic1 {
-  background-image: url("images/homes-bg.jpg");
-  @apply bg-center bg-auto bg-no-repeat;
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%; /* Adjust based on the number of images */
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  animation: scrollBackground 15s linear infinite;
+  background-size: cover; /* Ensure images cover the area */
+  background-position: center; /* Center the images */
+}
+
+.hero-background img {
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  object-fit: cover; /* Ensure images cover the area */
+  object-position: center; /* Center the images */
+}
+
+@keyframes scrollBackground {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-66.66%); /* Adjust based on the number of images */
+  }
+}
+
+.hero-content {
+  position: relative;
+  padding: 2rem;
+  background-color: rgba(255, 105, 180, 0.6); /* Light Pink with Transparency */
+  border-radius: 0.5rem;
+  z-index: 1; /* Ensure content is above the background */
+}
+
+.about {
+  padding: 4rem 1rem;
+  background-color: #ffe0e0; /* Light Pink */
+  text-align: center;
+}
+
+.gallery {
+  padding: 4rem 1rem;
+}
+
+.gallery h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c2185b; /* Pink-800 */
+}
+
+.gallery-images {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.gallery-images img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border: 5px solid #f48fb1; /* Light Pink Border */
+}
+
+.rsvp {
+  padding: 4rem 1rem;
+  background-color: #ffe0e0; /* Light Pink */
+  text-align: center;
+}
+
+.rsvp-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rsvp-form input,
+.rsvp-form textarea,
+.rsvp-form button {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.rsvp-form textarea {
+  resize: vertical;
+}
+
+.guest-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-info label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.guest-name {
+  @apply align-middle w-full;
+}
+
+.footer {
+  background-color: #d32f2f; /* Red-600 */
+  color: #ffffff;
+  padding: 1rem;
+  text-align: center;
 }
