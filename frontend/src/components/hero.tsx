@@ -9,7 +9,8 @@ function HeroSection() {
         <img src="/images/belvedere5.jpg" alt="Belvedere 5" />
       </div>
       <div className="hero-content">
-        <h1 className="text-5xl font-bold py-8">Welcome to Our Wedding</h1>
+        <h1 className="text-5xl font-bold pt-8">Welcome to the Wedding of</h1>
+        <h2 className="text-4xl font-bold">Paul and Margot</h2>
         <p className="mt-4 text-xl">
           We are so excited to celebrate with you on the {"<date>"} at the{" "}
           {"<venue>"}!

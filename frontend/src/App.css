@@ -228,3 +228,67 @@
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
+
+.password-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #ffe0e9, #ffffff);
+  font-family: "Georgia", serif;
+}
+
+.password-prompt-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.password-prompt h2 {
+  margin-bottom: 10px;
+  font-size: 2em;
+  color: #d9534f;
+}
+
+.password-prompt p {
+  margin-bottom: 20px;
+  color: #6c757d;
+}
+
+.password-prompt input {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.password-prompt input:focus {
+  outline: none;
+  border-color: #d9534f;
+}
+
+.password-prompt button {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1em;
+}
+
+.password-prompt button:hover {
+  background-color: #c9302c;
+}
+
+.error-message {
+  color: #d9534f;
+  margin-top: 10px;
+}
