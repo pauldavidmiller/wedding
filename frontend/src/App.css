@@ -292,3 +292,50 @@
   color: #d9534f;
   margin-top: 10px;
 }
+
+.venue-section {
+  padding: 60px 20px;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+
+.venue-title {
+  font-size: 2.5em;
+  color: #d9534f;
+  margin-bottom: 20px;
+}
+
+.venue-details {
+  margin-bottom: 40px;
+}
+
+.venue-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.venue-address {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.venue-description {
+  font-size: 1em;
+  color: #6c757d;
+  margin-bottom: 30px;
+}
+
+.venue-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.venue-map iframe {
+  width: 100%;
+  max-width: 600px;
+  height: 450px;
+  border: 0;
+  border-radius: 10px;
+}

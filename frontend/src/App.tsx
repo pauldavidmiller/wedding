@@ -8,10 +8,12 @@ import GallerySection from "./components/gallery";
 import RSVPSection from "./components/rsvp";
 import Footer from "./components/footer";
 import PasswordPrompt from "./components/password-prompt";
+import VenueSection from "./components/venue";
 
 const isPasswordEnabled = false; // TODO: Enable before deploying
 const hashedPassword =
   "f9da371f8ec027b5e598d64ded7722d8b023b0e5d676fa6e03ed1702c8f88bc9";
+const venueName = "<venueName>";
 
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -26,7 +28,8 @@ function App() {
       ) : (
         <>
           <Header />
-          <HeroSection />
+          <HeroSection venueName={venueName} />
+          <VenueSection venueName={venueName} />
           <AboutSection />
           <GallerySection />
           <RSVPSection />

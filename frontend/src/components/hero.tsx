@@ -1,4 +1,8 @@
-function HeroSection() {
+type HeroSectionProps = {
+  venueName: string;
+};
+
+const HeroSection = ({ venueName }: HeroSectionProps) => {
   return (
     <section id="hero" className="hero">
       <div className="hero-background">
@@ -13,11 +17,11 @@ function HeroSection() {
         <h2 className="text-4xl font-bold">Paul and Margot</h2>
         <p className="mt-4 text-xl">
           We are so excited to celebrate with you on the {"<date>"} at the{" "}
-          {"<venue>"}!
+          {venueName}!
         </p>
       </div>
     </section>
   );
-}
+};
 
 export default HeroSection;

@@ -24,6 +24,14 @@ function Header() {
           <li>
             <button
               className="header-button"
+              onClick={() => scrollToSection("venue")}
+            >
+              Venue
+            </button>
+          </li>
+          <li>
+            <button
+              className="header-button"
               onClick={() => scrollToSection("about")}
             >
               About

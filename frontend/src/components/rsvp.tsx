@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Checkbox from "./checkbox";
+import plusOneAllowList from "../data/plusOneAllowList.json";
 import axios from "axios";
+import jaroWinkler from "../data/jarowinkler";
+import levenshtein from "../data/levenshtein";
 
 function RSVPSection() {
   const [fullName, setFullName] = useState("");
@@ -8,6 +11,20 @@ function RSVPSection() {
   const [plusOneFullName, setPlusOneFullName] = useState("");
   const [response, setResponse] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const canHavePlusOne =
+    plusOneAllowList.find((po) => {
+      var allowListFullName = (po.firstName + " " + po.lastName).toLowerCase();
+      var enteredFullNameArr = fullName.split(" ");
+      var enteredFullName = [
+        enteredFullNameArr[0],
+        enteredFullNameArr[enteredFullNameArr.length - 1],
+      ].join(" ");
+      return (
+        jaroWinkler(allowListFullName, enteredFullName, 0) >= 0.9 ||
+        levenshtein(allowListFullName, enteredFullName) <= 5
+      );
+    }) != null;
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -42,29 +59,31 @@ function RSVPSection() {
       <form className="rsvp-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="First and Last Name"
           onChange={(e) => setFullName(e.target.value)}
           required
         />
-        <div className="guest-info">
-          <div className="flex flex-col">
-            <Checkbox
-              isChecked={plusOne}
-              setIsChecked={setPlusOne}
-              label="Plus One"
-            />
-            {plusOne && (
-              <input
-                id="guest-name"
-                className="guest-name"
-                value={plusOneFullName}
-                onChange={(e) => setPlusOneFullName(e.target.value)}
-                placeholder="Guest's Name"
-                required
+        {canHavePlusOne && (
+          <div className="guest-info">
+            <div className="flex flex-col">
+              <Checkbox
+                isChecked={plusOne}
+                setIsChecked={setPlusOne}
+                label="Plus One"
               />
-            )}
+              {plusOne && (
+                <input
+                  id="guest-name"
+                  className="guest-name"
+                  value={plusOneFullName}
+                  onChange={(e) => setPlusOneFullName(e.target.value)}
+                  placeholder="Guest's Name"
+                  required
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
         <button type="submit" className="bg-red-500">
           Send RSVP
         </button>
