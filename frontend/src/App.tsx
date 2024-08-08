@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css"; // Import the custom stylesheet
 
 import Header from "./components/header";
@@ -7,16 +7,32 @@ import AboutSection from "./components/about";
 import GallerySection from "./components/gallery";
 import RSVPSection from "./components/rsvp";
 import Footer from "./components/footer";
+import PasswordPrompt from "./components/password-prompt";
+
+const isPasswordEnabled = false; // TODO: Enable before deploying
+const hashedPassword =
+  "f9da371f8ec027b5e598d64ded7722d8b023b0e5d676fa6e03ed1702c8f88bc9";
 
 function App() {
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
   return (
     <div className="App">
-      <Header />
-      <HeroSection />
-      <AboutSection />
-      <GallerySection />
-      <RSVPSection />
-      <Footer />
+      {isPasswordEnabled && !isUnlocked ? (
+        <PasswordPrompt
+          hashedPassword={hashedPassword}
+          onUnlock={() => setIsUnlocked(true)}
+        />
+      ) : (
+        <>
+          <Header />
+          <HeroSection />
+          <AboutSection />
+          <GallerySection />
+          <RSVPSection />
+          <Footer />
+        </>
+      )}
     </div>
   );
 }

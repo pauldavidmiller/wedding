@@ -29,7 +29,9 @@ function RSVPSection() {
     } catch (error) {
       console.error("Error sending notification:", error);
       setResponse({ success: false, error });
-      setErrorMessage("Failed to send RSVP. Please try again later.");
+      setErrorMessage(
+        `Failed to send RSVP. Please try again later. ${response.error}`
+      );
       alert(errorMessage);
     }
   };
