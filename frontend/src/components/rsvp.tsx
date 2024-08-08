@@ -19,7 +19,9 @@ function RSVPSection() {
       var enteredFullName = [
         enteredFullNameArr[0],
         enteredFullNameArr[enteredFullNameArr.length - 1],
-      ].join(" ");
+      ]
+        .join(" ")
+        .toLowerCase();
       return (
         jaroWinkler(allowListFullName, enteredFullName, 0) >= 0.9 ||
         levenshtein(allowListFullName, enteredFullName) <= 5
