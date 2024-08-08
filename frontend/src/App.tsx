@@ -9,6 +9,7 @@ import RSVPSection from "./components/rsvp";
 import Footer from "./components/footer";
 import PasswordPrompt from "./components/password-prompt";
 import VenueSection from "./components/venue";
+import HotelsSection from "./components/hotels";
 
 const isPasswordEnabled = false; // TODO: Enable before deploying
 const hashedPassword =
@@ -29,9 +30,10 @@ function App() {
         <>
           <Header />
           <HeroSection venueName={venueName} />
-          <VenueSection venueName={venueName} />
           <AboutSection />
           <GallerySection />
+          <VenueSection venueName={venueName} />
+          <HotelsSection />
           <RSVPSection />
           <Footer />
         </>

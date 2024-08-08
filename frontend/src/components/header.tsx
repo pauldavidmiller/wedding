@@ -24,14 +24,6 @@ function Header() {
           <li>
             <button
               className="header-button"
-              onClick={() => scrollToSection("venue")}
-            >
-              Venue
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
               onClick={() => scrollToSection("about")}
             >
               About
@@ -43,6 +35,22 @@ function Header() {
               onClick={() => scrollToSection("gallery")}
             >
               Gallery
+            </button>
+          </li>
+          <li>
+            <button
+              className="header-button"
+              onClick={() => scrollToSection("venue")}
+            >
+              Venue
+            </button>
+          </li>
+          <li>
+            <button
+              className="header-button"
+              onClick={() => scrollToSection("hotels")}
+            >
+              Hotels
             </button>
           </li>
           <li>

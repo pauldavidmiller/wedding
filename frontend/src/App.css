@@ -295,7 +295,7 @@
 
 .venue-section {
   padding: 60px 20px;
-  background-color: #f7f7f7;
+  background-color: #ffe0e0; /* Light Pink */
   text-align: center;
 }
 
@@ -338,4 +338,52 @@
   height: 450px;
   border: 0;
   border-radius: 10px;
+}
+
+.hotels-section {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.hotels-title {
+  font-size: 2.5em;
+  color: #d9534f;
+  margin-bottom: 20px;
+}
+
+.hotels-list {
+  display: flex; /* Use flexbox to align items horizontally */
+  flex-wrap: wrap; /* Allow wrapping to the next line if necessary */
+  justify-content: center; /* Center items */
+}
+
+.hotel-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px; /* Margin between items */
+  width: 250px; /* Set a fixed width for consistency */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hotel-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.hotel-address,
+.hotel-phone {
+  font-size: 1em;
+  color: #555;
+}
+
+.hotel-link {
+  color: #d9534f;
+  text-decoration: none;
+}
+
+.hotel-link:hover {
+  text-decoration: underline;
 }
