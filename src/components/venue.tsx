@@ -19,13 +19,14 @@ const VenueSection = ({ venueName }: VenueSectionProps) => {
       </div>
       <div className="venue-map">
         <iframe
+          title="Venue Location"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3105.217907275369!2d-76.61962052440967!3d39.32647634203747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c805f09b021b35%3A0xfb35840c1a0132fc!2sBaltimore%20Museum%20of%20Art!5e0!3m2!1sen!2sus!4v1693085966781!5m2!1sen!2sus"
           width="600"
           height="450"
-          style="border:0;"
-          allowfullscreen="true"
+          style={{ border: 0 }}
+          allowFullScreen={true}
           loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
+          referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
       </div>
     </section>
