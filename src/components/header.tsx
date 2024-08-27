@@ -1,4 +1,6 @@
-function Header() {
+import React from "react";
+
+const Header = () => {
   const scrollToSection = (id: any) => {
     const element = document.getElementById(id);
     if (element) {

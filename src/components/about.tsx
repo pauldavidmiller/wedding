@@ -1,4 +1,6 @@
-function AboutSection() {
+import React from "react";
+
+const AboutSection = () => {
   return (
     <section id="about" className="about">
       <h2 className="text-4xl font-bold">Our Story</h2>

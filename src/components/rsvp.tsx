@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Checkbox from "./checkbox";
 import plusOneAllowList from "../data/plusOneAllowList.json";
 import axios from "axios";

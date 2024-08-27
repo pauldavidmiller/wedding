@@ -12,10 +12,11 @@ import VenueSection from "./components/venue";
 import HotelsSection from "./components/hotels";
 import FAQsSection from "./components/faqs";
 
-const isPasswordEnabled = false; // TODO: Enable before deploying
+const isPasswordEnabled = true;
 const hashedPassword =
-  "f9da371f8ec027b5e598d64ded7722d8b023b0e5d676fa6e03ed1702c8f88bc9";
-const venueName = "<venueName>";
+  "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2";
+const venueName = "Baltimore Museum of Art";
+const date = "Sunday, August 31st, 2025"
 
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -30,7 +31,7 @@ function App() {
       ) : (
         <>
           <Header />
-          <HeroSection venueName={venueName} />
+          <HeroSection venueName={venueName} date={date} />
           <AboutSection />
           <GallerySection />
           <VenueSection venueName={venueName} />

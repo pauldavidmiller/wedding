@@ -1,3 +1,4 @@
+import React from "react";
 import hotelsData from "../data/hotels.json";
 
 const HotelsSection = () => {
