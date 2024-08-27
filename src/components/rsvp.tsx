@@ -38,7 +38,7 @@ function RSVPSection() {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/notify", {
+      const res = await axios.post("/api/notify", {
         fullName,
         plusOneFullName,
       });
