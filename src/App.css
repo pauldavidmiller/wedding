@@ -60,38 +60,11 @@
   text-align: center;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300%; /* Adjust based on the number of images */
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  animation: scrollBackground 15s linear infinite;
-  background-size: cover; /* Ensure images cover the area */
-  background-position: center; /* Center the images */
-}
-
-.hero-background img {
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
-  object-fit: cover; /* Ensure images cover the area */
-  object-position: center; /* Center the images */
-}
-
-@keyframes scrollBackground {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-66.66%); /* Adjust based on the number of images */
-  }
-}
-
 .hero-content {
-  position: relative;
+  position: absolute;
   padding: 2rem;
+  @apply top-0;
+  @apply w-full;
   background-color: rgba(255, 105, 180, 0.6); /* Light Pink with Transparency */
   border-radius: 0.5rem;
   z-index: 1; /* Ensure content is above the background */
@@ -109,9 +82,9 @@
 
 .gallery h2 {
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.5em;
   color: #c2185b; /* Pink-800 */
+  @apply pb-2;
 }
 
 .gallery-images {
@@ -131,6 +104,12 @@
   padding: 4rem 1rem;
   background-color: #ffe0e0; /* Light Pink */
   text-align: center;
+}
+
+.rsvp h2 {
+  font-size: 2.5em;
+  @apply text-black;
+  @apply pb-2;
 }
 
 .rsvp-form {
@@ -302,7 +281,7 @@
 .venue-title {
   font-size: 2.5em;
   color: #d9534f;
-  margin-bottom: 20px;
+  @apply pb-2;
 }
 
 .venue-details {
@@ -349,7 +328,7 @@
 .hotels-title {
   font-size: 2.5em;
   color: #d9534f;
-  margin-bottom: 20px;
+  @apply pb-2;
 }
 
 .hotels-list {
@@ -397,7 +376,7 @@
 .faqs-title {
   font-size: 2.5em;
   color: #d9534f;
-  margin-bottom: 20px;
+  @apply pb-2;
 }
 
 .faqs-list {

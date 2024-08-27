@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <footer className="footer">
-      <p>&copy; 2024 Paul & Margot's Wedding. All rights reserved.</p>
+      <p>&copy; 2024 Margot & Paul's Wedding. All rights reserved. Yep, Paul made this website!</p>
     </footer>
   );
 }

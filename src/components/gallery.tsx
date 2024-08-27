@@ -3,7 +3,7 @@ import React from "react";
 const GallerySection = () => {
   return (
     <section id="gallery" className="gallery">
-      <h2 className="text-4xl font-bold">Gallery</h2>
+      <h2>Gallery</h2>
       <div className="gallery-images">
         <img src="/images/us10.jpg" alt="Gallery 10" />
         <img src="/images/us20.jpg" alt="Gallery 20" />

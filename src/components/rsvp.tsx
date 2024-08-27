@@ -57,7 +57,7 @@ function RSVPSection() {
 
   return (
     <section id="rsvp" className="rsvp">
-      <h2 className="text-4xl font-bold">RSVP</h2>
+      <h2>RSVP</h2>
       <form className="rsvp-form" onSubmit={handleSubmit}>
         <input
           type="text"
