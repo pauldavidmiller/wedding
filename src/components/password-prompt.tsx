@@ -26,7 +26,7 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({
   return (
     <div className="password-prompt">
       <div className="password-prompt-container">
-        <h2>Paul and Margot Get Married!</h2>
+        <h2>Margot and Paul Get Married!</h2>
         <p>Please enter the password to access the site:</p>
         <form onSubmit={handleSubmit}>
           <input

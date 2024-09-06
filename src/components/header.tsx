@@ -1,80 +1,42 @@
 import React from "react";
+import Tabs from "./tabs";
+import { useHamburgerMenu } from "../contexts/hamburger-menu-context";
 
 const Header = () => {
-  const scrollToSection = (id: any) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const { setIsHamburgerMenuOpen } = useHamburgerMenu();
 
   return (
     <header className="header">
-      <nav className="header-nav">
+      <div className="header-nav">
+        {/* <!-- Hamburger Menu --> */}
+        <button
+          id="menuButton"
+          className="lg:hidden"
+          onClick={() => setIsHamburgerMenuOpen(true)}
+        >
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        </button>
         <div className="header-logo">
-          Paul & Margot's Wedding <span className="heart-symbol">❤️</span>
+          Margot & Paul's Wedding <span className="heart-symbol">❤️</span>
         </div>
-        <ul className="header-menu">
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("hero")}
-            >
-              Home
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("about")}
-            >
-              About
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("gallery")}
-            >
-              Gallery
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("venue")}
-            >
-              Venue
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("hotels")}
-            >
-              Hotels
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("faqs")}
-            >
-              FAQ
-            </button>
-          </li>
-          <li>
-            <button
-              className="header-button"
-              onClick={() => scrollToSection("rsvp")}
-            >
-              RSVP
-            </button>
-          </li>
-        </ul>
-      </nav>
+        <nav className="hidden lg:flex space-x-4">
+          <Tabs />
+        </nav>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;

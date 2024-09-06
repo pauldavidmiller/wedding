@@ -10,15 +10,18 @@ const HotelsSection = () => {
           <div className="hotel-item" key={index}>
             <h3 className="hotel-name">{hotel.name}</h3>
             <p className="hotel-address">{hotel.address}</p>
-            <p className="hotel-phone">{hotel.phone}</p>
+            <p className="hotel-phone">
+              <a href="tel:+2014463301">{hotel.phone}</a>
+            </p>
             <a
               className="hotel-link"
               href={hotel.link}
               target="_blank"
               rel="noopener noreferrer"
             >
-              More Info
+              Website Link
             </a>
+            <img alt="Hotel Directions" src={hotel.image} />
           </div>
         ))}
       </div>

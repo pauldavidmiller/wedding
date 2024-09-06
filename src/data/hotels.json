@@ -1,20 +1,9 @@
 [
   {
-    "name": "Hotel 1",
-    "address": "123 Main St, Baltimore, MD 21202",
-    "phone": "(123) 456-7890",
-    "link": "https://example.com/hotel1"
-  },
-  {
-    "name": "Hotel 2",
-    "address": "456 Elm St, Baltimore, MD 21202",
-    "phone": "(987) 654-3210",
-    "link": "https://example.com/hotel2"
-  },
-  {
-    "name": "Hotel 3",
-    "address": "789 Oak St, Baltimore, MD 21202",
-    "phone": "(555) 555-5555",
-    "link": "https://example.com/hotel3"
+    "name": "The Study At Johns Hopkins",
+    "address": "3215 N Charles Street, Baltimore, MD 21218",
+    "phone": "(410) 243-0030",
+    "link": "https://www.thestudyatjohnshopkins.com/",
+    "image": "/images/thestudyhotelmap.jpg"
   }
 ]

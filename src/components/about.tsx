@@ -18,10 +18,11 @@ const AboutSection = () => {
         was)... the rest was history: Paul asked Margot on a walk, then took her
         out on some dates, and just like that here we are on our wedding day!
         Roughly 5 years after that first August 30th 2020 walk. Happy and in
-        love as ever, and so excited to be here with all of you! לי חיים
+        love as ever, and so excited to be here with all of you!
       </p>
+      <p>לי חיים</p>
     </section>
   );
-}
+};
 
 export default AboutSection;
