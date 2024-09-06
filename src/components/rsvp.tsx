@@ -42,15 +42,27 @@ function RSVPSection() {
         fullName,
         plusOneFullName,
       });
-      setResponse(res.data);
-      setErrorMessage(""); // Clear any previous error messages
-      alert("RSVP sent successfully!");
-    } catch (error) {
+      if (res?.data?.success) {
+        setResponse(res.data);
+        setErrorMessage(""); // Clear any previous error messages
+        alert("RSVP sent successfully!");
+      } else {
+        setResponse({ success: false, message: "Unknown error occurred" });
+        alert("RSVP failed to send!");
+      }
+    } catch (error: any) {
       console.error("Error sending notification:", error);
-      setResponse({ success: false, error });
-      setErrorMessage(
-        `Failed to send RSVP. Please try again later. ${response.error}`
-      );
+
+      // Adding defensive checks for error and response
+      setResponse({
+        success: false,
+        error:
+          error?.response?.data?.error ||
+          "An error occurred while sending the notification.",
+      });
+      // setErrorMessage(
+      //   `Failed to send RSVP. Please try again later. ${response.error}`
+      // );
       alert(errorMessage);
     }
   };

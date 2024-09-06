@@ -1,0 +1,13 @@
+[build]
+  publish = "build"  # Adjust this if your React app output folder is different
+  functions = "netlify/functions"  # Directory where your serverless functions are stored
+
+[dev]
+  command = "yarn start"  # Command to run the local dev server for React
+  targetPort = 3000  # Port where React app runs locally
+  framework = "create-react-app"  # Framework used in the frontend
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200  # Redirect API calls to Netlify Functions
