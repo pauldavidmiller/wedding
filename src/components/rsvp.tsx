@@ -9,8 +9,6 @@ function RSVPSection() {
   const [fullName, setFullName] = useState("");
   const [plusOne, setPlusOne] = useState(false);
   const [plusOneFullName, setPlusOneFullName] = useState("");
-  const [response, setResponse] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const canHavePlusOne =
     plusOneAllowList.find((po) => {
@@ -33,7 +31,7 @@ function RSVPSection() {
 
     // Check if plus one name is required
     if (plusOne && !plusOneFullName) {
-      setErrorMessage("Please provide your plus one's name.");
+      alert("Please provide your plus one's name.");
       return;
     }
 
@@ -43,27 +41,13 @@ function RSVPSection() {
         plusOneFullName,
       });
       if (res?.data?.success) {
-        setResponse(res.data);
-        setErrorMessage(""); // Clear any previous error messages
         alert("RSVP sent successfully!");
       } else {
-        setResponse({ success: false, message: "Unknown error occurred" });
         alert("RSVP failed to send!");
       }
     } catch (error: any) {
       console.error("Error sending notification:", error);
-
-      // Adding defensive checks for error and response
-      setResponse({
-        success: false,
-        error:
-          error?.response?.data?.error ||
-          "An error occurred while sending the notification.",
-      });
-      // setErrorMessage(
-      //   `Failed to send RSVP. Please try again later. ${response.error}`
-      // );
-      alert(errorMessage);
+      alert("RSVP failed to send!");
     }
   };
 
