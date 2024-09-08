@@ -28,10 +28,8 @@ const Header = () => {
             />
           </svg>
         </button>
-        <div className="header-logo">
-          Margot & Paul's Wedding <span className="heart-symbol">❤️</span>
-        </div>
-        <nav className="hidden lg:flex space-x-4">
+        <div className="header-logo">Margot & Paul's Wedding</div>
+        <nav className="hidden lg:flex lg:flex-row space-x-4">
           <Tabs />
         </nav>
       </div>

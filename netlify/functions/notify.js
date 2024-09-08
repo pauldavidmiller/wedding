@@ -14,14 +14,24 @@ const transporter = nodemailer.createTransport({
 });
 
 // Export the handler function that Netlify will use
-exports.handler = async(event, context) => {
+exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
-  const { fullName, plusOneFullName } = body;
+  const {
+    fullName,
+    dinnerChoice,
+    plusOneFullName,
+    plusOneDinnerChoice,
+    dietaryRestrictions,
+  } = body;
 
-  const subject = "New Wedding RSVP";
+  const subject = "Wedding RSVP";
   const message = `${fullName} ${
     plusOneFullName ? `and ${plusOneFullName} are` : "is"
-  } attending your wedding!`;
+  } attending your wedding! 
+  \n
+  \n ${fullName}: ${dinnerChoice} 
+  \n ${plusOneFullName}: ${plusOneDinnerChoice} 
+  \n Dietary Restrictions: ${dietaryRestrictions}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

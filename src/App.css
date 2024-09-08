@@ -3,12 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
 body {
   margin: 0;
   padding: 0;
-  width: 100vw; /* Use viewport width to ensure full width */
-  height: 100vh; /* Ensure it takes full viewport height */
+  width: 100%; /* Use viewport width to ensure full width */
+  height: 100%; /* Ensure it takes full viewport height */
   max-width: 100vw; /* Prevent any overflow beyond the viewport */
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
@@ -42,6 +41,7 @@ body {
 .header-logo {
   font-size: 1.5rem;
   font-weight: bold;
+  @apply pt-2;
   @apply cursive-font;
   letter-spacing: 3px;
   @apply whitespace-nowrap;
@@ -79,11 +79,12 @@ body {
 .hero {
   position: relative;
   height: 100vh;
-  overflow: hidden;
+  @apply w-full;
   color: #ffffff;
   text-align: center;
   font-family: "Montserrat", sans-serif;
   @apply shadow-lg;
+  @apply scroll-mt-9;
 }
 
 .hero-content {
@@ -102,6 +103,7 @@ body {
   @apply bg-pink-50;
   @apply m-3 rounded-2xl shadow-lg;
   font-family: "Montserrat", sans-serif;
+  @apply scroll-mt-9;
 }
 
 .gallery {
@@ -109,6 +111,7 @@ body {
   @apply m-3 rounded-2xl shadow-lg;
   @apply bg-pink-200;
   font-family: "Montserrat", sans-serif;
+  @apply scroll-mt-9;
 }
 
 .gallery h2 {
@@ -137,6 +140,7 @@ body {
   text-align: center;
   @apply m-3 rounded-2xl shadow-lg;
   font-family: "Montserrat", sans-serif;
+  @apply scroll-mt-9;
 }
 
 .rsvp h2 {
@@ -169,7 +173,6 @@ body {
   display: flex;
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
-  @apply m-3 rounded-2xl shadow-lg;
 }
 
 .guest-info label {
@@ -314,6 +317,7 @@ body {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   @apply m-3 rounded-2xl shadow-lg;
+  @apply scroll-mt-9;
 }
 
 .venue-title {
@@ -363,6 +367,7 @@ body {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   @apply m-3 rounded-2xl shadow-lg;
+  @apply scroll-mt-9;
 }
 
 .hotels-title {
@@ -418,6 +423,7 @@ body {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   @apply m-3 rounded-2xl shadow-lg;
+  @apply scroll-mt-9;
 }
 
 .faqs-title {
@@ -454,4 +460,55 @@ body {
 .faq-answer {
   font-size: 1em;
   color: #555;
+}
+
+.dinner-choice legend {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.radio-option {
+  margin-bottom: 0.25rem;
+}
+
+.radio-option label {
+  background-color: #f5f5f5;
+  border: 2px solid #ccc;
+  padding: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-block;
+  width: 50%;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.radio-option label:hover {
+  background-color: #ffebeb;
+  border-color: #ff6666;
+}
+
+.dinner-choice input[type="radio"] {
+  display: none;
+}
+
+.dinner-choice input[type="radio"]:checked + label {
+  background-color: #ff6666;
+  color: #fff;
+  border-color: #ff6666;
+}
+
+.dietary-restrictions {
+  @apply w-full;
+}
+
+.dietary-restrictions legend {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  @apply pt-2;
+}
+
+.dietary-restrictions textarea {
+  @apply h-full w-full;
 }
