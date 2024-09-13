@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-type HeroSectionProps = {
-  venueName: string;
-  date: string;
-};
-
-const HeroSection = ({ venueName, date }: HeroSectionProps) => {
+const HeroSection = () => {
   const images = [
     "/images/bma1.jpg",
     "/images/bma2.jpg",
@@ -27,20 +22,10 @@ const HeroSection = ({ venueName, date }: HeroSectionProps) => {
 
   return (
     <section id="hero" className="hero">
-      <div className="hero-content">
-        <h1 className="text-5xl font-bold pt-8 cursive-font">
-          Welcome to the Wedding of
-        </h1>
-        <h2 className="text-4xl font-bold oswald-font">Margot and Paul</h2>
-        <h3 className="text-2xl font-bold pt-2">{date}</h3>
-        <p className="text-xl">
-          We are so excited to celebrate with you at the {venueName}!
-        </p>
-      </div>
       <img
         src={images[currentIndex]}
         alt="Hero"
-        className="w-full h-screen object-cover"
+        className="w-full h-full object-cover rounded-2xl z-50"
       />
     </section>
   );

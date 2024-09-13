@@ -13,6 +13,7 @@ import HotelsSection from "./components/hotels";
 import FAQsSection from "./components/faqs";
 import { useHamburgerMenu } from "./contexts/hamburger-menu-context";
 import HamburgerMenu from "./components/hamburger-menu";
+import Signature from "./components/signature";
 
 const isPasswordEnabled = true;
 const hashedPassword =
@@ -59,8 +60,9 @@ function App() {
         />
       ) : (
         <>
+          <Signature venueName={venueName} date={date} />
           <Header />
-          <HeroSection venueName={venueName} date={date} />
+          <HeroSection />
           <AboutSection />
           <GallerySection />
           <VenueSection venueName={venueName} />

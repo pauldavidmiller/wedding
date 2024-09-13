@@ -62,7 +62,7 @@ const Tabs = () => {
           className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
           onClick={() => scrollToSection("faqs")}
         >
-          FAQ
+          Faq
         </button>
       </li>
       <li>
@@ -70,7 +70,7 @@ const Tabs = () => {
           className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
           onClick={() => scrollToSection("rsvp")}
         >
-          RSVP
+          Rsvp
         </button>
       </li>
     </ul>

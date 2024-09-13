@@ -119,7 +119,7 @@ function RSVPSection() {
         <fieldset className="dietary-restrictions">
           <legend>Dietary Restrictions:</legend>
           <textarea
-            placeholder="Enter any dietary restrictions for all all attendees here..."
+            placeholder="Enter any dietary restrictions for all attendees here..."
             onChange={(e) => setDietaryRestrictions(e.target.value)}
           />
         </fieldset>

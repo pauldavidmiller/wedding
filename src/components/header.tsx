@@ -11,7 +11,7 @@ const Header = () => {
         {/* <!-- Hamburger Menu --> */}
         <button
           id="menuButton"
-          className="lg:hidden"
+          className="lg:hidden mx-3"
           onClick={() => setIsHamburgerMenuOpen(true)}
         >
           <svg
@@ -28,8 +28,7 @@ const Header = () => {
             />
           </svg>
         </button>
-        <div className="header-logo">Margot & Paul's Wedding</div>
-        <nav className="hidden lg:flex lg:flex-row space-x-4">
+        <nav className="hidden lg:flex lg:flex-row space-x-4 w-full justify-center items-center">
           <Tabs />
         </nav>
       </div>

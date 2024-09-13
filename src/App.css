@@ -15,6 +15,7 @@ body {
 .app-container {
   @apply w-full max-w-full;
 }
+
 .cursive-font {
   font-family: "Great Vibes", cursive;
 }
@@ -23,13 +24,44 @@ body {
   font-family: "Oswald", sans-serif;
 }
 
+.tangerine-font {
+  font-family: "Tangerine", serif;
+}
+
 /* Custom Styles */
+.signature {
+  padding: 2rem;
+  /* background-color: rgba(255, 105, 180, 0.8); /* Light Pink with Transparency */
+  /* @apply sm:rounded-bl-3xl sm:rounded-br-3xl md:rounded-bl-full md:rounded-br-full lg:rounded-bl-full lg:rounded-br-full; */
+  @apply z-10; /* Ensure content is above the background */
+
+  @apply text-gray-950;
+  @apply bg-gray-50;
+  text-align: center;
+
+  height: 250px;
+}
+
+.signature-img-left {
+  @apply hidden;
+  @apply xl:absolute xl:left-0 xl:top-2;
+  @apply xl:block; /* Optional: Ensures image doesn't have inline spacing */
+  @apply w-96 h-52;
+}
+
+.signature-img-right {
+  @apply hidden;
+  @apply xl:absolute xl:right-20 xl:-top-20;
+  transform: rotate(90deg); /* Rotates the image 90 degrees */
+  @apply xl:block; /* Optional: Ensures image doesn't have inline spacing */
+  @apply w-52 h-96;
+}
+
 .header {
   @apply w-full;
   @apply sticky top-0 z-50;
-  background-color: #d32f2f; /* Red-600 */
-  color: #ffffff;
-  @apply px-2 py-1;
+  @apply bg-gray-50 opacity-90;
+  @apply content-center px-2 pt-1 mb-0.5;
 }
 
 .header-nav {
@@ -61,40 +93,27 @@ body {
 }
 
 .header-button {
-  border: none;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
+  @apply text-gray-950;
   cursor: pointer;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s, color 0.3s;
+  @apply p-1 w-24;
+  @apply border-b-2 border-solid border-transparent; /* Default transparent border */
+  @apply tangerine-font text-3xl tracking-wider;
 }
 
 .header-button:hover {
-  background-color: #ff4081; /* Light Pink for hover */
-  color: #ffffff; /* Ensure text remains readable */
-  border-radius: 0.25rem;
+  @apply border-b-red-500;
+  @apply border-b border-solid;
+  border-radius: 5px;
 }
 
 .hero {
-  position: relative;
-  height: 100vh;
-  @apply w-full;
-  color: #ffffff;
-  text-align: center;
+  @apply p-1;
+  height: 85vh;
+  @apply mb-3 mx-3 rounded-2xl shadow-lg;
+  @apply bg-pink-200;
   font-family: "Montserrat", sans-serif;
-  @apply shadow-lg;
   @apply scroll-mt-9;
-}
-
-.hero-content {
-  position: absolute;
-  padding: 2rem;
-  @apply top-0;
-  @apply w-full;
-  background-color: rgba(255, 105, 180, 0.8); /* Light Pink with Transparency */
-  @apply sm:rounded-bl-3xl sm:rounded-br-3xl md:rounded-bl-full md:rounded-br-full lg:rounded-bl-full lg:rounded-br-full;
-  z-index: 1; /* Ensure content is above the background */
+  @apply z-50;
 }
 
 .about {
@@ -104,6 +123,7 @@ body {
   @apply m-3 rounded-2xl shadow-lg;
   font-family: "Montserrat", sans-serif;
   @apply scroll-mt-9;
+  @apply z-50;
 }
 
 .gallery {
@@ -112,6 +132,7 @@ body {
   @apply bg-pink-200;
   font-family: "Montserrat", sans-serif;
   @apply scroll-mt-9;
+  @apply z-50;
 }
 
 .gallery h2 {
@@ -141,6 +162,7 @@ body {
   @apply m-3 rounded-2xl shadow-lg;
   font-family: "Montserrat", sans-serif;
   @apply scroll-mt-9;
+  @apply z-50;
 }
 
 .rsvp h2 {
@@ -318,6 +340,7 @@ body {
   font-family: "Montserrat", sans-serif;
   @apply m-3 rounded-2xl shadow-lg;
   @apply scroll-mt-9;
+  @apply z-50;
 }
 
 .venue-title {
@@ -368,6 +391,7 @@ body {
   font-family: "Montserrat", sans-serif;
   @apply m-3 rounded-2xl shadow-lg;
   @apply scroll-mt-9;
+  @apply z-50;
 }
 
 .hotels-title {
@@ -424,6 +448,7 @@ body {
   font-family: "Montserrat", sans-serif;
   @apply m-3 rounded-2xl shadow-lg;
   @apply scroll-mt-9;
+  @apply z-50;
 }
 
 .faqs-title {
