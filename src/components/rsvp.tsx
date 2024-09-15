@@ -5,6 +5,7 @@ import axios from "axios";
 import jaroWinkler from "../data/jarowinkler";
 import levenshtein from "../data/levenshtein";
 import DinnerChoice, { DinnerChoiceType } from "./dinner-choice";
+import { Section } from "../types/section";
 
 function RSVPSection() {
   const [fullName, setFullName] = useState("");
@@ -72,7 +73,7 @@ function RSVPSection() {
   };
 
   return (
-    <section id="rsvp" className="rsvp">
+    <section id={Section.Rsvp} className="rsvp">
       <h2>RSVP</h2>
       <form className="rsvp-form" autoComplete="off" onSubmit={handleSubmit}>
         <input

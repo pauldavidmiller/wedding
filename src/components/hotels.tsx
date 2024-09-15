@@ -1,9 +1,10 @@
 import React from "react";
 import hotelsData from "../data/hotels.json";
+import { Section } from "../types/section";
 
 const HotelsSection = () => {
   return (
-    <section id="hotels" className="hotels-section">
+    <section id={Section.Hotels} className="hotels-section">
       <h2 className="hotels-title">Nearby Hotels</h2>
       <div className="hotels-list">
         {hotelsData.map((hotel, index) => (
