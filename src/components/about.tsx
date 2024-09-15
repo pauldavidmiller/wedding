@@ -1,9 +1,10 @@
 import React from "react";
+import { Section } from "../types/section";
 
 const AboutSection = () => {
   return (
-    <section id="about" className="about">
-      <h2 className="text-4xl font-bold">Our Story</h2>
+    <section id={Section.About} className="about">
+      <h2>Our Story</h2>
       <p className="mt-4 text-lg">
         It was the summer of 2018 when we were introduced to each other in a
         group. Both of our high school friends introduced us and wanted us to

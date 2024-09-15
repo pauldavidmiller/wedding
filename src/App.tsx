@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css"; // Import the custom stylesheet
 
 import Header from "./components/header";
-import HeroSection from "./components/hero";
 import AboutSection from "./components/about";
 import GallerySection from "./components/gallery";
 import RSVPSection from "./components/rsvp";
@@ -13,12 +12,16 @@ import HotelsSection from "./components/hotels";
 import FAQsSection from "./components/faqs";
 import { useHamburgerMenu } from "./contexts/hamburger-menu-context";
 import HamburgerMenu from "./components/hamburger-menu";
+import Signature from "./components/signature";
+import HeroSection from "./components/hero";
+import HamburgerHeader from "./components/hamburger-header";
 
 const isPasswordEnabled = true;
 const hashedPassword =
   "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2";
 const venueName = "Baltimore Museum of Art";
 const date = "Sunday, August 31st, 2025";
+const location = "Baltimore, MD";
 
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -59,14 +62,18 @@ function App() {
         />
       ) : (
         <>
+          <HamburgerHeader />
+          <Signature date={date} location={location} />
           <Header />
-          <HeroSection venueName={venueName} date={date} />
-          <AboutSection />
-          <GallerySection />
-          <VenueSection venueName={venueName} />
-          <HotelsSection />
-          <FAQsSection />
-          <RSVPSection />
+          <div className="space-y-3 mx-8">
+            <HeroSection />
+            <AboutSection />
+            <GallerySection />
+            <VenueSection venueName={venueName} />
+            <HotelsSection />
+            <FAQsSection />
+            <RSVPSection />
+          </div>
           <Footer />
 
           {isHamburgerMenuOpen && (

@@ -1,35 +1,11 @@
 import React from "react";
 import Tabs from "./tabs";
-import { useHamburgerMenu } from "../contexts/hamburger-menu-context";
 
 const Header = () => {
-  const { setIsHamburgerMenuOpen } = useHamburgerMenu();
-
   return (
-    <header className="header">
+    <header className="header hidden lg:flex lg:flex-row w-full justify-center">
       <div className="header-nav">
-        {/* <!-- Hamburger Menu --> */}
-        <button
-          id="menuButton"
-          className="lg:hidden"
-          onClick={() => setIsHamburgerMenuOpen(true)}
-        >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
-        <div className="header-logo">Margot & Paul's Wedding</div>
-        <nav className="hidden lg:flex lg:flex-row space-x-4">
+        <nav className="space-x-4 items-center">
           <Tabs />
         </nav>
       </div>

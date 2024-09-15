@@ -1,4 +1,5 @@
 import React from "react";
+import { Section } from "../types/section";
 
 const FAQsSection = () => {
   const faqs = [
@@ -15,7 +16,7 @@ const FAQsSection = () => {
   ];
 
   return (
-    <section id="faqs" className="faqs-section">
+    <section id={Section.Faq} className="faqs-section">
       <h2 className="faqs-title">Frequently Asked Questions</h2>
       <div className="faqs-list">
         {faqs.map((faq, index) => (
