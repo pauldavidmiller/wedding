@@ -6,8 +6,12 @@ import jaroWinkler from "../data/jarowinkler";
 import levenshtein from "../data/levenshtein";
 import DinnerChoice, { DinnerChoiceType } from "./dinner-choice";
 import { Section } from "../types/section";
+import { useAppContext } from "../contexts/app-context";
 
 function RSVPSection() {
+  const { websiteReleaseDate } = useAppContext();
+  const disabled = new Date() < websiteReleaseDate;
+
   const [fullName, setFullName] = useState("");
   const [isBringingPlusOne, setIsBringingPlusOne] = useState(false);
   const [plusOneFullName, setPlusOneFullName] = useState("");
@@ -76,55 +80,60 @@ function RSVPSection() {
     <section id={Section.Rsvp} className="rsvp">
       <h2>RSVP</h2>
       <form className="rsvp-form" autoComplete="off" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="First and Last Name"
-          onChange={(e) => setFullName(e.target.value)}
-          required
-        />
-        <DinnerChoice
-          name="primary"
-          selectedOption={dinnerChoice}
-          setSelectedOption={setDinnerChoice}
-          title="Dinner choice"
-        />
+        <fieldset disabled={disabled}>
+          <input
+            type="text"
+            placeholder="First and Last Name"
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
+          <DinnerChoice
+            name="primary"
+            selectedOption={dinnerChoice}
+            setSelectedOption={setDinnerChoice}
+            title="Dinner choice"
+            disabled={disabled}
+          />
+        </fieldset>
         {allowedPlusOne && (
-          <div className="guest-info">
-            <div className="flex flex-col">
-              <Checkbox
-                isChecked={isBringingPlusOne}
-                setIsChecked={setIsBringingPlusOne}
-                label="Plus One"
-              />
-              {isBringingPlusOne && (
-                <>
-                  <input
-                    id="guest-name"
-                    className="guest-name"
-                    value={plusOneFullName}
-                    onChange={(e) => setPlusOneFullName(e.target.value)}
-                    placeholder="Guest's Name"
-                    required
-                  />
-                  <DinnerChoice
-                    name="plusOne"
-                    selectedOption={plusOneDinnerChoice}
-                    setSelectedOption={setPlusOneDinnerChoice}
-                    title="Plus One's dinner choice"
-                  />
-                </>
-              )}
-            </div>
-          </div>
+          <fieldset disabled={disabled}>
+            <Checkbox
+              isChecked={isBringingPlusOne}
+              setIsChecked={setIsBringingPlusOne}
+              label="Plus One?"
+            />
+            {isBringingPlusOne && (
+              <>
+                <input
+                  id="guest-name"
+                  className="mt-3"
+                  value={plusOneFullName}
+                  onChange={(e) => setPlusOneFullName(e.target.value)}
+                  placeholder="Guest's Name"
+                  required
+                />
+                <DinnerChoice
+                  name="plusOne"
+                  selectedOption={plusOneDinnerChoice}
+                  setSelectedOption={setPlusOneDinnerChoice}
+                  title="Plus One's dinner choice"
+                />
+              </>
+            )}
+          </fieldset>
         )}
-        <fieldset className="dietary-restrictions">
+        <fieldset disabled={disabled} className="dietary-restrictions">
           <legend>Dietary Restrictions:</legend>
           <textarea
             placeholder="Enter any dietary restrictions for all attendees here..."
             onChange={(e) => setDietaryRestrictions(e.target.value)}
           />
         </fieldset>
-        <button type="submit" className="bg-red-500">
+        <button
+          disabled={disabled}
+          type="submit"
+          className="justify-center bg-red-400 disabled:cursor-not-allowed"
+        >
           Send RSVP
         </button>
       </form>

@@ -11,19 +11,21 @@ type DinnerChoiceProps = {
   title: string;
   selectedOption: DinnerChoiceType;
   setSelectedOption: React.Dispatch<React.SetStateAction<DinnerChoiceType>>;
+  disabled?: boolean;
 };
 const DinnerChoice = ({
   name,
   title,
   selectedOption,
   setSelectedOption,
+  disabled,
 }: DinnerChoiceProps) => {
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value as DinnerChoiceType);
   };
 
   return (
-    <fieldset className="dinner-choice">
+    <fieldset disabled={disabled} className="dinner-choice">
       <legend>{title}:</legend>
 
       <div className="radio-option">

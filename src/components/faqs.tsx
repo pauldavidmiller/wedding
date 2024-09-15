@@ -1,19 +1,24 @@
 import React from "react";
 import { Section } from "../types/section";
+import { useAppContext } from "../contexts/app-context";
 
 const FAQsSection = () => {
+  const { websiteReleaseDate } = useAppContext();
+
   const faqs = [
     {
       question: "What should I wear?",
       answer:
         "The dress code is formal attire. We want everyone to look their best!",
     },
-    {
-      question: "Is there a gift registry?",
-      answer:
-        "Yes, we have a gift registry at several stores. Please check out this link for more details.",
-    },
   ];
+
+  if (new Date() >= websiteReleaseDate) {
+    faqs.push({
+      question: "Is there a gift registry?",
+      answer: "Yes, please check out this link for more details.",
+    });
+  }
 
   return (
     <section id={Section.Faq} className="faqs-section">

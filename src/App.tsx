@@ -15,17 +15,13 @@ import HamburgerMenu from "./components/hamburger-menu";
 import Signature from "./components/signature";
 import HeroSection from "./components/hero";
 import HamburgerHeader from "./components/hamburger-header";
-
-const isPasswordEnabled = true;
-const hashedPassword =
-  "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2";
-const venueName = "Baltimore Museum of Art";
-const date = "Sunday, August 31st, 2025";
-const location = "Baltimore, MD";
+import { useAppContext } from "./contexts/app-context";
+import Modal from "./components/modal";
 
 function App() {
-  const [isUnlocked, setIsUnlocked] = useState(false);
+  const { isUnlocked } = useAppContext();
   const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHamburgerMenu();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
 
@@ -55,21 +51,18 @@ function App() {
 
   return (
     <div className="app-container">
-      {isPasswordEnabled && !isUnlocked ? (
-        <PasswordPrompt
-          hashedPassword={hashedPassword}
-          onUnlock={() => setIsUnlocked(true)}
-        />
+      {!isUnlocked ? (
+        <PasswordPrompt />
       ) : (
         <>
           <HamburgerHeader />
-          <Signature date={date} location={location} />
+          <Signature />
           <Header />
-          <div className="space-y-3 mx-8">
+          <div className="body-container">
             <HeroSection />
             <AboutSection />
             <GallerySection />
-            <VenueSection venueName={venueName} />
+            <VenueSection />
             <HotelsSection />
             <FAQsSection />
             <RSVPSection />
@@ -80,6 +73,14 @@ function App() {
             <div ref={hamburgerMenuRef}>
               <HamburgerMenu />
             </div>
+          )}
+
+          {isModalOpen && (
+            <Modal
+              title="More info and RSVP coming soon!"
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
           )}
         </>
       )}

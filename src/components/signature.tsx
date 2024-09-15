@@ -1,12 +1,10 @@
 import React from "react";
 import { Section } from "../types/section";
+import { useAppContext } from "../contexts/app-context";
 
-type SignatureProps = {
-  date: string;
-  location: string;
-};
+const Signature = () => {
+  const { date, location } = useAppContext();
 
-const Signature = ({ date, location }: SignatureProps) => {
   return (
     <section id={Section.Signature} className="signature">
       <h1 className="text-8xl font-bold pt-8 pb-2 cursive-font">

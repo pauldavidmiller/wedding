@@ -1,12 +1,11 @@
 import React from "react";
 import Carousel from "./carousel";
 import { Section } from "../types/section";
+import { useAppContext } from "../contexts/app-context";
 
-type VenueSectionProps = {
-  venueName: string;
-};
+const VenueSection = () => {
+  const { venueName } = useAppContext();
 
-const VenueSection = ({ venueName }: VenueSectionProps) => {
   return (
     <section id={Section.Venue} className="venue-section">
       <h2 className="venue-title">Venue</h2>

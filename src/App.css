@@ -19,6 +19,10 @@ body {
   align-items: center; /* Center vertically */
 }
 
+.body-container {
+  @apply space-y-3 mx-8;
+}
+
 /* Fonts */
 .cursive-font {
   font-family: "Great Vibes", cursive;
@@ -372,6 +376,7 @@ body {
 .rsvp-form input,
 .rsvp-form textarea,
 .rsvp-form button {
+  @apply self-center w-3/4;
   margin-bottom: 1rem;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -382,22 +387,9 @@ body {
   resize: vertical;
 }
 
-.guest-info {
-  display: flex;
-  flex-direction: column;
-  @apply playfair-display-font;
-}
-
-.guest-info label {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.guest-name {
-  @apply align-middle w-full;
-}
-
 .checkbox-container {
+  @apply mt-4;
+  @apply justify-center;
   display: flex;
   align-items: center;
   @apply h-full;
@@ -407,8 +399,9 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 20px; /* Adjust the font size if needed */
+  font-size: 24px; /* Adjust the font size if needed */
   white-space: nowrap;
+  @apply font-semibold tracking-wider underline;
 }
 
 .custom-checkbox {
@@ -488,6 +481,12 @@ body {
   border-color: #ff6666;
 }
 
+.dinner-choice input[type="radio"]:disabled + label {
+  @apply bg-gray-200;
+  border: 2px solid #ccc;
+  @apply cursor-not-allowed;
+}
+
 .dietary-restrictions {
   @apply w-full;
 }
@@ -531,9 +530,15 @@ body {
   text-align: center;
 }
 
-.password-prompt h2 {
+.password-prompt h1 {
   margin-bottom: 10px;
   font-size: 2em;
+  color: #d9534f;
+}
+
+.password-prompt h2 {
+  margin-bottom: 10px;
+  font-size: 1.75em;
   color: #d9534f;
 }
 
