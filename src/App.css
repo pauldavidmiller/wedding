@@ -13,9 +13,17 @@ body {
 }
 
 .app-container {
+  @apply bg-orange-100;
   @apply w-full max-w-full;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
+.body-container {
+  @apply space-y-3 mx-12 my-3;
+}
+
+/* Fonts */
 .cursive-font {
   font-family: "Great Vibes", cursive;
 }
@@ -28,35 +36,21 @@ body {
   font-family: "Tangerine", serif;
 }
 
-/* Custom Styles */
+/* Signature (Top) */
 .signature {
-  padding: 2rem;
-  /* background-color: rgba(255, 105, 180, 0.8); /* Light Pink with Transparency */
-  /* @apply sm:rounded-bl-3xl sm:rounded-br-3xl md:rounded-bl-full md:rounded-br-full lg:rounded-bl-full lg:rounded-br-full; */
-  @apply z-10; /* Ensure content is above the background */
-
-  @apply text-gray-950;
-  @apply bg-gray-50;
-  text-align: center;
-
-  height: 250px;
+  @apply w-full;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
-.signature-img-left {
-  @apply hidden;
-  @apply xl:absolute xl:left-0 xl:top-2;
-  @apply xl:block; /* Optional: Ensures image doesn't have inline spacing */
-  @apply w-96 h-52;
+.signature img {
+  @apply w-full;
+  @apply sm:h-auto md:h-auto lg:h-auto;
+  max-height: 85vh;
 }
 
-.signature-img-right {
-  @apply hidden;
-  @apply xl:absolute xl:right-20 xl:-top-20;
-  transform: rotate(90deg); /* Rotates the image 90 degrees */
-  @apply xl:block; /* Optional: Ensures image doesn't have inline spacing */
-  @apply w-52 h-96;
-}
-
+/* Header */
 .header {
   @apply w-full;
   @apply sticky top-0 z-50;
@@ -106,32 +100,24 @@ body {
   border-radius: 5px;
 }
 
-.hero {
-  @apply p-1;
-  height: 85vh;
-  @apply mb-3 mx-3 rounded-2xl shadow-lg;
-  @apply bg-pink-200;
-  font-family: "Montserrat", sans-serif;
-  @apply scroll-mt-9;
-  @apply z-50;
-}
-
+/* About */
 .about {
   padding: 3rem 1rem;
   text-align: center;
   @apply bg-pink-50;
-  @apply m-3 rounded-2xl shadow-lg;
+  @apply rounded-2xl shadow-lg;
   font-family: "Montserrat", sans-serif;
-  @apply scroll-mt-9;
+  @apply scroll-mt-14;
   @apply z-50;
 }
 
+/* Gallery */
 .gallery {
   padding: 3rem 1rem;
-  @apply m-3 rounded-2xl shadow-lg;
+  @apply rounded-2xl shadow-lg;
   @apply bg-pink-200;
   font-family: "Montserrat", sans-serif;
-  @apply scroll-mt-9;
+  @apply scroll-mt-14;
   @apply z-50;
 }
 
@@ -142,26 +128,266 @@ body {
   @apply pb-2;
 }
 
-.gallery-images {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-
-.gallery-images img {
+.gallery-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border: 5px solid #f48fb1; /* Light Pink Border */
+  height: 400px;
 }
 
-.rsvp {
+.gallery-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 90%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image-container {
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  @apply sm:w-full md:w-3/4 lg:w-3/4 xl:w-3/4 2xl:w-3/4;
+  height: 100%;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  position: absolute;
+  @apply rounded-md;
+}
+
+.image-container.center {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 3;
+}
+
+.image-container.left {
+  transform: translateX(-60%) scale(0.3);
+  opacity: 0.6;
+  z-index: 2;
+  @apply cursor-pointer;
+}
+
+.image-container.right {
+  transform: translateX(60%) scale(0.3);
+  opacity: 0.6;
+  z-index: 2;
+  @apply cursor-pointer;
+}
+
+.image-container.hidden {
+  opacity: 0;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.nav-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 47%;
+  transform: translateY(-20%);
+}
+
+.nav-button.prev {
+  left: 0;
+}
+
+.nav-button.next {
+  right: 0;
+}
+
+/* Venue */
+.venue-section {
   padding: 3rem 1rem;
   @apply bg-pink-200;
   text-align: center;
-  @apply m-3 rounded-2xl shadow-lg;
   font-family: "Montserrat", sans-serif;
-  @apply scroll-mt-9;
+  @apply rounded-2xl shadow-lg;
+  @apply scroll-mt-14;
+  @apply z-50;
+}
+
+.venue-displays {
+  @apply flex flex-col gap-3 overflow-auto w-full h-2/3;
+  @apply sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.venue-title {
+  font-size: 2.5em;
+  color: #d9534f;
+  @apply pb-2;
+}
+
+.venue-details {
+}
+
+.venue-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.venue-address {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.venue-description {
+  font-size: 1em;
+  color: #6c757d;
+  margin-bottom: 30px;
+}
+
+.venue-map {
+  @apply w-1/2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.venue-map iframe {
+  width: 100%;
+  max-width: 600px;
+  height: 450px;
+  border: 0;
+  border-radius: 10px;
+}
+
+.hero {
+  @apply sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2;
+  height: 400px;
+  @apply rounded-2xl shadow-lg;
+  @apply z-50;
+}
+
+.hero img {
+  @apply w-full h-full;
+  @apply object-cover rounded-2xl z-50;
+}
+
+/* Hotels */
+.hotels-section {
+  padding: 3rem 1rem;
+  @apply bg-pink-50;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  @apply rounded-2xl shadow-lg;
+  @apply scroll-mt-14;
+  @apply z-50;
+}
+
+.hotels-title {
+  font-size: 2.5em;
+  color: #d9534f;
+  @apply pb-2;
+}
+
+.hotels-list {
+  @apply w-full;
+  display: flex; /* Use flexbox to align items horizontally */
+  flex-wrap: wrap; /* Allow wrapping to the next line if necessary */
+  justify-content: center; /* Center items */
+}
+
+.hotel-item {
+  @apply min-w-min;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px; /* Margin between items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hotel-item img {
+  @apply w-96 h-auto;
+}
+
+.hotel-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.hotel-address,
+.hotel-phone {
+  font-size: 1em;
+  color: #555;
+}
+
+.hotel-link {
+  color: #d9534f;
+  text-decoration: none;
+}
+
+.hotel-link:hover {
+  text-decoration: underline;
+}
+
+/* FAQ */
+.faqs-section {
+  padding: 3rem 1rem;
+  @apply bg-pink-200;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  @apply rounded-2xl shadow-lg;
+  @apply scroll-mt-14;
+  @apply z-50;
+}
+
+.faqs-title {
+  font-size: 2.5em;
+  color: #d9534f;
+  @apply pb-2;
+}
+
+.faqs-list {
+  display: flex; /* Use flexbox to align items horizontally */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: center; /* Center align items */
+}
+
+.faq-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px; /* Margin between items */
+  width: calc(
+    50% - 20px
+  ); /* Each item takes up half the width, accounting for margin */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  @apply min-w-60;
+}
+
+.faq-question {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.faq-answer {
+  font-size: 1em;
+  color: #555;
+}
+
+/* RSVP */
+.rsvp {
+  padding: 3rem 1rem;
+  @apply bg-pink-50;
+  text-align: center;
+  @apply rounded-2xl shadow-lg;
+  font-family: "Montserrat", sans-serif;
+  @apply scroll-mt-14;
   @apply z-50;
 }
 
@@ -204,14 +430,6 @@ body {
 
 .guest-name {
   @apply align-middle w-full;
-}
-
-.footer {
-  background-color: #d32f2f; /* Red-600 */
-  color: #ffffff;
-  padding: 1rem;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
 }
 
 .checkbox-container {
@@ -269,6 +487,67 @@ body {
   transform: rotate(45deg);
 }
 
+.dinner-choice legend {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.radio-option {
+  margin-bottom: 0.25rem;
+}
+
+.radio-option label {
+  background-color: #f5f5f5;
+  border: 2px solid #ccc;
+  padding: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-block;
+  width: 50%;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.radio-option label:hover {
+  background-color: #ffebeb;
+  border-color: #ff6666;
+}
+
+.dinner-choice input[type="radio"] {
+  display: none;
+}
+
+.dinner-choice input[type="radio"]:checked + label {
+  background-color: #ff6666;
+  color: #fff;
+  border-color: #ff6666;
+}
+
+.dietary-restrictions {
+  @apply w-full;
+}
+
+.dietary-restrictions legend {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  @apply pt-2;
+}
+
+.dietary-restrictions textarea {
+  @apply h-full w-full;
+}
+
+/* Footer */
+.footer {
+  background-color: #d32f2f; /* Red-600 */
+  color: #ffffff;
+  padding: 1rem;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Password Screen */
 .password-prompt {
   display: flex;
   align-items: center;
@@ -331,209 +610,4 @@ body {
 .error-message {
   color: #d9534f;
   margin-top: 10px;
-}
-
-.venue-section {
-  padding: 3rem 1rem;
-  @apply bg-pink-50;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  @apply m-3 rounded-2xl shadow-lg;
-  @apply scroll-mt-9;
-  @apply z-50;
-}
-
-.venue-title {
-  font-size: 2.5em;
-  color: #d9534f;
-  @apply pb-2;
-}
-
-.venue-details {
-  margin-bottom: 40px;
-}
-
-.venue-name {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.venue-address {
-  font-size: 1.2em;
-  margin-bottom: 20px;
-}
-
-.venue-description {
-  font-size: 1em;
-  color: #6c757d;
-  margin-bottom: 30px;
-}
-
-.venue-map {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.venue-map iframe {
-  width: 100%;
-  max-width: 600px;
-  height: 450px;
-  border: 0;
-  border-radius: 10px;
-}
-
-.hotels-section {
-  padding: 3rem 1rem;
-  @apply bg-pink-200;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  @apply m-3 rounded-2xl shadow-lg;
-  @apply scroll-mt-9;
-  @apply z-50;
-}
-
-.hotels-title {
-  font-size: 2.5em;
-  color: #d9534f;
-  @apply pb-2;
-}
-
-.hotels-list {
-  @apply w-full;
-  display: flex; /* Use flexbox to align items horizontally */
-  flex-wrap: wrap; /* Allow wrapping to the next line if necessary */
-  justify-content: center; /* Center items */
-}
-
-.hotel-item {
-  @apply min-w-min;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 10px; /* Margin between items */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.hotel-item img {
-  @apply w-96 h-auto;
-}
-
-.hotel-name {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.hotel-address,
-.hotel-phone {
-  font-size: 1em;
-  color: #555;
-}
-
-.hotel-link {
-  color: #d9534f;
-  text-decoration: none;
-}
-
-.hotel-link:hover {
-  text-decoration: underline;
-}
-
-.faqs-section {
-  padding: 3rem 1rem;
-  @apply bg-pink-50;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  @apply m-3 rounded-2xl shadow-lg;
-  @apply scroll-mt-9;
-  @apply z-50;
-}
-
-.faqs-title {
-  font-size: 2.5em;
-  color: #d9534f;
-  @apply pb-2;
-}
-
-.faqs-list {
-  display: flex; /* Use flexbox to align items horizontally */
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  justify-content: center; /* Center align items */
-}
-
-.faq-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 10px; /* Margin between items */
-  width: calc(
-    50% - 20px
-  ); /* Each item takes up half the width, accounting for margin */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; /* Ensure padding and border are included in the width */
-  @apply min-w-60;
-}
-
-.faq-question {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-.faq-answer {
-  font-size: 1em;
-  color: #555;
-}
-
-.dinner-choice legend {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.radio-option {
-  margin-bottom: 0.25rem;
-}
-
-.radio-option label {
-  background-color: #f5f5f5;
-  border: 2px solid #ccc;
-  padding: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: inline-block;
-  width: 50%;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-.radio-option label:hover {
-  background-color: #ffebeb;
-  border-color: #ff6666;
-}
-
-.dinner-choice input[type="radio"] {
-  display: none;
-}
-
-.dinner-choice input[type="radio"]:checked + label {
-  background-color: #ff6666;
-  color: #fff;
-  border-color: #ff6666;
-}
-
-.dietary-restrictions {
-  @apply w-full;
-}
-
-.dietary-restrictions legend {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  @apply pt-2;
-}
-
-.dietary-restrictions textarea {
-  @apply h-full w-full;
 }

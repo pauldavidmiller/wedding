@@ -20,17 +20,9 @@ const Tabs = () => {
       <li>
         <button
           className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => scrollToSection("hero")}
+          onClick={() => scrollToSection("signature")}
         >
           Home
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => scrollToSection("about")}
-        >
-          About
         </button>
       </li>
       <li>
@@ -39,6 +31,14 @@ const Tabs = () => {
           onClick={() => scrollToSection("gallery")}
         >
           Gallery
+        </button>
+      </li>
+      <li>
+        <button
+          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
+          onClick={() => scrollToSection("about")}
+        >
+          About
         </button>
       </li>
       <li>

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css"; // Import the custom stylesheet
 
 import Header from "./components/header";
-import HeroSection from "./components/hero";
 import AboutSection from "./components/about";
 import GallerySection from "./components/gallery";
 import RSVPSection from "./components/rsvp";
@@ -60,15 +59,16 @@ function App() {
         />
       ) : (
         <>
-          <Signature venueName={venueName} date={date} />
           <Header />
-          <HeroSection />
-          <AboutSection />
-          <GallerySection />
-          <VenueSection venueName={venueName} />
-          <HotelsSection />
-          <FAQsSection />
-          <RSVPSection />
+          <Signature venueName={venueName} date={date} />
+          <div className="body-container">
+            <GallerySection />
+            <AboutSection />
+            <VenueSection venueName={venueName} />
+            <HotelsSection />
+            <FAQsSection />
+            <RSVPSection />
+          </div>
           <Footer />
 
           {isHamburgerMenuOpen && (

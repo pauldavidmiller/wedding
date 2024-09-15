@@ -22,11 +22,7 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="hero">
-      <img
-        src={images[currentIndex]}
-        alt="Hero"
-        className="w-full h-full object-cover rounded-2xl z-50"
-      />
+      <img src={images[currentIndex]} alt="Hero" />
     </section>
   );
 };

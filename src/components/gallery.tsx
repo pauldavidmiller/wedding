@@ -1,24 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
+
+const images = [
+  "/images/us10.jpg",
+  "/images/us20.jpg",
+  "/images/us30.jpg",
+  "/images/us40.jpg",
+  "/images/us50.HEIC",
+  "/images/us60.HEIC",
+  "/images/us70.HEIC",
+  "/images/us80.jpg",
+  "/images/us90.jpg",
+  "/images/us100.jpg",
+  "/images/us110.jpg",
+];
 
 const GallerySection = () => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
   return (
     <section id="gallery" className="gallery">
       <h2>Gallery</h2>
-      <div className="gallery-images">
-        <img src="/images/us10.jpg" alt="Gallery 10" />
-        <img src="/images/us20.jpg" alt="Gallery 20" />
-        <img src="/images/us30.jpg" alt="Gallery 30" />
-        <img src="/images/us40.jpg" alt="Gallery 40" />
-        <img src="/images/us50.HEIC" alt="Gallery 50" />
-        <img src="/images/us60.HEIC" alt="Gallery 60" />
-        <img src="/images/us70.HEIC" alt="Gallery 70" />
-        <img src="/images/us80.jpg" alt="Gallery 80" />
-        <img src="/images/us90.jpg" alt="Gallery 90" />
-        <img src="/images/us100.jpg" alt="Gallery 100" />
-        <img src="/images/us110.jpg" alt="Gallery 110" />
+      <div className="gallery-container">
+        <button className="nav-button prev" onClick={handlePrev}>
+          &lt;
+        </button>
+
+        <div className="gallery-wrapper">
+          {images.map((image, index) => {
+            let position = "hidden"; // Default hidden position
+
+            // Calculate image positions based on current index
+            if (index === currentIndex) {
+              position = "center";
+            } else if (index === (currentIndex + 1) % images.length) {
+              position = "right";
+            } else if (
+              index ===
+              (currentIndex - 1 + images.length) % images.length
+            ) {
+              position = "left";
+            }
+
+            return (
+              <div
+                key={index}
+                className={`image-container ${position}`}
+                style={{ backgroundImage: `url(${image})` }}
+                onClick={() => {
+                  if (position === "left") {
+                    handlePrev();
+                  } else if (position === "right") {
+                    handleNext();
+                  }
+                }}
+              />
+            );
+          })}
+        </div>
+
+        <button className="nav-button next" onClick={handleNext}>
+          &gt;
+        </button>
       </div>
     </section>
   );
-}
+};
 
 export default GallerySection;
