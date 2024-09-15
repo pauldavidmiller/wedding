@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
+import { useAppContext } from "../contexts/app-context";
 
-interface PasswordPromptProps {
-  hashedPassword: string;
-  onUnlock: () => void;
-}
-
-const PasswordPrompt: React.FC<PasswordPromptProps> = ({
-  hashedPassword,
-  onUnlock,
-}) => {
+const PasswordPrompt = () => {
+  const { hashedPassword, setIsUnlocked } = useAppContext();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -17,7 +11,7 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({
     e.preventDefault();
     const hash = CryptoJS.SHA256(password).toString();
     if (hash === hashedPassword) {
-      onUnlock();
+      setIsUnlocked(true);
     } else {
       setError("Incorrect password. Please try again.");
     }
@@ -26,7 +20,8 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({
   return (
     <div className="password-prompt">
       <div className="password-prompt-container">
-        <h2>Margot and Paul Get Married!</h2>
+        <h1>Margot and Paul</h1>
+        <h2>Get Married!</h2>
         <p>Please enter the password to access the site:</p>
         <form onSubmit={handleSubmit}>
           <input

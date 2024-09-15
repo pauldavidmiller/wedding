@@ -3,13 +3,16 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HamburgerMenuProvider } from "./contexts/hamburger-menu-context";
+import { AppProvider } from "./contexts/app-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <HamburgerMenuProvider>
-      <App />
-    </HamburgerMenuProvider>
+    <AppProvider>
+      <HamburgerMenuProvider>
+        <App />
+      </HamburgerMenuProvider>
+    </AppProvider>
   </React.StrictMode>
 );
 
