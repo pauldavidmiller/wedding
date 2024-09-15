@@ -8,16 +8,6 @@ type SignatureProps = {
 const Signature = ({ venueName, date }: SignatureProps) => {
   return (
     <section id="signature" className="signature">
-      <img
-        src="/images/signature-flowers.webp"
-        alt="left-flowers"
-        className="signature-img-left"
-      />
-      <img
-        src="/images/signature-flowers.webp"
-        alt="right-flowers"
-        className="signature-img-right"
-      />
       <h1 className="text-5xl font-bold pt-8 cursive-font">
         Welcome to the Wedding of
       </h1>
