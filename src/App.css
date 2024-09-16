@@ -459,6 +459,10 @@ body {
 .rsvp-input-row {
 }
 
+.rsvp-input-row input:disabled {
+  @apply cursor-not-allowed;
+}
+
 .radio-option {
 }
 
