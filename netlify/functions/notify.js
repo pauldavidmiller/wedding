@@ -16,22 +16,21 @@ const transporter = nodemailer.createTransport({
 // Export the handler function that Netlify will use
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
-  const {
-    fullName,
-    dinnerChoice,
-    plusOneFullName,
-    plusOneDinnerChoice,
-    dietaryRestrictions,
-  } = body;
+  const { rsvps } = body; // Rsvps is of type Rsvp (object);
 
   const subject = "Wedding RSVP";
-  const message = `${fullName} ${
-    plusOneFullName ? `and ${plusOneFullName} are` : "is"
-  } attending your wedding! 
-  \n
-  \n ${fullName}: ${dinnerChoice} 
-  \n ${plusOneFullName}: ${plusOneDinnerChoice} 
-  \n Dietary Restrictions: ${dietaryRestrictions}`;
+  let message = "";
+
+  for (let i = 0; i < rsvps.length; i++) {
+    const rsvp = rsvps[i];
+
+    message += "Name: " + rsvp.name + "\n";
+    message += "Dinner: " + rsvp.dinnerChoice?.toString() + "\n";
+    if (!!rsvp.dietaryRestrictions) {
+      message += "Dietary Restrictions: " + rsvp.dietaryRestrictions + "\n";
+    }
+    message += "\n";
+  }
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

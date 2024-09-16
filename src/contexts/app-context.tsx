@@ -18,7 +18,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [websiteReleaseDate] = useState<Date>(new Date("01/01/2025"));
+  const [websiteReleaseDate] = useState<Date>(new Date("01/01/2024"));
   const [isPasswordEnabled] = useState<boolean>(true);
   const [isUnlocked, setIsUnlocked] = useState<boolean>(!isPasswordEnabled);
   const [hashedPassword] = useState<string>(

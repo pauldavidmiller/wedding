@@ -15,10 +15,7 @@ const Modal: React.FC<ModalProps> = ({ title, children, isOpen, onClose }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg text-center">
         <h2 className="text-lg font-semibold mb-4">{title}</h2>
         {children}
-        <button
-          onClick={onClose}
-          className="bg-pink-400 text-white px-4 py-2 rounded hover:bg-pink-300"
-        >
+        <button onClick={onClose} className="close-modal-button">
           Close
         </button>
       </div>
