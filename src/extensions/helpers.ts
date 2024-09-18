@@ -1,6 +1,9 @@
 import { Section } from "../types/section";
 import jaroWinkler from "../data/jarowinkler";
 import levenshtein from "../data/levenshtein";
+import { Rsvp } from "../types/rsvp";
+import { AttendingChoice } from "../types/attending-choice";
+import { DinnerChoice } from "../types/dinner-choice";
 
 export const capitalizeFirstLetter = (string?: string): string => {
   return string == null
@@ -62,4 +65,25 @@ export const isPersonOnList = (
       );
     }) != null
   );
+};
+
+export const validateSubmission = (
+  rsvp: Rsvp,
+  nameAttendingAlertMessage: string,
+  dinnerAlertMessage: string
+) => {
+  // Check if name and attending is entered
+  if (!isValidFullName(rsvp.name) || !rsvp.attendingChoice) {
+    alert(nameAttendingAlertMessage);
+    return;
+  }
+
+  // If attending check to make sure other info is filled out
+  if (
+    rsvp.attendingChoice === AttendingChoice.Yes &&
+    (!rsvp.dinnerChoice || rsvp.dinnerChoice === DinnerChoice.None)
+  ) {
+    alert(dinnerAlertMessage);
+    return;
+  }
 };

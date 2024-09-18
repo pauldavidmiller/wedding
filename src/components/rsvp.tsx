@@ -3,23 +3,26 @@ import Checkbox from "./checkbox";
 import plusOneAllowList from "../data/plusOneAllowList.json";
 import familyAllowList from "../data/familyAllowList.json";
 import axios from "axios";
-import { DinnerChoiceType } from "./dinner-choice";
 import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
-import { isPersonOnList, isValidFullName } from "../extensions/helpers";
+import { isPersonOnList, validateSubmission } from "../extensions/helpers";
 import RsvpInput from "./rsvp-input";
 import { Rsvp } from "../types/rsvp";
+import { DinnerChoice } from "../types/dinner-choice";
+import { AttendingChoice } from "../types/attending-choice";
 
 const DEFAULT_RSVP: Rsvp = {
   id: 0,
   name: "",
+  attendingChoice: null,
   dinnerChoice: null,
   dietaryRestrictions: "",
 };
-const DEFAULT_FAMILY_RSVP: Rsvp = {
+const DEFAULT_EXTRA_RSVP: Rsvp = {
   id: 0,
   name: "",
-  dinnerChoice: DinnerChoiceType.None,
+  attendingChoice: AttendingChoice.Yes,
+  dinnerChoice: null,
   dietaryRestrictions: "",
 };
 
@@ -31,23 +34,25 @@ function RSVPSection() {
 
   // Primary
   const [primaryRsvp, setPrimaryRsvp] = useState<Rsvp>(DEFAULT_RSVP);
+  const [confirmationEmailAddress, setConfirmationEmailAddress] =
+    useState<string>(null);
 
   // Plus One
   const allowedPlusOne = isPersonOnList(primaryRsvp.name, plusOneAllowList);
   const [isBringingPlusOne, setIsBringingPlusOne] = useState<boolean>(false);
-  const [plusOneRsvp, setPlusOneRsvp] = useState<Rsvp>(DEFAULT_RSVP);
+  const [plusOneRsvp, setPlusOneRsvp] = useState<Rsvp>(DEFAULT_EXTRA_RSVP);
 
   // Family
   const allowedFamily = isPersonOnList(primaryRsvp.name, familyAllowList);
   const [isFillingOutFamily, setIsFillingOutFamily] = useState<boolean>(false);
   const [familyMemberRsvps, setFamilyMemberRsvps] = useState<Rsvp[]>([
-    DEFAULT_FAMILY_RSVP,
+    DEFAULT_EXTRA_RSVP,
   ]);
 
   const handleAddFamilyMember = () => {
     setFamilyMemberRsvps((fm) => [
       ...fm,
-      { id: fm.length, name: "", dinnerChoice: DinnerChoiceType.None },
+      { ...DEFAULT_EXTRA_RSVP, id: fm.length },
     ]);
   };
 
@@ -59,9 +64,20 @@ function RSVPSection() {
     );
   };
 
+  const handleUpdateFamilyMemberAttendingChoice = (
+    id: number,
+    newAttendingChoice: AttendingChoice
+  ) => {
+    setFamilyMemberRsvps((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, attendingChoice: newAttendingChoice } : item
+      )
+    );
+  };
+
   const handleUpdateFamilyMemberDinnerChoice = (
     id: number,
-    newDinnerChoice: DinnerChoiceType
+    newDinnerChoice: DinnerChoice
   ) => {
     setFamilyMemberRsvps((prevItems) =>
       prevItems.map((item) =>
@@ -91,10 +107,10 @@ function RSVPSection() {
     setPrimaryRsvp(DEFAULT_RSVP);
 
     setIsBringingPlusOne(false);
-    setPlusOneRsvp(DEFAULT_RSVP);
+    setPlusOneRsvp(DEFAULT_EXTRA_RSVP);
 
     setIsFillingOutFamily(false);
-    setFamilyMemberRsvps([DEFAULT_FAMILY_RSVP]);
+    setFamilyMemberRsvps([DEFAULT_EXTRA_RSVP]);
   };
 
   const handleSubmit = async (event: any) => {
@@ -103,35 +119,34 @@ function RSVPSection() {
     // Gather all Rsvps
     let rsvps = [primaryRsvp];
 
-    // Check if name and dinner choice is entered
-    if (
-      !isValidFullName(primaryRsvp.name) ||
-      !primaryRsvp.dinnerChoice ||
-      primaryRsvp.dinnerChoice === DinnerChoiceType.None
-    ) {
-      alert("Please enter your full name and dinner choice!");
-      return;
-    }
+    // Validate Primary Rsvp
+    validateSubmission(
+      primaryRsvp,
+      "Please enter your full name and whether you're attending!",
+      "Please enter your dinner choice!"
+    );
 
+    // Validate Plus One Rsvp
     if (isBringingPlusOne) {
-      // Check if plus one name is required
-      if (
-        !isValidFullName(plusOneRsvp.name) ||
-        !primaryRsvp.dinnerChoice ||
-        plusOneRsvp.dinnerChoice === DinnerChoiceType.None
-      ) {
-        alert("Please provide your plus one's full name and dinner choice!");
-        return;
-      }
+      validateSubmission(
+        plusOneRsvp,
+        "Please provide your plus one's full name and whether they are attending!",
+        "Please enter your plus one's dinner choice!"
+      );
 
       rsvps.push(plusOneRsvp);
     }
 
     if (isFillingOutFamily) {
-      // Check if any family members aren't valid
-      if (familyMemberRsvps.find((fm) => !isValidFullName(fm.name))) {
-        alert("Please provide a valid full name for a family member");
-        return;
+      // Valid all Family Members Rsvps
+      for (let i = 0; i < familyMemberRsvps.length; i++) {
+        const fm = familyMemberRsvps[i];
+
+        validateSubmission(
+          fm,
+          "Please provide a full name for a family member!",
+          "Please provide a dinner choice for a family member!"
+        );
       }
 
       rsvps.push(...familyMemberRsvps);
@@ -142,6 +157,7 @@ function RSVPSection() {
 
       const res = await axios.post("/api/notify", {
         rsvps,
+        confirmationEmailAddress,
       });
 
       if (res?.data?.success) {
@@ -162,14 +178,14 @@ function RSVPSection() {
   useEffect(() => {
     if (!allowedPlusOne || !isBringingPlusOne) {
       setIsBringingPlusOne(false);
-      setPlusOneRsvp(DEFAULT_RSVP);
+      setPlusOneRsvp(DEFAULT_EXTRA_RSVP);
     }
   }, [allowedPlusOne, isBringingPlusOne]);
 
   useEffect(() => {
     if (!allowedFamily || !isFillingOutFamily) {
       setIsFillingOutFamily(false);
-      setFamilyMemberRsvps([DEFAULT_FAMILY_RSVP]);
+      setFamilyMemberRsvps([DEFAULT_EXTRA_RSVP]);
     }
   }, [allowedFamily, isFillingOutFamily]);
 
@@ -182,7 +198,11 @@ function RSVPSection() {
           setName={(e) =>
             setPrimaryRsvp((rsvp) => ({ ...rsvp, name: e.target.value }))
           }
-          dinnerChoiceName="primary"
+          rsvpKey="primary"
+          attendingChoice={primaryRsvp.attendingChoice}
+          setAttendingChoice={(attendingChoice) =>
+            setPrimaryRsvp((rsvp) => ({ ...rsvp, attendingChoice }))
+          }
           dinnerChoice={primaryRsvp.dinnerChoice}
           setDinnerChoice={(dinnerChoice) =>
             setPrimaryRsvp((rsvp) => ({ ...rsvp, dinnerChoice }))
@@ -213,11 +233,19 @@ function RSVPSection() {
                       setName={(e) =>
                         handleUpdateFamilyMemberName(i, e.target.value)
                       }
-                      dinnerChoiceName={`familymember-${i}`}
+                      rsvpKey={`familymember-${i}`}
+                      attendingChoice={fm.attendingChoice}
+                      setAttendingChoice={(attendingChoice) =>
+                        handleUpdateFamilyMemberAttendingChoice(
+                          i,
+                          attendingChoice
+                        )
+                      }
                       dinnerChoice={fm.dinnerChoice}
                       setDinnerChoice={(dinnerChoice) =>
                         handleUpdateFamilyMemberDinnerChoice(i, dinnerChoice)
                       }
+                      hasDinnerChoiceNone={true}
                       dietaryRestrictions={fm.dietaryRestrictions}
                       setDietaryRestrictions={(e) =>
                         handleUpdateFamilyMemberDietaryRestrictions(
@@ -259,9 +287,16 @@ function RSVPSection() {
               <RsvpInput
                 name={plusOneRsvp.name}
                 setName={(e) =>
-                  setPlusOneRsvp((rsvp) => ({ ...rsvp, name: e.target.value }))
+                  setPlusOneRsvp((rsvp) => ({
+                    ...rsvp,
+                    name: e.target.value,
+                  }))
                 }
-                dinnerChoiceName="plusOne"
+                rsvpKey="plusOne"
+                attendingChoice={plusOneRsvp.attendingChoice}
+                setAttendingChoice={(attendingChoice) =>
+                  setPlusOneRsvp((rsvp) => ({ ...rsvp, attendingChoice }))
+                }
                 dinnerChoice={plusOneRsvp.dinnerChoice}
                 setDinnerChoice={(dinnerChoice) =>
                   setPlusOneRsvp((rsvp) => ({ ...rsvp, dinnerChoice }))
@@ -278,10 +313,20 @@ function RSVPSection() {
             )}
           </fieldset>
         )}
+        <div className="rsvp-email-address">
+          <legend>RSVP Confirmation (optional):</legend>
+          <input
+            type="email"
+            disabled={disabled}
+            placeholder="name@email.com"
+            value={confirmationEmailAddress}
+            onChange={(e) => setConfirmationEmailAddress(e.target.value)}
+          />
+        </div>
         <button
           disabled={disabled}
           type="submit"
-          className="w-1/3 justify-center bg-green-500 disabled:cursor-not-allowed"
+          className="rsvp-submit-button"
         >
           {isSubmitting ? <div className="spinner" /> : "Send RSVP"}
         </button>

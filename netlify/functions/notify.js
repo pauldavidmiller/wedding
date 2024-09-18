@@ -16,9 +16,9 @@ const transporter = nodemailer.createTransport({
 // Export the handler function that Netlify will use
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
-  const { rsvps } = body; // Rsvps is of type Rsvp (object);
+  const { rsvps, confirmationEmailAddress } = body; // Rsvps is of type Rsvp (object);
 
-  const subject = "Wedding RSVP";
+  const subject = "Margot & Paul's Wedding RSVP";
   let message = "";
 
   for (let i = 0; i < rsvps.length; i++) {
@@ -32,19 +32,29 @@ exports.handler = async (event, context) => {
     message += "\n";
   }
 
-  const mailOptions = {
+  const toUsMailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
     subject: subject,
     text: message,
   };
 
+  const toYouMailOptions = {
+    from: process.env.EMAIL_USER,
+    to: confirmationEmailAddress,
+    subject: subject,
+    text: message,
+  };
+
   try {
     // Send the email using nodemailer
-    const info = await transporter.sendMail(mailOptions);
+    const [infoUs, infoYou] = await Promise.allSettled([
+      transporter.sendMail(toUsMailOptions),
+      transporter.sendMail(toYouMailOptions),
+    ]);
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, info }),
+      body: JSON.stringify({ success: true, infoUs, infoYou }),
     };
   } catch (error) {
     return {

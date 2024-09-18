@@ -1,30 +1,25 @@
 import React from "react";
+import { DinnerChoice } from "../types/dinner-choice";
 
-export enum DinnerChoiceType {
-  None = "None",
-  Meat = "Meat",
-  Fish = "Fish",
-  Vegetarian = "Vegetarian",
-}
-
-type DinnerChoiceProps = {
+type DinnerChoiceSelectProps = {
   name: string;
   title?: string;
-  selectedOption: DinnerChoiceType;
-  setSelectedOption: (dinnerChoice: DinnerChoiceType) => void;
+  selectedOption: DinnerChoice;
+  setSelectedOption: (dinnerChoice: DinnerChoice) => void;
   disabled?: boolean;
   hasNone?: boolean;
 };
-const DinnerChoice = ({
+
+const DinnerChoiceSelect = ({
   name,
   title,
   selectedOption,
   setSelectedOption,
   disabled,
   hasNone,
-}: DinnerChoiceProps) => {
+}: DinnerChoiceSelectProps) => {
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value as DinnerChoiceType);
+    setSelectedOption(event.target.value as DinnerChoice);
   };
 
   return (
@@ -32,32 +27,30 @@ const DinnerChoice = ({
       {title && <legend>{title}:</legend>}
 
       <div className="dinner-choice-inputs">
-        {Object.keys(DinnerChoiceType)
+        {Object.keys(DinnerChoice)
           .map((dinnerChoice, i) => {
-            if (!hasNone && dinnerChoice === DinnerChoiceType.None) {
+            if (!hasNone && dinnerChoice === DinnerChoice.None) {
               return null;
             }
 
             return (
-              <div key={i} className="radio-option">
+              <div key={i} className="dinner-choice-radio-option">
                 <input
                   type="radio"
-                  id={`${name}-${dinnerChoice.toLowerCase()}`}
-                  name={name}
+                  id={`${name}-dinnerChoice-${dinnerChoice.toLowerCase()}`}
+                  name={`${name}-dinnerChoice`}
                   value={
-                    DinnerChoiceType[
-                      dinnerChoice as keyof typeof DinnerChoiceType
-                    ]
+                    DinnerChoice[dinnerChoice as keyof typeof DinnerChoice]
                   }
                   checked={
                     selectedOption ===
-                    DinnerChoiceType[
-                      dinnerChoice as keyof typeof DinnerChoiceType
-                    ]
+                    DinnerChoice[dinnerChoice as keyof typeof DinnerChoice]
                   }
                   onChange={handleOptionChange}
                 />
-                <label htmlFor={`${name}-${dinnerChoice.toLowerCase()}`}>
+                <label
+                  htmlFor={`${name}-dinnerChoice-${dinnerChoice.toLowerCase()}`}
+                >
                   {dinnerChoice}
                 </label>
               </div>
@@ -69,4 +62,4 @@ const DinnerChoice = ({
   );
 };
 
-export default DinnerChoice;
+export default DinnerChoiceSelect;

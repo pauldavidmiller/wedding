@@ -1,12 +1,18 @@
 import React from "react";
-import DinnerChoice, { DinnerChoiceType } from "./dinner-choice";
+import DinnerChoiceSelect from "./dinner-choice-select";
+import { DinnerChoice } from "../types/dinner-choice";
+import { AttendingChoice } from "../types/attending-choice";
+import AttendingChoiceSelect from "./attending-choice-select";
 
 type RsvpInputProps = {
   name: string;
   setName: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  dinnerChoiceName: string;
-  dinnerChoice: DinnerChoiceType;
-  setDinnerChoice: (dinnerChoice: DinnerChoiceType) => void;
+  rsvpKey: string;
+  attendingChoice: AttendingChoice | null;
+  setAttendingChoice: (attendingChoice: AttendingChoice) => void;
+  dinnerChoice: DinnerChoice;
+  setDinnerChoice: (dinnerChoice: DinnerChoice) => void;
+  hasDinnerChoiceNone?: boolean;
   dietaryRestrictions: string;
   setDietaryRestrictions: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
@@ -16,9 +22,12 @@ type RsvpInputProps = {
 const RsvpInput = ({
   name,
   setName,
-  dinnerChoiceName,
+  rsvpKey,
+  attendingChoice,
+  setAttendingChoice,
   dinnerChoice,
   setDinnerChoice,
+  hasDinnerChoiceNone,
   dietaryRestrictions,
   setDietaryRestrictions,
   disabled,
@@ -26,34 +35,49 @@ const RsvpInput = ({
 }: RsvpInputProps) => {
   return (
     <fieldset disabled={disabled} className={`rsvp-input ${className}`}>
-      <div className="rsvp-input-row">
+      <div className="rsvp-input-section">
         <legend>Full Name:</legend>
         <input
           type="text"
           placeholder="First and Last Name"
           value={name}
           onChange={setName}
+          disabled={disabled}
           required
         />
       </div>
-      <div className="rsvp-input-row">
-        <legend>Dinner Choice:</legend>
-        <DinnerChoice
-          name={dinnerChoiceName}
-          selectedOption={dinnerChoice}
-          setSelectedOption={setDinnerChoice}
+      <div className="rsvp-input-section">
+        <AttendingChoiceSelect
+          name={rsvpKey}
+          selectedOption={attendingChoice}
+          setSelectedOption={setAttendingChoice}
           disabled={disabled}
         />
       </div>
-      <div className="rsvp-input-row">
-        <legend>Dietary Restrictions:</legend>
-        <input
-          type="text"
-          value={dietaryRestrictions}
-          placeholder="Shellfish"
-          onChange={setDietaryRestrictions}
-        />
-      </div>
+      {attendingChoice === AttendingChoice.Yes && (
+        <>
+          <div className="rsvp-input-section">
+            <legend>Dinner Choice:</legend>
+            <DinnerChoiceSelect
+              name={rsvpKey}
+              selectedOption={dinnerChoice}
+              setSelectedOption={setDinnerChoice}
+              disabled={disabled}
+              hasNone={hasDinnerChoiceNone}
+            />
+          </div>
+          <div className="rsvp-input-section">
+            <legend>Dietary Restrictions:</legend>
+            <input
+              type="text"
+              value={dietaryRestrictions}
+              placeholder="Shellfish"
+              onChange={setDietaryRestrictions}
+              disabled={disabled}
+            />
+          </div>
+        </>
+      )}
     </fieldset>
   );
 };
