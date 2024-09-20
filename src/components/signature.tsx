@@ -7,7 +7,7 @@ const Signature = () => {
 
   return (
     <section id={Section.Signature} className="signature">
-      <h1 className="text-8xl font-bold pt-8 pb-2 cursive-font">
+      <h1 className="text-8xl font-bold cursive-font pt-8 pb-4">
         Welcome to the Wedding of
       </h1>
       <h2 className="text-5xl playfair-display-font uppercase tracking-widest">

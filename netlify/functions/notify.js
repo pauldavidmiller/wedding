@@ -47,14 +47,19 @@ exports.handler = async (event, context) => {
   };
 
   try {
-    // Send the email using nodemailer
-    const [infoUs, infoYou] = await Promise.allSettled([
-      transporter.sendMail(toUsMailOptions),
-      transporter.sendMail(toYouMailOptions),
-    ]);
+    // Send the emails using nodemailer
+    let mailOptions = [transporter.sendMail(toUsMailOptions)];
+
+    if (confirmationEmailAddress != null && confirmationEmailAddress !== "") {
+      mailOptions.push(transporter.sendMail(toYouMailOptions));
+    }
+
+    // Call all emails in parallel
+    const info = await Promise.allSettled(mailOptions);
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, infoUs, infoYou }),
+      body: JSON.stringify({ success: true, info }),
     };
   } catch (error) {
     return {

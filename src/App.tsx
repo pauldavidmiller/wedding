@@ -49,6 +49,10 @@ function App() {
     };
   }, [handleClickOutside, isHamburgerMenuOpen]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isUnlocked]);
+
   return (
     <div className="app-container">
       {!isUnlocked ? (

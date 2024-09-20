@@ -35,7 +35,7 @@ function RSVPSection() {
   // Primary
   const [primaryRsvp, setPrimaryRsvp] = useState<Rsvp>(DEFAULT_RSVP);
   const [confirmationEmailAddress, setConfirmationEmailAddress] =
-    useState<string>(null);
+    useState<string>("");
 
   // Plus One
   const allowedPlusOne = isPersonOnList(primaryRsvp.name, plusOneAllowList);
