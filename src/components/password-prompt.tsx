@@ -20,9 +20,11 @@ const PasswordPrompt = () => {
   return (
     <div className="password-prompt">
       <div className="password-prompt-container">
-        <h1>Margot and Paul</h1>
-        <h2>Get Married!</h2>
-        <p>Please enter the password to access the site:</p>
+        <h1>Save the Date!</h1>
+        <h2>August 31st, 2025</h2>
+        <h3>The Wedding of</h3>
+        <h4>Margot and Paul</h4>
+        <p>Please enter the password to access the full site:</p>
         <form onSubmit={handleSubmit}>
           <input
             type="password"

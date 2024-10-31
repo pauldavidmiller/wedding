@@ -75,6 +75,14 @@ const Tabs = () => {
       <li>
         <button
           className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
+          onClick={() => handleScrollToSection(Section.Stream)}
+        >
+          {getTabFromSection(Section.Stream)}
+        </button>
+      </li>
+      <li>
+        <button
+          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
           onClick={() => handleScrollToSection(Section.Rsvp)}
         >
           {getTabFromSection(Section.Rsvp)}

@@ -79,6 +79,19 @@ body {
   max-height: 85vh;
 }
 
+.signature h1 {
+  @apply text-8xl font-bold cursive-font pt-8 pb-2;
+}
+
+.signature h2 {
+  color: #d9534f;
+  @apply text-5xl playfair-display-font uppercase tracking-widest;
+}
+
+.signature h3 {
+  @apply text-2xl montserrat-font pt-2 uppercase tracking-wider;
+}
+
 .signature-img-left {
   @apply hidden;
   @apply xl:absolute xl:left-0 xl:top-2;
@@ -363,6 +376,21 @@ body {
   color: #555;
 }
 
+/* Stream */
+.stream-section {
+  @apply p-3;
+  @apply rounded-2xl shadow-lg;
+  @apply playfair-display-font;
+  @apply scroll-mt-14;
+  @apply z-50;
+}
+
+.stream-section h2 {
+  font-size: 2.5em;
+  @apply text-4xl text-center font-bold text-slate-950;
+  @apply pb-2;
+}
+
 /* RSVP */
 .rsvp {
   padding: 2rem 1rem;
@@ -637,24 +665,34 @@ body {
   text-align: center;
 }
 
-.password-prompt h1 {
+.password-prompt-container h1 {
   margin-bottom: 10px;
-  font-size: 2em;
-  color: #d9534f;
+  @apply text-8xl font-bold cursive-font pt-8;
 }
 
-.password-prompt h2 {
+.password-prompt-container h2 {
   margin-bottom: 10px;
-  font-size: 1.75em;
-  color: #d9534f;
+  @apply text-5xl playfair-display-font uppercase tracking-wider pb-8;
 }
 
-.password-prompt p {
-  margin-bottom: 20px;
+.password-prompt-container h3 {
+  margin-bottom: 10px;
+  color: #d9534f;
+  @apply text-5xl font-bold cursive-font tracking-widest;
+}
+
+.password-prompt-container h4 {
+  margin-bottom: 10px;
+  color: #d9534f;
+  @apply text-4xl;
+}
+
+.password-prompt-container p {
+  margin-bottom: 10px;
   color: #6c757d;
 }
 
-.password-prompt input {
+.password-prompt-container input {
   padding: 10px;
   font-size: 1em;
   border: 1px solid #ced4da;
@@ -665,12 +703,12 @@ body {
   transition: all 0.3s ease;
 }
 
-.password-prompt input:focus {
+.password-prompt-container input:focus {
   outline: none;
   border-color: #d9534f;
 }
 
-.password-prompt button {
+.password-prompt-container button {
   background-color: #d9534f;
   color: white;
   padding: 10px 20px;
@@ -681,7 +719,7 @@ body {
   font-size: 1em;
 }
 
-.password-prompt button:hover {
+.password-prompt-container button:hover {
   background-color: #c9302c;
 }
 

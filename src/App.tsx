@@ -17,6 +17,7 @@ import HeroSection from "./components/hero";
 import HamburgerHeader from "./components/hamburger-header";
 import { useAppContext } from "./contexts/app-context";
 import Modal from "./components/modal";
+import StreamSection from "./components/stream";
 
 function App() {
   const { isUnlocked } = useAppContext();
@@ -69,6 +70,7 @@ function App() {
             <VenueSection />
             <HotelsSection />
             <FAQsSection />
+            <StreamSection />
             <RSVPSection />
           </div>
           <Footer />

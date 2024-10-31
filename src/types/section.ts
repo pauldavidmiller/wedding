@@ -6,5 +6,6 @@ export enum Section {
   Venue = "Venue",
   Hotels = "Hotels",
   Faq = "Faq",
+  Stream = "Stream",
   Rsvp = "Rsvp",
 }

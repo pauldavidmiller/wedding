@@ -87,3 +87,9 @@ export const validateSubmission = (
     return;
   }
 };
+
+export const subtractDays = (date: Date, days: number): Date => {
+  const result = new Date(date); // Create a copy of the input date
+  result.setDate(result.getDate() - days); // Subtract the days
+  return result; // Return the new date
+};
