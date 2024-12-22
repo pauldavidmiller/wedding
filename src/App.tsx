@@ -17,7 +17,6 @@ import HeroSection from "./components/hero";
 import HamburgerHeader from "./components/hamburger-header";
 import { useAppContext } from "./contexts/app-context";
 import Modal from "./components/modal";
-import StreamSection from "./components/stream";
 
 function App() {
   const { isUnlocked } = useAppContext();
@@ -55,11 +54,11 @@ function App() {
   }, [isUnlocked]);
 
   return (
-    <div className="app-container">
+    <>
       {!isUnlocked ? (
         <PasswordPrompt />
       ) : (
-        <>
+        <div className="app-container">
           <HamburgerHeader />
           <Signature />
           <Header />
@@ -70,7 +69,7 @@ function App() {
             <VenueSection />
             <HotelsSection />
             <FAQsSection />
-            <StreamSection />
+            {/* <StreamSection /> */}
             <RSVPSection />
           </div>
           <Footer />
@@ -88,9 +87,9 @@ function App() {
               onClose={() => setIsModalOpen(false)}
             />
           )}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

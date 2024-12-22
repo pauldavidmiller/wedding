@@ -5,12 +5,13 @@ import { subtractDays } from "../extensions/helpers";
 
 interface AppContextType {
   websiteReleaseDate: Date;
-  isPasswordEnabled: boolean;
   isUnlocked?: boolean;
   setIsUnlocked?: React.Dispatch<React.SetStateAction<boolean>>;
   hashedPassword: string;
   venueName: string;
+  venuAddress: string;
   dateString: string;
+  fullDateString: string;
   location: string;
   zoomMeetingLink?: string;
   isStreamEnabled: boolean;
@@ -21,15 +22,18 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [websiteReleaseDate] = useState<Date>(new Date("01/01/2025"));
-  const [isPasswordEnabled] = useState<boolean>(true);
-  const [isUnlocked, setIsUnlocked] = useState<boolean>(!isPasswordEnabled);
+  const [websiteReleaseDate] = useState<Date>(new Date("02/01/2025"));
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
   const [hashedPassword] = useState<string>(
     "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2"
   );
   const [venueName] = useState<string>("Baltimore Museum of Art");
+  const [venuAddress] = useState<string>(
+    "10 Art Museum Dr, Baltimore, MD 21218, USA"
+  );
   const [date] = useState<Date>(new Date("08/31/2025"));
-  const [dateString] = useState<string>("Sunday, August 31st, 2025");
+  const [dateString] = useState<string>("August 31st, 2025");
+  const [fullDateString] = useState<string>("Sunday, August 31st, 2025");
   const [location] = useState<string>("Baltimore, MD");
 
   /*
@@ -57,12 +61,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     <AppContext.Provider
       value={{
         websiteReleaseDate,
-        isPasswordEnabled,
         isUnlocked,
         setIsUnlocked,
         hashedPassword,
         venueName,
+        venuAddress,
         dateString,
+        fullDateString,
         location,
         zoomMeetingLink,
         isStreamEnabled,

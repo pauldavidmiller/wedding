@@ -4,16 +4,14 @@ import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
 
 const VenueSection = () => {
-  const { venueName } = useAppContext();
+  const { venueName, venuAddress } = useAppContext();
 
   return (
     <section id={Section.Venue} className="venue-section">
       <h2 className="venue-title">Venue</h2>
       <div className="venue-details">
         <p className="venue-name">{venueName}</p>
-        <p className="venue-address">
-          10 Art Museum Dr, Baltimore, MD 21218, USA
-        </p>
+        <p className="venue-address">{venuAddress}</p>
         <p className="venue-description">
           Join us at the beautiful {venueName} for an unforgettable celebration
           of love. The venue features historic art and painting alongside
@@ -31,7 +29,7 @@ const VenueSection = () => {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-        <Carousel />
+        <Carousel className="sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2" />
       </div>
     </section>
   );

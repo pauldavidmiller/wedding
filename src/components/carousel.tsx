@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const Carousel = () => {
+type CarouselProps = {
+  className?: string;
+};
+
+const Carousel = ({ className }: CarouselProps) => {
   const images = [
     "/images/bma1.jpg",
     "/images/bma2.jpg",
@@ -21,7 +25,7 @@ const Carousel = () => {
   }, [images.length]);
 
   return (
-    <div className="carousel">
+    <div className={`carousel ${className}`}>
       <img src={images[currentIndex]} alt="carousel" />
     </div>
   );

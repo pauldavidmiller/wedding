@@ -27,7 +27,7 @@ body {
 }
 
 .app-container {
-  @apply w-full max-w-full;
+  @apply w-full max-w-full h-full;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
 }
@@ -649,10 +649,11 @@ body {
 
 /* Password Screen */
 .password-prompt {
+  @apply w-full h-full;
+  @apply p-2;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background: linear-gradient(to bottom right, #ffe0e9, #ffffff);
   font-family: "Georgia", serif;
 }
@@ -672,7 +673,7 @@ body {
 
 .password-prompt-container h2 {
   margin-bottom: 10px;
-  @apply text-5xl playfair-display-font uppercase tracking-wider pb-8;
+  @apply text-5xl playfair-display-font tracking-wider pb-8;
 }
 
 .password-prompt-container h3 {
@@ -685,6 +686,14 @@ body {
   margin-bottom: 10px;
   color: #d9534f;
   @apply text-4xl;
+}
+
+.password-prompt-container h5 {
+  @apply text-xl;
+}
+
+.password-prompt-container h6 {
+  margin-bottom: 5px;
 }
 
 .password-prompt-container p {
@@ -723,6 +732,10 @@ body {
   background-color: #c9302c;
 }
 
+.password-prompt-carousel {
+  max-width: 500px;
+}
+
 .error-message {
   color: #d9534f;
   margin-top: 10px;
@@ -730,7 +743,6 @@ body {
 
 /* Carousel */
 .carousel {
-  @apply sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2;
   height: 400px;
   @apply rounded-2xl shadow-lg;
   @apply z-30;
