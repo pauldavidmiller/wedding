@@ -17,9 +17,7 @@ const PasswordPrompt = () => {
 
   const [showSiteOverride, setShowSiteOverride] = useState<boolean>(false);
   const showFullSitePasswordInput =
-    new Date() >= websiteReleaseDate ||
-    // window.location.hostname === "localhost" ||
-    showSiteOverride;
+    new Date() >= websiteReleaseDate || showSiteOverride;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

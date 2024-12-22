@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import "./App.css"; // Import the custom stylesheet
 
 import Header from "./components/header";
@@ -16,12 +16,10 @@ import Signature from "./components/signature";
 import HeroSection from "./components/hero";
 import HamburgerHeader from "./components/hamburger-header";
 import { useAppContext } from "./contexts/app-context";
-import Modal from "./components/modal";
 
 function App() {
   const { isUnlocked } = useAppContext();
   const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHamburgerMenu();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
 
@@ -78,14 +76,6 @@ function App() {
             <div ref={hamburgerMenuRef}>
               <HamburgerMenu />
             </div>
-          )}
-
-          {isModalOpen && (
-            <Modal
-              title="More info and RSVP coming soon!"
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-            />
           )}
         </div>
       )}
