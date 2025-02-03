@@ -2,13 +2,17 @@ import React from "react";
 import ZoomEmbed from "./zoom-embed";
 import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
+import PageSection, { SectionVariant } from "./page-section";
 
 const StreamSection = () => {
   const { zoomMeetingLink, isStreamEnabled } = useAppContext();
 
   return (
-    <section id={Section.Stream} className="stream-section">
-      <h2>Video Stream</h2>
+    <PageSection
+      id={Section.Stream}
+      title="Video Stream"
+      variant={SectionVariant.light}
+    >
       {isStreamEnabled ? (
         <ZoomEmbed meetingLink={zoomMeetingLink} />
       ) : (
@@ -17,7 +21,7 @@ const StreamSection = () => {
           <ZoomEmbed meetingLink={null} />
         </>
       )}
-    </section>
+    </PageSection>
   );
 };
 

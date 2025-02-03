@@ -5,6 +5,7 @@ export enum Section {
   Gallery = "Gallery",
   Venue = "Venue",
   Hotels = "Hotels",
+  Registry = "Registry",
   Faq = "Faq",
   Stream = "Stream",
   Rsvp = "Rsvp",

@@ -6,7 +6,7 @@ import AboutSection from "./components/about";
 import GallerySection from "./components/gallery";
 import RSVPSection from "./components/rsvp";
 import Footer from "./components/footer";
-import PasswordPrompt from "./components/password-prompt";
+import SaveTheDate from "./components/save-the-date";
 import VenueSection from "./components/venue";
 import HotelsSection from "./components/hotels";
 import FAQsSection from "./components/faqs";
@@ -16,6 +16,7 @@ import Signature from "./components/signature";
 import HeroSection from "./components/hero";
 import HamburgerHeader from "./components/hamburger-header";
 import { useAppContext } from "./contexts/app-context";
+import RegistrySection from "./components/registry";
 
 function App() {
   const { isUnlocked } = useAppContext();
@@ -54,7 +55,7 @@ function App() {
   return (
     <>
       {!isUnlocked ? (
-        <PasswordPrompt />
+        <SaveTheDate />
       ) : (
         <div className="app-container">
           <HamburgerHeader />
@@ -66,6 +67,7 @@ function App() {
             <GallerySection />
             <VenueSection />
             <HotelsSection />
+            <RegistrySection />
             <FAQsSection />
             {/* <StreamSection /> */}
             <RSVPSection />

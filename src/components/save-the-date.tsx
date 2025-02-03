@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 import { useAppContext } from "../contexts/app-context";
 import Carousel from "./carousel";
+import CountdownTimer from "./countdown-timer";
 
-const PasswordPrompt = () => {
+const SaveTheDate = () => {
   const {
     hashedPassword,
     setIsUnlocked,
     websiteReleaseDate,
-    dateString,
+    date,
+    dateSpelledString,
     venueName,
     venuAddress,
   } = useAppContext();
@@ -33,7 +35,8 @@ const PasswordPrompt = () => {
     <div className="password-prompt">
       <div className="password-prompt-container">
         <h1>Save the Date!</h1>
-        <h2>{dateString}</h2>
+        <h2>{dateSpelledString}</h2>
+        <CountdownTimer targetDate={date} />
         <h3>The Wedding of</h3>
         <h4>Margot and Paul</h4>
         <h5>{venueName}</h5>
@@ -69,4 +72,4 @@ const PasswordPrompt = () => {
   );
 };
 
-export default PasswordPrompt;
+export default SaveTheDate;

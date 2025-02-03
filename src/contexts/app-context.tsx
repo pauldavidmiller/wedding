@@ -10,8 +10,9 @@ interface AppContextType {
   hashedPassword: string;
   venueName: string;
   venuAddress: string;
-  dateString: string;
-  fullDateString: string;
+  date: Date;
+  dateSpelledString: string;
+  dateFullSpelledString: string;
   location: string;
   zoomMeetingLink?: string;
   isStreamEnabled: boolean;
@@ -32,8 +33,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     "10 Art Museum Dr, Baltimore, MD 21218, USA"
   );
   const [date] = useState<Date>(new Date("08/31/2025"));
-  const [dateString] = useState<string>("August 31st, 2025");
-  const [fullDateString] = useState<string>("Sunday, August 31st, 2025");
+  const [dateSpelledString] = useState<string>("August 31st, 2025");
+  const [dateFullSpelledString] = useState<string>("Sunday, August 31st, 2025");
   const [location] = useState<string>("Baltimore, MD");
 
   /*
@@ -66,8 +67,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         hashedPassword,
         venueName,
         venuAddress,
-        dateString,
-        fullDateString,
+        date,
+        dateSpelledString,
+        dateFullSpelledString,
         location,
         zoomMeetingLink,
         isStreamEnabled,

@@ -1,11 +1,12 @@
 import React from "react";
 import { Section } from "../types/section";
+import PageSection from "./page-section";
 
 const HeroSection = () => {
   return (
-    <section id={Section.Hero} className="hero">
+    <PageSection id={Section.Hero} className="hero">
       <img src="/images/main-us.jpeg" alt="main-us" />
-    </section>
+    </PageSection>
   );
 };
 

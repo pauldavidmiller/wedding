@@ -1,9 +1,10 @@
 import React from "react";
 import { Section } from "../types/section";
+import PageSection from "./page-section";
 
 const GallerySection = () => {
   return (
-    <section id={Section.Gallery} className="gallery">
+    <PageSection id={Section.Gallery}>
       {/* <h2>Gallery</h2> */}
       <div className="gallery-images">
         <img src="/images/us10.jpg" alt="Gallery 10" />
@@ -18,7 +19,7 @@ const GallerySection = () => {
         <img src="/images/us100.jpg" alt="Gallery 100" />
         {/* <img src="/images/us110.jpg" alt="Gallery 110" /> */}
       </div>
-    </section>
+    </PageSection>
   );
 };
 

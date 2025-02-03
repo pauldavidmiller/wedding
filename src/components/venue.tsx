@@ -2,13 +2,17 @@ import React from "react";
 import Carousel from "./carousel";
 import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
+import PageSection, { SectionVariant } from "./page-section";
 
 const VenueSection = () => {
   const { venueName, venuAddress } = useAppContext();
 
   return (
-    <section id={Section.Venue} className="venue-section">
-      <h2 className="venue-title">Venue</h2>
+    <PageSection
+      id={Section.Venue}
+      title="Venue"
+      variant={SectionVariant.light}
+    >
       <div className="venue-details">
         <p className="venue-name">{venueName}</p>
         <p className="venue-address">{venuAddress}</p>
@@ -31,7 +35,7 @@ const VenueSection = () => {
         </div>
         <Carousel className="sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2" />
       </div>
-    </section>
+    </PageSection>
   );
 };
 

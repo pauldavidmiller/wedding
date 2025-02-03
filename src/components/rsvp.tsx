@@ -10,6 +10,7 @@ import RsvpInput from "./rsvp-input";
 import { Rsvp } from "../types/rsvp";
 import { DinnerChoice } from "../types/dinner-choice";
 import { AttendingChoice } from "../types/attending-choice";
+import PageSection from "./page-section";
 
 const DEFAULT_RSVP: Rsvp = {
   id: 0,
@@ -190,8 +191,7 @@ function RSVPSection() {
   }, [allowedFamily, isFillingOutFamily]);
 
   return (
-    <section id={Section.Rsvp} className="rsvp">
-      <h2>RSVP</h2>
+    <PageSection id={Section.Rsvp} title="RSVP">
       <form className="rsvp-form" autoComplete="off" onSubmit={handleSubmit}>
         <RsvpInput
           name={primaryRsvp.name}
@@ -331,7 +331,7 @@ function RSVPSection() {
           {isSubmitting ? <div className="spinner" /> : "Send RSVP"}
         </button>
       </form>
-    </section>
+    </PageSection>
   );
 }
 

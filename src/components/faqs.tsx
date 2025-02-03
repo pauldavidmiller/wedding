@@ -1,5 +1,6 @@
 import React from "react";
 import { Section } from "../types/section";
+import PageSection, { SectionVariant } from "./page-section";
 
 const FAQsSection = () => {
   const faqs = [
@@ -8,15 +9,14 @@ const FAQsSection = () => {
       answer:
         "The dress code is formal attire. We want everyone to look their best!",
     },
-    {
-      question: "Is there a gift registry?",
-      answer: "Yes, please check out this link for more details.",
-    },
   ];
 
   return (
-    <section id={Section.Faq} className="faqs-section">
-      <h2 className="faqs-title">Frequently Asked Questions</h2>
+    <PageSection
+      id={Section.Faq}
+      title="Frequently Asked Questions"
+      variant={SectionVariant.dark}
+    >
       <div className="faqs-list">
         {faqs.map((faq, index) => (
           <div className="faq-item" key={index}>
@@ -25,7 +25,7 @@ const FAQsSection = () => {
           </div>
         ))}
       </div>
-    </section>
+    </PageSection>
   );
 };
 

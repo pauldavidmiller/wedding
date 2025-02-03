@@ -1,11 +1,11 @@
 import React from "react";
 import { Section } from "../types/section";
+import PageSection from "./page-section";
 
 const AboutSection = () => {
   return (
-    <section id={Section.About} className="about">
-      <h2>Our Story</h2>
-      <p className="mt-4 text-lg">
+    <PageSection id={Section.About} title="Our Story">
+      <p className="text-lg">
         It was the summer of 2018 when we were introduced to each other in a
         group. Both of our high school friends introduced us and wanted us to
         date each other because they thought that we would be a good match.
@@ -22,7 +22,7 @@ const AboutSection = () => {
         love as ever, and so excited to be here with all of you!
       </p>
       <p>לי חיים</p>
-    </section>
+    </PageSection>
   );
 };
 

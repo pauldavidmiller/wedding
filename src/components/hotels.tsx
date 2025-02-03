@@ -1,11 +1,15 @@
 import React from "react";
 import hotelsData from "../data/hotels.json";
 import { Section } from "../types/section";
+import PageSection, { SectionVariant } from "./page-section";
 
 const HotelsSection = () => {
   return (
-    <section id={Section.Hotels} className="hotels-section">
-      <h2 className="hotels-title">Nearby Hotels</h2>
+    <PageSection
+      id={Section.Hotels}
+      title="Nearby Hotels"
+      variant={SectionVariant.dark}
+    >
       <div className="hotels-list">
         {hotelsData.map((hotel, index) => (
           <div className="hotel-item" key={index}>
@@ -26,7 +30,7 @@ const HotelsSection = () => {
           </div>
         ))}
       </div>
-    </section>
+    </PageSection>
   );
 };
 

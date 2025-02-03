@@ -4,7 +4,10 @@ import { Section } from "../types/section";
 import { getTabFromSection } from "../extensions/helpers";
 
 const Tabs = () => {
-  const { isHamburgerMenuOpen, setCurrentSection } = useHamburgerMenu();
+  const { isHamburgerMenuOpen, currentSection, setCurrentSection } =
+    useHamburgerMenu();
+
+  const sectionIgnoreList: Section[] = [Section.Hero, Section.Stream];
 
   const scrollToSection = (section: Section) => {
     const element = document.getElementById(section);
@@ -24,70 +27,20 @@ const Tabs = () => {
 
   return (
     <ul className={`header-menu ${isHamburgerMenuOpen && "flex-col"}`}>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Signature)}
-        >
-          {getTabFromSection(Section.Signature)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.About)}
-        >
-          {getTabFromSection(Section.About)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Gallery)}
-        >
-          {getTabFromSection(Section.Gallery)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Venue)}
-        >
-          {getTabFromSection(Section.Venue)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Hotels)}
-        >
-          {getTabFromSection(Section.Hotels)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Faq)}
-        >
-          {getTabFromSection(Section.Faq)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Stream)}
-        >
-          {getTabFromSection(Section.Stream)}
-        </button>
-      </li>
-      <li>
-        <button
-          className={`header-button ${isHamburgerMenuOpen && "w-full"}`}
-          onClick={() => handleScrollToSection(Section.Rsvp)}
-        >
-          {getTabFromSection(Section.Rsvp)}
-        </button>
-      </li>
+      {Object.values(Section)
+        .filter((section) => !sectionIgnoreList.includes(section))
+        .map((section) => (
+          <li>
+            <button
+              className={`header-button ${isHamburgerMenuOpen && "w-full"} ${
+                currentSection === section && "header-button-selected"
+              }`}
+              onClick={() => handleScrollToSection(section)}
+            >
+              {getTabFromSection(section)}
+            </button>
+          </li>
+        ))}
     </ul>
   );
 };
