@@ -278,17 +278,18 @@ body {
 }
 
 .hotel-item {
+  @apply flex flex-col gap-4;
   @apply min-w-min;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
-  margin: 10px; /* Margin between items */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hotel-item img {
-  @apply w-96 h-auto;
+  @apply w-72 h-auto;
+  @apply place-self-center;
 }
 
 .hotel-name {
@@ -296,10 +297,13 @@ body {
   font-weight: bold;
 }
 
-.hotel-address,
-.hotel-phone {
+.hotel-address {
   font-size: 1em;
   color: #555;
+}
+
+.hotel-phone {
+  @apply text-blue-500 underline underline-offset-4;
 }
 
 .hotel-link {
@@ -309,6 +313,14 @@ body {
 
 .hotel-link:hover {
   text-decoration: underline;
+  @apply underline-offset-4;
+}
+
+.hotel-block-button {
+  @apply h-10 w-min self-center;
+  @apply px-2;
+  @apply whitespace-nowrap;
+  @apply bg-green-500 text-gray-50 rounded hover:bg-green-400;
 }
 
 /* Registry */
