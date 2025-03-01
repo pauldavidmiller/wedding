@@ -1,6 +1,7 @@
 export enum DinnerChoice {
-  Meat = "Meat",
+  Beef = "Beef",
+  Chicken = "Chicken",
   Fish = "Fish",
-  Vegetarian = "Vegetarian",
+  Vegan = "Vegan",
   None = "None",
 }

@@ -6,8 +6,8 @@ import PageSection, { SectionVariant } from "./page-section";
 const HotelsSection = () => {
   return (
     <PageSection
-      id={Section.Hotels}
-      title="Nearby Hotels"
+      id={Section.Hotel}
+      title="Wedding Hotel"
       variant={SectionVariant.dark}
     >
       <div className="hotels-list">
@@ -32,6 +32,13 @@ const HotelsSection = () => {
                 </a>
               </div>
             </div>
+
+            <p className="text-lg">
+              We have reserved a room block for our guests at {hotel.shortName}.
+              To ensure the wedding rate, please book by{" "}
+              <label className="underline">{hotel.bookByDate}</label>.
+            </p>
+
             <button
               type="button"
               className="hotel-block-button"

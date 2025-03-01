@@ -4,7 +4,7 @@ import PageSection from "./page-section";
 
 const AboutSection = () => {
   return (
-    <PageSection id={Section.About} title="Our Story">
+    <PageSection id={Section.AboutUs} title="Our Story">
       <p className="text-lg">
         It was the summer of 2018 when we were introduced to each other in a
         group. Both of our high school friends introduced us and wanted us to

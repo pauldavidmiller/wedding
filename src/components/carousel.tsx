@@ -7,7 +7,6 @@ type CarouselProps = {
 const Carousel = ({ className }: CarouselProps) => {
   const images = [
     "/images/bma1.jpg",
-    "/images/bma2.jpg",
     "/images/bma3.avif",
     // Add more images as needed
   ];

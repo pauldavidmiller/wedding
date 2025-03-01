@@ -2,12 +2,28 @@ import React from "react";
 import { Section } from "../types/section";
 import PageSection, { SectionVariant } from "./page-section";
 
+type Faq = {
+  question: string;
+  answer?: string;
+};
+
 const FAQsSection = () => {
-  const faqs = [
+  const faqs: Faq[] = [
     {
       question: "What should I wear?",
-      answer:
-        "The dress code is formal attire. We want everyone to look their best!",
+      answer: "The dress code is Black tie optional.",
+    },
+    {
+      question: "When should I arrive?",
+      answer: "Our ceremony will begin promptly at 6pm EST.",
+    },
+    {
+      question: "How should I get to the venue?",
+      // answer:
+      //   "If you are coming from the hotel, please see the map above for walking directions.",
+    },
+    {
+      question: "Where should I park?",
     },
   ];
 

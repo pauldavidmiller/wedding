@@ -1,11 +1,13 @@
 [
   {
     "name": "The Study At Johns Hopkins",
+    "shortName": "The Study Hotel",
     "address": "3215 N Charles Street, Baltimore, MD 21218",
     "phoneNumber": "4102430030",
     "phoneNumberString": "(410) 243-0030",
     "website": "https://www.thestudyatjohnshopkins.com/",
     "reservationLink": "https://reservations.travelclick.com/114532?groupID=4638822",
-    "image": "/images/thestudyhotelmap.jpg"
+    "image": "/images/thestudyhotelmap.jpg",
+    "bookByDate": "July 30th, 2025"
   }
 ]

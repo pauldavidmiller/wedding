@@ -1,10 +1,10 @@
 export enum Section {
   Signature = "Signature",
   Hero = "Hero",
-  About = "About",
+  AboutUs = "About Us",
   Gallery = "Gallery",
   Venue = "Venue",
-  Hotels = "Hotels",
+  Hotel = "Hotel",
   Registry = "Registry",
   Faq = "Faq",
   Stream = "Stream",

@@ -145,9 +145,10 @@ body {
 .header-button {
   @apply text-gray-950;
   cursor: pointer;
-  @apply p-1 w-24;
+  @apply p-1 w-32;
   @apply border-b-2 border-solid border-transparent; /* Default transparent border */
   @apply tangerine-font text-3xl tracking-wider;
+  @apply whitespace-nowrap;
 }
 
 .header-button:hover {
@@ -279,16 +280,17 @@ body {
 
 .hotel-item {
   @apply flex flex-col gap-4;
-  @apply min-w-min;
+  @apply w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 20px;
+  @apply py-6;
+  @apply px-4 sm:px-4 md:px-20 lg:px-20 xl:px-20 2xl:px-20;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hotel-item img {
-  @apply w-72 h-auto;
+  @apply w-full h-auto;
   @apply place-self-center;
 }
 
@@ -303,24 +305,30 @@ body {
 }
 
 .hotel-phone {
-  @apply text-blue-500 underline underline-offset-4;
+  @apply text-blue-500 underline underline-offset-4 whitespace-nowrap;
+}
+
+.hotel-phone:hover {
+  @apply underline-offset-8;
+  transition: text-underline-offset 0.3s ease, color 0.3s ease;
 }
 
 .hotel-link {
   color: #d9534f;
-  text-decoration: none;
+  @apply underline underline-offset-4 whitespace-nowrap;
 }
 
 .hotel-link:hover {
-  text-decoration: underline;
-  @apply underline-offset-4;
+  @apply underline-offset-8;
+  transition: text-underline-offset 0.3s ease, color 0.3s ease;
 }
 
 .hotel-block-button {
   @apply h-10 w-min self-center;
   @apply px-2;
+  @apply tracking-wide;
   @apply whitespace-nowrap;
-  @apply bg-green-500 text-gray-50 rounded hover:bg-green-400;
+  @apply bg-blue-500 hover:bg-blue-400 text-gray-50 rounded;
 }
 
 /* Registry */
@@ -388,6 +396,7 @@ body {
   @apply px-2;
   border: 1px solid #ddd;
   border-radius: 4px;
+  @apply border-gray-500;
 }
 
 .rsvp-form textarea {
@@ -408,7 +417,7 @@ body {
   cursor: pointer;
   @apply text-xl;
   white-space: nowrap;
-  @apply font-semibold tracking-wider underline;
+  @apply font-semibold tracking-wider underline underline-offset-4;
 }
 
 .custom-checkbox {
@@ -421,15 +430,17 @@ body {
 .checkmark {
   display: inline-block;
   width: 25px; /* Adjust the size as needed */
-  height: 25px; /* Adjust the size as needed */
+  height: 27px; /* Adjust the size as needed */
   @apply bg-gray-100 border border-gray-300;
   border-radius: 5px;
+  @apply border-black;
   margin-right: 10px; /* Adjust the spacing as needed */
   position: relative;
 }
 
 .custom-checkbox:checked + .checkmark {
-  background-color: #4caf50; /* Green background when checked */
+  @apply bg-green-500;
+  @apply opacity-60;
 }
 
 .checkmark:after {
@@ -466,6 +477,7 @@ body {
 }
 
 .attending-choice {
+  @apply flex flex-row gap-2;
 }
 
 .attending-choice legend {
@@ -560,6 +572,7 @@ body {
   @apply text-center align-middle;
   background-color: #f5f5f5;
   border: 1px solid #ddd;
+  @apply border-black;
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
@@ -591,6 +604,10 @@ body {
   @apply sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3 2xl:w-1/3 text-center whitespace-nowrap;
 }
 
+.rsvp-email-address legend {
+  @apply font-semibold;
+}
+
 .rsvp-email-address input {
   @apply w-full;
 }
@@ -600,7 +617,8 @@ body {
 }
 
 .rsvp-submit-button {
-  @apply w-1/3 justify-center bg-green-500 disabled:cursor-not-allowed;
+  @apply w-full sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3 2xl:w-1/3;
+  @apply justify-center bg-green-300 disabled:cursor-not-allowed;
 }
 
 /* Footer */
@@ -642,7 +660,7 @@ body {
 
 .password-prompt-container h3 {
   color: #d9534f;
-  @apply text-5xl font-bold cursive-font tracking-widest;
+  @apply text-5xl font-bold cursive-font tracking-wider;
   @apply pt-4;
 }
 
@@ -759,4 +777,25 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Dinner Menu */
+.dinner-menu {
+  @apply mb-4;
+  @apply flex flex-col gap-1;
+  @apply place-self-center;
+  @apply border rounded-2xl border-blue-800;
+}
+
+.dinner-menu h1 {
+  @apply text-xl font-bold;
+}
+
+.dinner-menu-table-option {
+  @apply text-left;
+  @apply max-w-min;
+}
+.dinner-menu-table-description {
+  @apply text-left;
+  @apply w-full;
 }

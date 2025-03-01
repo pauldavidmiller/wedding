@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "./checkbox";
-import plusOneAllowList from "../data/plusOneAllowList.json";
-import familyAllowList from "../data/familyAllowList.json";
 import axios from "axios";
 import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
-import { isPersonOnList, validateSubmission } from "../extensions/helpers";
+import {
+  getPersonOnAllowListById,
+  getPersonOnAllowListByName,
+  isValidSubmission,
+} from "../extensions/helpers";
 import RsvpInput from "./rsvp-input";
 import { Rsvp } from "../types/rsvp";
 import { DinnerChoice } from "../types/dinner-choice";
 import { AttendingChoice } from "../types/attending-choice";
-import PageSection from "./page-section";
+import PageSection, { SectionVariant } from "./page-section";
+import { isDevelopment } from "../extensions/environments";
+import { useLocalStorage } from "../contexts/use-local-storage";
+import DinnerMenu from "./dinner-menu";
 
 const DEFAULT_RSVP: Rsvp = {
   id: 0,
@@ -29,7 +34,7 @@ const DEFAULT_EXTRA_RSVP: Rsvp = {
 
 function RSVPSection() {
   const { websiteReleaseDate } = useAppContext();
-  const disabled = new Date() < websiteReleaseDate;
+  const disabled = new Date() < websiteReleaseDate && !isDevelopment();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -38,60 +43,62 @@ function RSVPSection() {
   const [confirmationEmailAddress, setConfirmationEmailAddress] =
     useState<string>("");
 
-  // Plus One
-  const allowedPlusOne = isPersonOnList(primaryRsvp.name, plusOneAllowList);
-  const [isBringingPlusOne, setIsBringingPlusOne] = useState<boolean>(false);
-  const [plusOneRsvp, setPlusOneRsvp] = useState<Rsvp>(DEFAULT_EXTRA_RSVP);
-
-  // Family
-  const allowedFamily = isPersonOnList(primaryRsvp.name, familyAllowList);
-  const [isFillingOutFamily, setIsFillingOutFamily] = useState<boolean>(false);
-  const [familyMemberRsvps, setFamilyMemberRsvps] = useState<Rsvp[]>([
+  // Additions
+  const primaryRsvpAllowedData = getPersonOnAllowListByName(primaryRsvp.name);
+  const [isFillingOutAdditions, setIsFillingOutAdditions] =
+    useState<boolean>(false);
+  const [additionalRsvps, setAdditionalRsvps] = useState<Rsvp[]>([
     DEFAULT_EXTRA_RSVP,
   ]);
 
-  const handleAddFamilyMember = () => {
-    setFamilyMemberRsvps((fm) => [
+  // TODO: move to online database
+  const [hasAlreadyRsvped, setHasAlreadyRsvped] = useLocalStorage(
+    "already-rsvped",
+    false
+  );
+
+  const handleAddAddition = () => {
+    setAdditionalRsvps((fm) => [
       ...fm,
       { ...DEFAULT_EXTRA_RSVP, id: fm.length },
     ]);
   };
 
-  const handleUpdateFamilyMemberName = (id: number, newName: string) => {
-    setFamilyMemberRsvps((prevItems) =>
+  const handleUpdateAdditionName = (id: number, newName: string) => {
+    setAdditionalRsvps((prevItems) =>
       prevItems.map((item) =>
         item.id === id ? { ...item, name: newName } : item
       )
     );
   };
 
-  const handleUpdateFamilyMemberAttendingChoice = (
+  const handleUpdateAdditionAttendingChoice = (
     id: number,
     newAttendingChoice: AttendingChoice
   ) => {
-    setFamilyMemberRsvps((prevItems) =>
+    setAdditionalRsvps((prevItems) =>
       prevItems.map((item) =>
         item.id === id ? { ...item, attendingChoice: newAttendingChoice } : item
       )
     );
   };
 
-  const handleUpdateFamilyMemberDinnerChoice = (
+  const handleUpdateAdditionDinnerChoice = (
     id: number,
     newDinnerChoice: DinnerChoice
   ) => {
-    setFamilyMemberRsvps((prevItems) =>
+    setAdditionalRsvps((prevItems) =>
       prevItems.map((item) =>
         item.id === id ? { ...item, dinnerChoice: newDinnerChoice } : item
       )
     );
   };
 
-  const handleUpdateFamilyMemberDietaryRestrictions = (
+  const handleUpdateAdditionDietaryRestrictions = (
     id: number,
     newDietaryRestrictions: string
   ) => {
-    setFamilyMemberRsvps((prevItems) =>
+    setAdditionalRsvps((prevItems) =>
       prevItems.map((item) =>
         item.id === id
           ? { ...item, dietaryRestrictions: newDietaryRestrictions }
@@ -100,18 +107,15 @@ function RSVPSection() {
     );
   };
 
-  const handleRemoveFamilyMember = (id: number) => {
-    setFamilyMemberRsvps((prevItems) => prevItems.filter((i) => i.id !== id));
+  const handleRemoveAddition = (id: number) => {
+    setAdditionalRsvps((prevItems) => prevItems.filter((i) => i.id !== id));
   };
 
   const clearForm = () => {
     setPrimaryRsvp(DEFAULT_RSVP);
 
-    setIsBringingPlusOne(false);
-    setPlusOneRsvp(DEFAULT_EXTRA_RSVP);
-
-    setIsFillingOutFamily(false);
-    setFamilyMemberRsvps([DEFAULT_EXTRA_RSVP]);
+    setIsFillingOutAdditions(false);
+    setAdditionalRsvps([DEFAULT_EXTRA_RSVP]);
   };
 
   const handleSubmit = async (event: any) => {
@@ -121,36 +125,33 @@ function RSVPSection() {
     let rsvps = [primaryRsvp];
 
     // Validate Primary Rsvp
-    validateSubmission(
+    const isValid = isValidSubmission(
       primaryRsvp,
-      "Please enter your full name and whether you're attending!",
-      "Please enter your dinner choice!"
+      "Please enter your full name and whether you're attending.",
+      "Please enter your dinner choice."
     );
 
-    // Validate Plus One Rsvp
-    if (isBringingPlusOne) {
-      validateSubmission(
-        plusOneRsvp,
-        "Please provide your plus one's full name and whether they are attending!",
-        "Please enter your plus one's dinner choice!"
-      );
-
-      rsvps.push(plusOneRsvp);
+    if (!isValid) {
+      return;
     }
 
-    if (isFillingOutFamily) {
-      // Valid all Family Members Rsvps
-      for (let i = 0; i < familyMemberRsvps.length; i++) {
-        const fm = familyMemberRsvps[i];
+    if (isFillingOutAdditions) {
+      // Validate all Additional Rsvps
+      for (let i = 0; i < additionalRsvps.length; i++) {
+        const fm = additionalRsvps[i];
 
-        validateSubmission(
+        const isValid = isValidSubmission(
           fm,
-          "Please provide a full name for a family member!",
-          "Please provide a dinner choice for a family member!"
+          "One of the members of your party is missing either their full name or their RSVP status.",
+          "There is a missing dinner selection for a member of your party."
         );
+
+        if (!isValid) {
+          return;
+        }
       }
 
-      rsvps.push(...familyMemberRsvps);
+      rsvps.push(...additionalRsvps);
     }
 
     try {
@@ -163,6 +164,7 @@ function RSVPSection() {
 
       if (res?.data?.success) {
         setIsSubmitting(false);
+        setHasAlreadyRsvped(true);
         clearForm(); // Clear the form after successful submission
         alert("RSVP sent successfully!");
       } else {
@@ -177,21 +179,44 @@ function RSVPSection() {
   };
 
   useEffect(() => {
-    if (!allowedPlusOne || !isBringingPlusOne) {
-      setIsBringingPlusOne(false);
-      setPlusOneRsvp(DEFAULT_EXTRA_RSVP);
+    if (isFillingOutAdditions) {
+      const autoFillRsvps: Rsvp[] =
+        primaryRsvpAllowedData?.additionalMembers?.map((memberId, i) => {
+          const allowListMember = getPersonOnAllowListById(memberId);
+          return {
+            id: i,
+            name: allowListMember.firstName + " " + allowListMember.lastName,
+            dietaryRestrictions: "",
+            allowListMember: allowListMember,
+          };
+        });
+      setAdditionalRsvps(
+        autoFillRsvps?.length > 0 ? autoFillRsvps : [DEFAULT_EXTRA_RSVP]
+      );
+    } else {
+      setIsFillingOutAdditions(false);
+      setAdditionalRsvps([]);
     }
-  }, [allowedPlusOne, isBringingPlusOne]);
+  }, [isFillingOutAdditions, primaryRsvpAllowedData?.additionalMembers]);
 
   useEffect(() => {
-    if (!allowedFamily || !isFillingOutFamily) {
-      setIsFillingOutFamily(false);
-      setFamilyMemberRsvps([DEFAULT_EXTRA_RSVP]);
+    if (!primaryRsvpAllowedData?.maxAdditionalCount) {
+      setIsFillingOutAdditions(false);
+      setAdditionalRsvps([]);
     }
-  }, [allowedFamily, isFillingOutFamily]);
+  }, [primaryRsvpAllowedData?.maxAdditionalCount]);
 
   return (
-    <PageSection id={Section.Rsvp} title="RSVP">
+    <PageSection
+      id={Section.Rsvp}
+      title="RSVP"
+      variant={SectionVariant.white}
+      isComingSoon={disabled}
+    >
+      {/* Menu */}
+      <DinnerMenu />
+
+      {/* RSVP Form */}
       <form className="rsvp-form" autoComplete="off" onSubmit={handleSubmit}>
         <RsvpInput
           name={primaryRsvp.name}
@@ -215,106 +240,81 @@ function RSVPSection() {
             }))
           }
           disabled={disabled}
+          className={
+            !!additionalRsvps?.find((r) => !r.allowListMember) && "pr-12"
+          }
         />
 
-        {allowedFamily && (
+        {primaryRsvpAllowedData?.maxAdditionalCount > 0 && (
           <fieldset disabled={disabled}>
             <Checkbox
-              isChecked={isFillingOutFamily}
-              setIsChecked={setIsFillingOutFamily}
-              label="Filling Out for Family?"
+              isChecked={isFillingOutAdditions}
+              setIsChecked={setIsFillingOutAdditions}
+              label={
+                primaryRsvpAllowedData?.maxAdditionalCount === 1
+                  ? "Plus One?"
+                  : "Filling Out for Family?"
+              }
             />
-            {isFillingOutFamily && (
-              <div className="flex flex-col">
-                {familyMemberRsvps.map((fm, i) => (
-                  <div key={i} className="flex gap-3">
+            {isFillingOutAdditions && (
+              <div className="flex flex-col gap-4 pb-4">
+                {additionalRsvps.map((fm, i) => (
+                  <div
+                    key={i}
+                    className="flex gap-3 justify-between border rounded-lg border-gray-300 py-2 px-4"
+                  >
                     <RsvpInput
                       name={fm.name}
                       setName={(e) =>
-                        handleUpdateFamilyMemberName(i, e.target.value)
+                        handleUpdateAdditionName(i, e.target.value)
                       }
                       rsvpKey={`familymember-${i}`}
                       attendingChoice={fm.attendingChoice}
                       setAttendingChoice={(attendingChoice) =>
-                        handleUpdateFamilyMemberAttendingChoice(
-                          i,
-                          attendingChoice
-                        )
+                        handleUpdateAdditionAttendingChoice(i, attendingChoice)
                       }
                       dinnerChoice={fm.dinnerChoice}
                       setDinnerChoice={(dinnerChoice) =>
-                        handleUpdateFamilyMemberDinnerChoice(i, dinnerChoice)
+                        handleUpdateAdditionDinnerChoice(i, dinnerChoice)
                       }
-                      hasDinnerChoiceNone={true}
                       dietaryRestrictions={fm.dietaryRestrictions}
                       setDietaryRestrictions={(e) =>
-                        handleUpdateFamilyMemberDietaryRestrictions(
+                        handleUpdateAdditionDietaryRestrictions(
                           i,
                           e.target.value
                         )
                       }
                       disabled={disabled}
                     />
-                    <button
-                      type="button"
-                      className="close-button"
-                      onClick={() => handleRemoveFamilyMember(i)}
-                      disabled={familyMemberRsvps.length === 1}
-                    >
-                      ✖
-                    </button>
+                    {!fm.allowListMember && (
+                      <button
+                        type="button"
+                        className="close-button"
+                        onClick={() => handleRemoveAddition(i)}
+                        disabled={additionalRsvps.length === 1}
+                      >
+                        ✖
+                      </button>
+                    )}
                   </div>
                 ))}
-                <button
-                  type="button"
-                  className="add-button"
-                  onClick={() => handleAddFamilyMember()}
-                >
-                  ➕ Add Family Member
-                </button>
+                {additionalRsvps.length <
+                  primaryRsvpAllowedData?.maxAdditionalCount && (
+                  <button
+                    type="button"
+                    className="add-button"
+                    onClick={() => handleAddAddition()}
+                  >
+                    ➕ Add Family Member
+                  </button>
+                )}
               </div>
             )}
           </fieldset>
         )}
-        {allowedPlusOne && (
-          <fieldset disabled={disabled}>
-            <Checkbox
-              isChecked={isBringingPlusOne}
-              setIsChecked={setIsBringingPlusOne}
-              label="Plus One?"
-            />
-            {isBringingPlusOne && (
-              <RsvpInput
-                name={plusOneRsvp.name}
-                setName={(e) =>
-                  setPlusOneRsvp((rsvp) => ({
-                    ...rsvp,
-                    name: e.target.value,
-                  }))
-                }
-                rsvpKey="plusOne"
-                attendingChoice={plusOneRsvp.attendingChoice}
-                setAttendingChoice={(attendingChoice) =>
-                  setPlusOneRsvp((rsvp) => ({ ...rsvp, attendingChoice }))
-                }
-                dinnerChoice={plusOneRsvp.dinnerChoice}
-                setDinnerChoice={(dinnerChoice) =>
-                  setPlusOneRsvp((rsvp) => ({ ...rsvp, dinnerChoice }))
-                }
-                dietaryRestrictions={plusOneRsvp.dietaryRestrictions}
-                setDietaryRestrictions={(e) =>
-                  setPlusOneRsvp((rsvp) => ({
-                    ...rsvp,
-                    dietaryRestrictions: e.target.value,
-                  }))
-                }
-                disabled={disabled}
-              />
-            )}
-          </fieldset>
-        )}
+
         <div className="rsvp-email-address">
-          <legend>RSVP Confirmation (optional):</legend>
+          <legend>Your Email Address (optional):</legend>
           <input
             type="email"
             disabled={disabled}
@@ -324,9 +324,14 @@ function RSVPSection() {
           />
         </div>
         <button
-          disabled={disabled}
+          disabled={disabled || hasAlreadyRsvped}
           type="submit"
           className="rsvp-submit-button"
+          title={
+            hasAlreadyRsvped
+              ? "You or a member of your party has already RSVPed."
+              : null
+          }
         >
           {isSubmitting ? <div className="spinner" /> : "Send RSVP"}
         </button>

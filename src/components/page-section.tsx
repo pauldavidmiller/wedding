@@ -13,6 +13,7 @@ type PageSectionProps = {
   variant?: SectionVariant;
   className?: string;
   children: ReactNode;
+  isComingSoon?: boolean;
 };
 
 const PageSection = ({
@@ -21,6 +22,7 @@ const PageSection = ({
   variant = SectionVariant.white,
   className,
   children,
+  isComingSoon: hideChildren = false,
 }: PageSectionProps) => {
   return (
     <section
@@ -28,7 +30,7 @@ const PageSection = ({
       className={`section${variant && `-${variant}`} ${className}`}
     >
       {title && <h2 className="section-title">{title}</h2>}
-      {children}
+      {hideChildren ? <h3>Rsvp is coming soon...</h3> : children}
     </section>
   );
 };

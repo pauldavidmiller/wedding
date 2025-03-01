@@ -29,8 +29,8 @@ const Tabs = () => {
     <ul className={`header-menu ${isHamburgerMenuOpen && "flex-col"}`}>
       {Object.values(Section)
         .filter((section) => !sectionIgnoreList.includes(section))
-        .map((section) => (
-          <li>
+        .map((section, i) => (
+          <li key={i}>
             <button
               className={`header-button ${isHamburgerMenuOpen && "w-full"} ${
                 currentSection === section && "header-button-selected"

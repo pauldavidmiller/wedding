@@ -10,7 +10,18 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   hasTitle = false,
 }) => {
   const calculateTimeLeft = useCallback(() => {
-    const difference = targetDate.getTime() - new Date().getTime();
+    const now = new Date();
+    const target = new Date(targetDate);
+
+    // Convert to Eastern Time (ET)
+    const estNow = new Date(
+      now.toLocaleString("en-US", { timeZone: "America/New_York" })
+    );
+    const estTarget = new Date(
+      target.toLocaleString("en-US", { timeZone: "America/New_York" })
+    );
+
+    const difference = estTarget.getTime() - estNow.getTime();
 
     if (difference > 0) {
       return {
