@@ -11,7 +11,7 @@ const StreamSection = () => {
     <PageSection
       id={Section.Stream}
       title="Video Stream"
-      variant={SectionVariant.light}
+      variant={SectionVariant.pink}
     >
       {isStreamEnabled ? (
         <ZoomEmbed meetingLink={zoomMeetingLink} />

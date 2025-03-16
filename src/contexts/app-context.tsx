@@ -5,6 +5,8 @@ import { subtractDays } from "../extensions/helpers";
 
 interface AppContextType {
   websiteReleaseDate: Date;
+  registryReleaseDate: Date;
+  rsvpReleaseDate: Date;
   isUnlocked?: boolean;
   setIsUnlocked?: React.Dispatch<React.SetStateAction<boolean>>;
   hashedPassword: string;
@@ -23,7 +25,9 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [websiteReleaseDate] = useState<Date>(new Date("04/01/2025"));
+  const [websiteReleaseDate] = useState<Date>(new Date("03/15/2025"));
+  const [registryReleaseDate] = useState<Date>(new Date("04/15/2025"));
+  const [rsvpReleaseDate] = useState<Date>(new Date("05/11/2025"));
   const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
   const [hashedPassword] = useState<string>(
     "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2"
@@ -62,6 +66,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     <AppContext.Provider
       value={{
         websiteReleaseDate,
+        registryReleaseDate,
+        rsvpReleaseDate,
         isUnlocked,
         setIsUnlocked,
         hashedPassword,

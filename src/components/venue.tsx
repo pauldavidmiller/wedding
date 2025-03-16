@@ -8,11 +8,7 @@ const VenueSection = () => {
   const { venueName, venuAddress } = useAppContext();
 
   return (
-    <PageSection
-      id={Section.Venue}
-      title="Venue"
-      variant={SectionVariant.light}
-    >
+    <PageSection id={Section.Venue} title="Venue" variant={SectionVariant.pink}>
       <div className="venue-details">
         <p className="venue-name">{venueName}</p>
         <p className="venue-address">{venuAddress}</p>

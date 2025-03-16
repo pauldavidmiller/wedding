@@ -3,8 +3,7 @@ import { Section } from "../types/section";
 
 export enum SectionVariant {
   white = "white",
-  light = "light",
-  dark = "dark",
+  pink = "pink",
 }
 
 type PageSectionProps = {

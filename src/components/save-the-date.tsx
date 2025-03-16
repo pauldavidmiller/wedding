@@ -3,6 +3,7 @@ import CryptoJS from "crypto-js";
 import { useAppContext } from "../contexts/app-context";
 import Carousel from "./carousel";
 import CountdownTimer from "./countdown-timer";
+import { isDevelopment } from "../extensions/environments";
 
 const SaveTheDate = () => {
   const {
@@ -19,7 +20,7 @@ const SaveTheDate = () => {
 
   const [showSiteOverride, setShowSiteOverride] = useState<boolean>(false);
   const showFullSitePasswordInput =
-    new Date() >= websiteReleaseDate || showSiteOverride;
+    new Date() >= websiteReleaseDate || showSiteOverride || isDevelopment();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

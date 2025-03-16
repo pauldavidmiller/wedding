@@ -8,7 +8,7 @@ const HotelsSection = () => {
     <PageSection
       id={Section.Hotel}
       title="Wedding Hotel"
-      variant={SectionVariant.dark}
+      variant={SectionVariant.pink}
     >
       <div className="hotels-list">
         {hotelsData.map((hotel, index) => (
@@ -35,8 +35,8 @@ const HotelsSection = () => {
 
             <p className="text-lg">
               We have reserved a room block for our guests at {hotel.shortName}.
-              To ensure the wedding rate, please book by{" "}
-              <label className="underline">{hotel.bookByDate}</label>.
+              To ensure the wedding rate, please book with the following button
+              by <label className="font-bold">{hotel.bookByDate}</label>.
             </p>
 
             <button

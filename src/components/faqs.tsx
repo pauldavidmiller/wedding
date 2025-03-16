@@ -8,6 +8,7 @@ type Faq = {
 };
 
 const FAQsSection = () => {
+  const DEFAULT_ANSWER = "More information is coming soon!";
   const faqs: Faq[] = [
     {
       question: "What should I wear?",
@@ -21,9 +22,11 @@ const FAQsSection = () => {
       question: "How should I get to the venue?",
       // answer:
       //   "If you are coming from the hotel, please see the map above for walking directions.",
+      answer: DEFAULT_ANSWER,
     },
     {
       question: "Where should I park?",
+      answer: DEFAULT_ANSWER,
     },
   ];
 
@@ -31,7 +34,7 @@ const FAQsSection = () => {
     <PageSection
       id={Section.Faq}
       title="Frequently Asked Questions"
-      variant={SectionVariant.dark}
+      variant={SectionVariant.pink}
     >
       <div className="faqs-list">
         {faqs.map((faq, index) => (

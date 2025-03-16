@@ -179,10 +179,11 @@ body {
 .section {
   @apply p-3;
   @apply text-center;
-  @apply rounded-2xl shadow-lg;
+  @apply rounded-2xl shadow-md;
   @apply playfair-display-font;
   @apply scroll-mt-14;
   @apply z-50;
+  @apply bg-gray-50;
 }
 
 .section h2 {
@@ -193,21 +194,12 @@ body {
   @apply section;
 }
 
-.section-light {
+.section-pink {
   @apply section;
-  @apply bg-pink-50;
+  @apply border-4 border-pink-100;
 }
 
-.section-light h2 {
-  color: #d9534f;
-}
-
-.section-dark {
-  @apply section;
-  @apply bg-pink-100;
-}
-
-.section-dark h2 {
+.section-pink h2 {
   color: #d9534f;
 }
 
@@ -281,8 +273,8 @@ body {
 .hotel-item {
   @apply flex flex-col gap-4;
   @apply w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  @apply bg-pink-50 bg-opacity-50;
+  @apply border border-gray-400;
   border-radius: 8px;
   @apply py-6;
   @apply px-4 sm:px-4 md:px-20 lg:px-20 xl:px-20 2xl:px-20;
@@ -345,6 +337,7 @@ body {
   @apply object-fill;
   @apply rounded-xl shadow-2xl;
   @apply cursor-pointer;
+  @apply border border-gray-400;
 }
 
 /* FAQ */
@@ -355,8 +348,8 @@ body {
 }
 
 .faq-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  @apply bg-pink-200 bg-opacity-75;
+  @apply border border-gray-400;
   border-radius: 8px;
   padding: 20px;
   margin: 10px; /* Margin between items */

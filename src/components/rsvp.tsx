@@ -33,8 +33,8 @@ const DEFAULT_EXTRA_RSVP: Rsvp = {
 };
 
 function RSVPSection() {
-  const { websiteReleaseDate } = useAppContext();
-  const disabled = new Date() < websiteReleaseDate && !isDevelopment();
+  const { rsvpReleaseDate } = useAppContext();
+  const disabled = new Date() < rsvpReleaseDate && !isDevelopment();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 

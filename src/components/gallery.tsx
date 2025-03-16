@@ -11,13 +11,14 @@ const GallerySection = () => {
         <img src="/images/us20.jpg" alt="Gallery 20" />
         <img src="/images/us30.jpg" alt="Gallery 30" />
         <img src="/images/us40.jpg" alt="Gallery 40" />
-        <img src="/images/us50.HEIC" alt="Gallery 50" />
+        {/* <img src="/images/us50.HEIC" alt="Gallery 50" /> */}
         {/* <img src="/images/us60.HEIC" alt="Gallery 60" /> */}
         <img src="/images/us70.HEIC" alt="Gallery 70" />
         <img src="/images/us80.jpg" alt="Gallery 80" />
         {/* <img src="/images/us90.jpg" alt="Gallery 90" /> */}
         <img src="/images/us100.jpg" alt="Gallery 100" />
         {/* <img src="/images/us110.jpg" alt="Gallery 110" /> */}
+        <img src="/images/us130.jpg" alt="Gallery 130" />
       </div>
     </PageSection>
   );
