@@ -25,7 +25,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [websiteReleaseDate] = useState<Date>(new Date("03/15/2025"));
+  const [websiteReleaseDate] = useState<Date>(new Date("04/01/2025"));
   const [registryReleaseDate] = useState<Date>(new Date("04/15/2025"));
   const [rsvpReleaseDate] = useState<Date>(new Date("05/11/2025"));
   const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
