@@ -39,6 +39,19 @@ const HotelsSection = () => {
               by <label className="font-bold">{hotel.bookByDate}</label>.
             </p>
 
+            <p className="text-base">
+              When booking, please select Monday September 1st for checkout. For
+              any desired accommodations that are not shown, please call the
+              Study and ask for Daniel Thron and he will be able to assist you
+              with your needs. Contact Daniel directly at
+              <a
+                href={`mailto:${hotel.email}?subject=The%Margot%Bailowitz%and%Paul%Miller%Wedding%Booking`}
+              >
+                {hotel.email}
+              </a>
+              .
+            </p>
+
             <button
               type="button"
               className="hotel-block-button"

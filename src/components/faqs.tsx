@@ -8,7 +8,7 @@ type Faq = {
 };
 
 const FAQsSection = () => {
-  const DEFAULT_ANSWER = "More information is coming soon!";
+  // const DEFAULT_ANSWER = "More information is coming soon!";
   const faqs: Faq[] = [
     {
       question: "What should I wear?",
@@ -16,17 +16,18 @@ const FAQsSection = () => {
     },
     {
       question: "When should I arrive?",
-      answer: "Our ceremony will begin promptly at 6pm EST.",
+      answer:
+        "Our wedding will begin promptly at 6pm EST. Please plan to be seated by 5:45pm at the latest.",
     },
     {
       question: "How should I get to the venue?",
-      // answer:
-      //   "If you are coming from the hotel, please see the map above for walking directions.",
-      answer: DEFAULT_ANSWER,
+      answer:
+        "For those staying at the Study Hotel, the BMA is a five minute walk around the block. See image above for walking directions.",
     },
     {
       question: "Where should I park?",
-      answer: DEFAULT_ANSWER,
+      answer:
+        "Valet parking will be provided at the BMA entrance. Once parked, we recommend walking up the exterior staircase directly into the ceremony location. An accessible route is available through the main museum entrance at valet drop off. Attendants will be onsite to direct you.",
     },
   ];
 

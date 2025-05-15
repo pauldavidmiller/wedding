@@ -32,7 +32,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const [hashedPassword] = useState<string>(
     "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2"
   );
-  const [venueName] = useState<string>("Baltimore Museum of Art");
+  const [venueName] = useState<string>("Baltimore Museum of Art (BMA)");
   const [venuAddress] = useState<string>(
     "10 Art Museum Dr, Baltimore, MD 21218, USA"
   );
