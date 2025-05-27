@@ -19,31 +19,105 @@ exports.handler = async (event, context) => {
   const { rsvps, confirmationEmailAddress } = body; // Rsvps is of type Rsvp (object);
 
   const subject = "Margot & Paul's Wedding RSVP";
-  let message = "";
+  const rsvpEntries = rsvps
+    .map(
+      (rsvp) => `
+        <tr>
+            <td>${rsvp.name}</td>
+            <td>${rsvp.attendingChoice?.toString()}</td>
+            <td>${rsvp.dinnerChoice?.toString()}</td>
+            <td>${rsvp.dietaryRestrictions}</td>
+            <td>${rsvp.attendingRehearsal?.toString()}</td>
+        </tr>
+    `
+    )
+    .join("");
+  const rsvpBody = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: 'Georgia', serif;
+                background-color: #f8f8f8;
+                padding: 20px;
+                color: #333;
+            }
+            .container {
+                max-width: 600px;
+                margin: auto;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            h2 {
+                text-align: center;
+                color: #A45D5D;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #A45D5D;
+                color: white;
+            }
+            .footer {
+                text-align: center;
+                font-size: 14px;
+                margin-top: 20px;
+                color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Wedding RSVP Confirmation</h2>
+            <p>We’re thrilled to have you celebrating with us! Below are the RSVP details provided:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Attending Wedding</th>
+                        <th>Dinner Choice</th>
+                        <th>Dietary Restrictions</th>
+                        <th>Attending Rehearsal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rsvpEntries}
+                </tbody>
+            </table>
+            <div class="footer">
+                With love,<br>
+                Margot & Paul
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
 
-  for (let i = 0; i < rsvps.length; i++) {
-    const rsvp = rsvps[i];
-
-    message += "Name: " + rsvp.name + "\n";
-    message += "Dinner: " + rsvp.dinnerChoice?.toString() + "\n";
-    if (!!rsvp.dietaryRestrictions) {
-      message += "Dietary Restrictions: " + rsvp.dietaryRestrictions + "\n";
-    }
-    message += "\n";
-  }
-
+  // Send to ourselves
   const toUsMailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
     subject: subject,
-    text: message,
+    html: rsvpBody,
   };
 
+  // Send to confirmation email
   const toYouMailOptions = {
     from: process.env.EMAIL_USER,
     to: confirmationEmailAddress,
     subject: subject,
-    text: message,
+    html: rsvpBody,
   };
 
   try {
@@ -62,6 +136,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ success: true, info }),
     };
   } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
       body: JSON.stringify({ success: false, error }),

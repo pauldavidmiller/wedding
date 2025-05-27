@@ -23,6 +23,7 @@ const DEFAULT_RSVP: Rsvp = {
   attendingChoice: null,
   dinnerChoice: null,
   dietaryRestrictions: "",
+  attendingRehearsal: null,
 };
 const DEFAULT_EXTRA_RSVP: Rsvp = {
   id: 0,
@@ -30,26 +31,42 @@ const DEFAULT_EXTRA_RSVP: Rsvp = {
   attendingChoice: AttendingChoice.Yes,
   dinnerChoice: null,
   dietaryRestrictions: "",
+  attendingRehearsal: null,
 };
 
 function RSVPSection() {
   const { rsvpReleaseDate } = useAppContext();
   const disabled = new Date() < rsvpReleaseDate && !isDevelopment();
 
+  const [isRsvpFormOpen, setIsRsvpFormOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Primary
   const [primaryRsvp, setPrimaryRsvp] = useState<Rsvp>(DEFAULT_RSVP);
+  const primaryRsvpAllowedData = getPersonOnAllowListByName(primaryRsvp.name);
   const [confirmationEmailAddress, setConfirmationEmailAddress] =
     useState<string>("");
 
   // Additions
-  const primaryRsvpAllowedData = getPersonOnAllowListByName(primaryRsvp.name);
   const [isFillingOutAdditions, setIsFillingOutAdditions] =
     useState<boolean>(false);
   const [additionalRsvps, setAdditionalRsvps] = useState<Rsvp[]>([
     DEFAULT_EXTRA_RSVP,
   ]);
+
+  // Reactions
+  useEffect(() => {
+    if (!primaryRsvpAllowedData && !!primaryRsvp.attendingChoice) {
+      setPrimaryRsvp((r) => ({
+        ...r,
+        attendingChoice: null,
+        dinnerChoice: null,
+        dietaryRestrictions: "",
+        attendingRehearsal: null,
+      }));
+      setAdditionalRsvps([]);
+    }
+  }, [primaryRsvpAllowedData, primaryRsvp.attendingChoice]);
 
   // TODO: move to online database
   const [hasAlreadyRsvped, setHasAlreadyRsvped] = useLocalStorage(
@@ -78,7 +95,30 @@ function RSVPSection() {
   ) => {
     setAdditionalRsvps((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, attendingChoice: newAttendingChoice } : item
+        item.id === id
+          ? {
+              ...item,
+              attendingChoice: newAttendingChoice,
+              dinnerChoice: null,
+              dietaryRestrictions: null,
+            }
+          : item
+      )
+    );
+  };
+
+  const handleUpdateAdditionAttendingRehearsal = (
+    id: number,
+    newAttendingRehearsal: AttendingChoice
+  ) => {
+    setAdditionalRsvps((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              attendingRehearsal: newAttendingRehearsal,
+            }
+          : item
       )
     );
   };
@@ -206,6 +246,25 @@ function RSVPSection() {
     }
   }, [primaryRsvpAllowedData?.maxAdditionalCount]);
 
+  if (!isRsvpFormOpen) {
+    return (
+      <PageSection
+        id={Section.Rsvp}
+        title="RSVP"
+        variant={SectionVariant.white}
+        isComingSoon={disabled}
+      >
+        <button
+          type="button"
+          className="rsvp-button"
+          onClick={() => setIsRsvpFormOpen(true)}
+        >
+          Send Rsvp Now
+        </button>
+      </PageSection>
+    );
+  }
+
   return (
     <PageSection
       id={Section.Rsvp}
@@ -214,10 +273,14 @@ function RSVPSection() {
       isComingSoon={disabled}
     >
       {/* Menu */}
-      <DinnerMenu />
+      {primaryRsvp.attendingChoice === AttendingChoice.Yes && <DinnerMenu />}
 
       {/* RSVP Form */}
-      <form className="rsvp-form" autoComplete="off" onSubmit={handleSubmit}>
+      <form
+        className="rsvp-form lora-text"
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
         <RsvpInput
           name={primaryRsvp.name}
           setName={(e) =>
@@ -239,10 +302,15 @@ function RSVPSection() {
               dietaryRestrictions: e.target.value,
             }))
           }
+          attendingRehearsal={primaryRsvp.attendingRehearsal}
+          setAttendingRehearsal={(attendingRehearsal) =>
+            setPrimaryRsvp((rsvp) => ({ ...rsvp, attendingRehearsal }))
+          }
           disabled={disabled}
           className={
             !!additionalRsvps?.find((r) => !r.allowListMember) && "pr-12"
           }
+          allowListMember={primaryRsvpAllowedData}
         />
 
         {primaryRsvpAllowedData?.maxAdditionalCount > 0 && (
@@ -284,7 +352,15 @@ function RSVPSection() {
                           e.target.value
                         )
                       }
+                      attendingRehearsal={fm.attendingRehearsal}
+                      setAttendingRehearsal={(attendingRehearsal) =>
+                        handleUpdateAdditionAttendingRehearsal(
+                          i,
+                          attendingRehearsal
+                        )
+                      }
                       disabled={disabled}
+                      allowListMember={getPersonOnAllowListByName(fm.name)}
                     />
                     {!fm.allowListMember && (
                       <button
@@ -314,7 +390,7 @@ function RSVPSection() {
         )}
 
         <div className="rsvp-email-address">
-          <legend>Your Email Address (optional):</legend>
+          <legend>Your Email Address (optional for confirmation):</legend>
           <input
             type="email"
             disabled={disabled}

@@ -2,13 +2,13 @@ import React from "react";
 import Carousel from "./carousel";
 import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
-import PageSection, { SectionVariant } from "./page-section";
+import PageSection from "./page-section";
 
 const VenueSection = () => {
   const { venueName, venuAddress } = useAppContext();
 
   return (
-    <PageSection id={Section.Venue} title="Venue" variant={SectionVariant.pink}>
+    <PageSection id={Section.Venue} title="Venue">
       <div className="venue-details">
         <p className="venue-name">{venueName}</p>
         <p className="venue-address">{venuAddress}</p>

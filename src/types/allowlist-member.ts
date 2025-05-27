@@ -4,4 +4,5 @@ export type AllowListMember = {
   lastName: string;
   maxAdditionalCount: number;
   additionalMembers: number[];
+  rehearsalDinnerRsvpEnabled?: boolean;
 };

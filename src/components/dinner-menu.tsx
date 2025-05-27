@@ -6,23 +6,23 @@ const DinnerMenu = () => {
   const dinnerMenuOptions: DinnerMenuOption[] = [
     {
       choice: DinnerChoice.Beef,
-      description: "Espresso Rubbed Sliced Beef Tenderloin",
-      note: "with charred pearl onions, huckleberry habanero sauce",
+      description: "ESPRESSO RUBBED BEEF TENDERLOIN",
+      note: "gf, df | charred pearl onions, huckleberry habanero sauce",
     },
     {
       choice: DinnerChoice.Chicken,
-      description: "Parmesan Crusted Chicken",
-      note: "with basil beurre blanc",
+      description: "PARMESAN CRUSTED CHICKEN",
+      note: "| basil beurre blanc",
     },
     {
       choice: DinnerChoice.Fish,
-      description: "Blackened BBQ Salmon",
-      note: "with spiced cherry compote",
+      description: "BLACKENED BBQ SALMON",
+      note: "gf, df | spiced cherry compote",
     },
     {
       choice: DinnerChoice.Vegan,
-      description: "Chickpea Cake",
-      note: "with lemon tahini sauce",
+      description: "CHICKPEA CAKE",
+      note: "vg | lemon tahini sauce",
     },
   ];
 

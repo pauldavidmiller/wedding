@@ -57,6 +57,10 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+.lora-text {
+  font-family: "Lora", serif;
+}
+
 /* Signature (Top) */
 .signature {
   @apply w-full;
@@ -346,7 +350,7 @@ body {
 }
 
 .faq-item {
-  @apply bg-pink-200 bg-opacity-75;
+  @apply bg-pink-100 bg-opacity-75;
   @apply border border-gray-400;
   border-radius: 8px;
   padding: 20px;
@@ -372,6 +376,14 @@ body {
 /* Stream */
 
 /* RSVP */
+.rsvp-button {
+  @apply h-10 w-min self-center text-lg;
+  @apply px-2;
+  @apply tracking-wide;
+  @apply whitespace-nowrap;
+  @apply bg-blue-500 hover:bg-blue-400 text-gray-50 rounded;
+}
+
 .rsvp-form {
   @apply gap-3;
   display: flex;
@@ -388,6 +400,10 @@ body {
   border: 1px solid #ddd;
   border-radius: 4px;
   @apply border-gray-500;
+}
+
+.rsvp-form legend {
+  @apply text-lg;
 }
 
 .rsvp-form textarea {
@@ -408,7 +424,7 @@ body {
   cursor: pointer;
   @apply text-xl;
   white-space: nowrap;
-  @apply font-semibold tracking-wider underline underline-offset-4;
+  @apply font-semibold tracking-wider;
 }
 
 .custom-checkbox {
@@ -456,8 +472,8 @@ body {
 
 .rsvp-input {
   @apply flex flex-wrap;
-  @apply gap-3;
-  @apply justify-center items-center;
+  @apply gap-6;
+  @apply justify-center items-end;
 }
 
 .rsvp-input-section {
@@ -468,7 +484,7 @@ body {
 }
 
 .attending-choice {
-  @apply flex flex-row gap-2;
+  @apply flex flex-col gap-2;
 }
 
 .attending-choice legend {
@@ -482,7 +498,6 @@ body {
 
 /* Attending Choice Radio */
 .attending-choice-radio-option {
-  @apply font-bold;
   display: inline-flex;
   align-items: center;
   margin-right: 10px;
@@ -592,11 +607,11 @@ body {
 }
 
 .rsvp-email-address {
-  @apply sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3 2xl:w-1/3 text-center whitespace-nowrap;
+  @apply w-full sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3 2xl:w-1/3 text-center whitespace-nowrap;
 }
 
 .rsvp-email-address legend {
-  @apply font-semibold;
+  @apply font-semibold text-wrap;
 }
 
 .rsvp-email-address input {
@@ -629,12 +644,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom right, #ffe0e9, #ffffff);
   font-family: "Georgia", serif;
 }
 
 .password-prompt-container {
-  background: rgba(255, 255, 255, 0.9);
+  @apply bg-pink-50;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -776,6 +790,7 @@ body {
   @apply flex flex-col gap-1;
   @apply place-self-center;
   @apply border rounded-2xl border-blue-800;
+  @apply lora-text;
 }
 
 .dinner-menu h1 {

@@ -45,24 +45,24 @@ export const isValidFullName = (name: string): boolean => {
 export const getPersonOnAllowListByName = (
   inputName: string
 ): AllowListMember => {
-  return RsvpAllowList.find((po) => {
-    var allowListFullName = (po.firstName + " " + po.lastName).toLowerCase();
-    var enteredFullNameArr = inputName.trim().split(" ");
+  return RsvpAllowList.find((listMember) => {
+    const enteredFullNameArr = inputName.trim().split(" ");
     if (!isValidFullName(inputName)) {
       return false;
     }
 
     // Only use first and last name anyway
-    var enteredFullName = [
-      enteredFullNameArr[0],
-      enteredFullNameArr[enteredFullNameArr.length - 1],
-    ]
-      .join(" ")
-      .toLowerCase();
-    return (
-      jaroWinkler(allowListFullName, enteredFullName, 0) >= 0.9 ||
-      levenshtein(allowListFullName, enteredFullName) <= 5
-    );
+    const enteredFirstName = enteredFullNameArr[0];
+    const enteredLastName = enteredFullNameArr[enteredFullNameArr.length - 1];
+
+    // Fuzzy First Name Match and Last Names must be equal
+    const firstNameMatch =
+      jaroWinkler(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase(), 0) >= 0.85
+    // || levenshtein(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase()) <= 5
+
+    const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
+
+    return firstNameMatch && lastNameMatch;
   });
 };
 

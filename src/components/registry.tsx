@@ -1,5 +1,5 @@
 import React from "react";
-import PageSection, { SectionVariant } from "./page-section";
+import PageSection from "./page-section";
 import { Section } from "../types/section";
 import { useAppContext } from "../contexts/app-context";
 import { isDevelopment } from "../extensions/environments";
@@ -15,6 +15,11 @@ const RegistrySection = () => {
   const hideRegistries = new Date() < registryReleaseDate && !isDevelopment();
 
   const registries: Registry[] = [
+    {
+      name: "Amazon",
+      img: "/images/amazonregistrylogo.png",
+      url: "https://www.amazon.com/wedding/a/registry/ENOSFGG8MXJJ?tag=wedch-994-20",
+    },
     {
       name: "Crate & Barrel",
       img: "/images/crateandbarrellogo.png",
@@ -33,11 +38,7 @@ const RegistrySection = () => {
   ];
 
   return (
-    <PageSection
-      id={Section.Registry}
-      title="Registry"
-      variant={SectionVariant.pink}
-    >
+    <PageSection id={Section.Registry} title="Registry">
       <div className="flex flex-col gap-4">
         {!!hideRegistries ? (
           <p>Our registries are coming soon!</p>
@@ -48,11 +49,22 @@ const RegistrySection = () => {
               you so much for all of your generosity!
             </p>
             <div className="registry-images">
+              <img
+                src="/images/theknotlogo.png"
+                alt="The Knot Registry"
+                onClick={() =>
+                  window.open(
+                    "https://registry.theknot.com/margot-bailowitz-paul-miller-august-2025-md/72194350",
+                    "_blank"
+                  )
+                }
+              />
+            </div>
+            <div className="registry-images">
               {registries.map((r) => (
                 <img
                   src={r.img}
                   alt={r.name}
-                  className="w-12 h-auto"
                   onClick={() => window.open(r.url, "_blank")}
                 />
               ))}

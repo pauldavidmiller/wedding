@@ -2,14 +2,18 @@ import React from "react";
 import { AttendingChoice } from "../types/attending-choice";
 
 type AttendingChoiceSelectProps = {
+  title: string;
   name: string;
+  keyType: string;
   selectedOption: AttendingChoice | null;
   setSelectedOption: (attendingChoice: AttendingChoice) => void;
   disabled?: boolean;
 };
 
 const AttendingChoiceSelect = ({
+  title,
   name,
+  keyType,
   selectedOption,
   setSelectedOption,
   disabled,
@@ -19,8 +23,14 @@ const AttendingChoiceSelect = ({
   };
 
   return (
-    <fieldset disabled={disabled} className="attending-choice">
-      <legend>Attending:</legend>
+    <fieldset
+      disabled={disabled}
+      className="attending-choice"
+      title={
+        disabled ? "Please enter previous required field first!" : undefined
+      }
+    >
+      <legend>{title}:</legend>
 
       <div className="attending-choice-inputs">
         {Object.keys(AttendingChoice)
@@ -29,13 +39,13 @@ const AttendingChoiceSelect = ({
             return (
               <label
                 key={i}
-                htmlFor={`${name}-attending-${choice.toLowerCase()}`}
+                htmlFor={`${name}-${keyType}-${choice.toLowerCase()}`}
                 className="attending-choice-radio-option"
               >
                 <input
                   type="radio"
-                  id={`${name}-attending-${choice.toLowerCase()}`}
-                  name={`${name}-attending`}
+                  id={`${name}-${keyType}-${choice.toLowerCase()}`}
+                  name={`${name}-${keyType}`}
                   value={
                     AttendingChoice[choice as keyof typeof AttendingChoice]
                   }
