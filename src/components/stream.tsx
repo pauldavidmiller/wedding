@@ -8,11 +8,7 @@ const StreamSection = () => {
   const { zoomMeetingLink, isStreamEnabled } = useAppContext();
 
   return (
-    <PageSection
-      id={Section.Stream}
-      title="Video Stream"
-      variant={SectionVariant.pink}
-    >
+    <PageSection id={Section.Stream} title="Video Stream">
       {isStreamEnabled ? (
         <ZoomEmbed meetingLink={zoomMeetingLink} />
       ) : (

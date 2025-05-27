@@ -1,6 +1,6 @@
 import React from "react";
 import { Section } from "../types/section";
-import PageSection, { SectionVariant } from "./page-section";
+import PageSection from "./page-section";
 
 type Faq = {
   question: string;
@@ -32,11 +32,7 @@ const FAQsSection = () => {
   ];
 
   return (
-    <PageSection
-      id={Section.Faq}
-      title="Frequently Asked Questions"
-      variant={SectionVariant.pink}
-    >
+    <PageSection id={Section.Faq} title="Frequently Asked Questions">
       <div className="faqs-list">
         {faqs.map((faq, index) => (
           <div className="faq-item" key={index}>

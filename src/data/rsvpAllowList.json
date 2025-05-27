@@ -221,6 +221,14 @@
     "firstName": "Kevin",
     "lastName": "Oestreicher",
     "maxAdditionalCount": 1,
+    "additionalMembers": [291],
+    "rehearsalDinnerRsvpEnabled": true
+  },
+  {
+    "id": 291,
+    "firstName": "Alyssa",
+    "lastName": "Freund",
+    "maxAdditionalCount": 0,
     "additionalMembers": []
   },
   {

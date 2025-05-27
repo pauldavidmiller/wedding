@@ -1,15 +1,11 @@
 import React from "react";
 import hotelsData from "../data/hotels.json";
 import { Section } from "../types/section";
-import PageSection, { SectionVariant } from "./page-section";
+import PageSection from "./page-section";
 
 const HotelsSection = () => {
   return (
-    <PageSection
-      id={Section.Hotel}
-      title="Wedding Hotel"
-      variant={SectionVariant.pink}
-    >
+    <PageSection id={Section.Hotel} title="Wedding Hotel">
       <div className="hotels-list">
         {hotelsData.map((hotel, index) => (
           <div className="hotel-item" key={index}>

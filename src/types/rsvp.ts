@@ -8,5 +8,6 @@ export type Rsvp = {
   attendingChoice?: AttendingChoice | null;
   dinnerChoice?: DinnerChoice | null;
   dietaryRestrictions: string;
+  attendingRehearsal?: AttendingChoice | null;
   allowListMember?: AllowListMember;
 };
