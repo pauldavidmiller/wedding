@@ -1,6 +1,5 @@
 import { Section } from "../types/section";
 import jaroWinkler from "../data/jarowinkler";
-import levenshtein from "../data/levenshtein";
 import { Rsvp } from "../types/rsvp";
 import { AttendingChoice } from "../types/attending-choice";
 import { DinnerChoice } from "../types/dinner-choice";
