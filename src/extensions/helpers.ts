@@ -60,8 +60,7 @@ export const getPersonOnAllowListByName = (
     // || levenshtein(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase()) <= 5
 
     // Includes
-    const lastNameMatch = listMember.lastName.toLowerCase().includes(enteredLastName.toLowerCase());
-    // const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
+    const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
 
     return firstNameMatch && lastNameMatch;
   });
