@@ -41,29 +41,44 @@ export const isValidFullName = (name: string): boolean => {
   return true;
 };
 
+type NameMatch = {
+  firstNameMatchValue: number;
+  isMatch: boolean;
+  listMember: AllowListMember;
+}
 export const getPersonOnAllowListByName = (
   inputName: string
 ): AllowListMember => {
-  return RsvpAllowList.find((listMember) => {
-    const enteredFullNameArr = inputName.trim().split(" ");
-    if (!isValidFullName(inputName)) {
-      return false;
-    }
+  // Make Sure there are 2 names at least
+  const enteredFullNameArr = inputName.trim().split(" ");
+  if (!isValidFullName(inputName)) {
+    return null;
+  }
 
-    // Only use first and last name anyway
-    const enteredFirstName = enteredFullNameArr[0];
-    const enteredLastName = enteredFullNameArr[enteredFullNameArr.length - 1];
+  // Only use first and last name anyway
+  const enteredFirstName = enteredFullNameArr[0];
+  const enteredLastName = enteredFullNameArr[enteredFullNameArr.length - 1];
 
-    // Fuzzy First Name Match and Last Names must be equal
-    const firstNameMatch =
-      jaroWinkler(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase(), 0) >= 0.50
-    // || levenshtein(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase()) <= 5
+  const matches: NameMatch[] =
+    // 1. Determine all ListMembers Eligibility
+    RsvpAllowList.map((listMember) => {
+      // Fuzzy First Name Match and Last Names must be equal
+      const firstNameMatchValue = jaroWinkler(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase(), 0);
+      const firstNameMatch = firstNameMatchValue >= 0.50
+      // || levenshtein(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase()) <= 5
 
-    // Includes
-    const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
+      // Includes
+      const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
 
-    return firstNameMatch && lastNameMatch;
-  });
+      return { firstNameMatchValue, isMatch: firstNameMatch && lastNameMatch, listMember };
+    })
+      // 2. Filter all ListMembers if there is a Match
+      ?.filter(m => !!m.isMatch)
+      // 3. Rank ListMembers by the Match Score
+      ?.sort((a, b) => b.firstNameMatchValue - a.firstNameMatchValue);
+
+  // 4. Return Highest Ranked ListMember
+  return matches?.[0]?.listMember;
 };
 
 export const getPersonOnAllowListById = (id: number): AllowListMember => {
