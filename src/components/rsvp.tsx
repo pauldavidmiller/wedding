@@ -35,7 +35,7 @@ const DEFAULT_EXTRA_RSVP: Rsvp = {
 };
 
 function RSVPSection() {
-  const { rsvpReleaseDate } = useAppContext();
+  const { rsvpReleaseDate, reshearsalRsvpDateSpelledString } = useAppContext();
   const disabled = new Date() < rsvpReleaseDate && !isDevelopment();
 
   const [isRsvpFormOpen, setIsRsvpFormOpen] = useState<boolean>(false);
@@ -240,11 +240,13 @@ function RSVPSection() {
   }, [isFillingOutAdditions, primaryRsvpAllowedData?.additionalMembers]);
 
   useEffect(() => {
-    if (!primaryRsvpAllowedData?.maxAdditionalCount) {
+    if (!!primaryRsvpAllowedData?.additionalMembers?.length) {
+      setIsFillingOutAdditions(true);
+    } else {
       setIsFillingOutAdditions(false);
       setAdditionalRsvps([]);
     }
-  }, [primaryRsvpAllowedData?.maxAdditionalCount]);
+  }, [primaryRsvpAllowedData?.additionalMembers?.length]);
 
   if (!isRsvpFormOpen) {
     return (
@@ -254,13 +256,18 @@ function RSVPSection() {
         variant={SectionVariant.white}
         isComingSoon={disabled}
       >
-        <button
-          type="button"
-          className="rsvp-button"
-          onClick={() => setIsRsvpFormOpen(true)}
-        >
-          Send Rsvp Now
-        </button>
+        <div className="flex flex-col gap-4">
+          <label className="text-xl">
+            Kindly RSVP by {reshearsalRsvpDateSpelledString}
+          </label>
+          <button
+            type="button"
+            className="rsvp-button"
+            onClick={() => setIsRsvpFormOpen(true)}
+          >
+            Send Rsvp Now
+          </button>
+        </div>
       </PageSection>
     );
   }
@@ -313,15 +320,15 @@ function RSVPSection() {
           allowListMember={primaryRsvpAllowedData}
         />
 
-        {primaryRsvpAllowedData?.maxAdditionalCount > 0 && (
+        {primaryRsvpAllowedData?.additionalMembers?.length > 0 && (
           <fieldset disabled={disabled}>
             <Checkbox
               isChecked={isFillingOutAdditions}
               setIsChecked={setIsFillingOutAdditions}
               label={
-                primaryRsvpAllowedData?.maxAdditionalCount === 1
-                  ? "Plus One?"
-                  : "Filling Out for Family?"
+                primaryRsvpAllowedData?.additionalMembers?.length === 1
+                  ? "Additional Guest?"
+                  : "Filling out for Family?"
               }
             />
             {isFillingOutAdditions && (
@@ -375,7 +382,7 @@ function RSVPSection() {
                   </div>
                 ))}
                 {additionalRsvps.length <
-                  primaryRsvpAllowedData?.maxAdditionalCount && (
+                  primaryRsvpAllowedData?.additionalMembers?.length && (
                   <button
                     type="button"
                     className="add-button"

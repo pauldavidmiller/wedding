@@ -378,7 +378,7 @@ body {
 /* RSVP */
 .rsvp-button {
   @apply h-10 w-min self-center text-lg;
-  @apply px-2;
+  @apply px-8;
   @apply tracking-wide;
   @apply whitespace-nowrap;
   @apply bg-blue-500 hover:bg-blue-400 text-gray-50 rounded;

@@ -12,6 +12,7 @@ interface AppContextType {
   hashedPassword: string;
   venueName: string;
   venuAddress: string;
+  reshearsalRsvpDateSpelledString: string;
   date: Date;
   dateSpelledString: string;
   dateFullSpelledString: string;
@@ -36,6 +37,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const [venuAddress] = useState<string>(
     "10 Art Museum Dr, Baltimore, MD 21218, USA"
   );
+  const [reshearsalRsvpDateSpelledString] = useState<string>("July 30th, 2025");
   const [date] = useState<Date>(new Date("08/31/2025"));
   const [dateSpelledString] = useState<string>("August 31st, 2025");
   const [dateFullSpelledString] = useState<string>("Sunday, August 31st, 2025");
@@ -73,6 +75,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         hashedPassword,
         venueName,
         venuAddress,
+        reshearsalRsvpDateSpelledString,
         date,
         dateSpelledString,
         dateFullSpelledString,

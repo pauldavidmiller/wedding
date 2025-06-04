@@ -7,22 +7,22 @@ const DinnerMenu = () => {
     {
       choice: DinnerChoice.Beef,
       description: "ESPRESSO RUBBED BEEF TENDERLOIN",
-      note: "gf, df | charred pearl onions, huckleberry habanero sauce",
+      note: "charred pearl onions, huckleberry habanero sauce",
     },
     {
       choice: DinnerChoice.Chicken,
       description: "PARMESAN CRUSTED CHICKEN",
-      note: "| basil beurre blanc",
+      note: "basil beurre blanc",
     },
     {
       choice: DinnerChoice.Fish,
-      description: "BLACKENED BBQ SALMON",
-      note: "gf, df | spiced cherry compote",
+      description: "TERIYAKI GLAZED SALMON",
+      note: "braised spinach, caramelized onions",
     },
     {
       choice: DinnerChoice.Vegan,
       description: "CHICKPEA CAKE",
-      note: "vg | lemon tahini sauce",
+      note: "lemon tahini sauce",
     },
   ];
 

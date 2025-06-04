@@ -56,10 +56,12 @@ export const getPersonOnAllowListByName = (
 
     // Fuzzy First Name Match and Last Names must be equal
     const firstNameMatch =
-      jaroWinkler(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase(), 0) >= 0.85
+      jaroWinkler(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase(), 0) >= 0.50
     // || levenshtein(listMember.firstName.toLowerCase(), enteredFirstName.toLowerCase()) <= 5
 
-    const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
+    // Includes
+    const lastNameMatch = listMember.lastName.toLowerCase().includes(enteredLastName.toLowerCase());
+    // const lastNameMatch = listMember.lastName.toLowerCase() === enteredLastName.toLowerCase();
 
     return firstNameMatch && lastNameMatch;
   });
