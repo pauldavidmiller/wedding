@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 // Export the handler function that Netlify will use
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
-  const { rsvps, confirmationEmailAddress } = body; // Rsvps is of type Rsvp (object);
+  const { rsvps, confirmationEmailAddress, otherComments } = body; // Rsvps is of type Rsvp (object);
 
   const subject = "Margot & Paul's Wedding RSVP";
   const rsvpEntries = rsvps
@@ -24,10 +24,10 @@ exports.handler = async (event, context) => {
       (rsvp) => `
         <tr>
             <td>${rsvp.name}</td>
-            <td>${rsvp.attendingChoice?.toString()}</td>
-            <td>${rsvp.dinnerChoice?.toString()}</td>
-            <td>${rsvp.dietaryRestrictions}</td>
-            <td>${rsvp.attendingRehearsal?.toString()}</td>
+            <td>${rsvp.attendingRehearsal?.toString() || ""}</td>
+            <td>${rsvp.attendingChoice?.toString() || ""}</td>
+            <td>${rsvp.dinnerChoice?.toString() || ""}</td>
+            <td>${rsvp.dietaryRestrictions?.toString() || ""}</td>
         </tr>
     `
     )
@@ -69,6 +69,18 @@ exports.handler = async (event, context) => {
                 background-color: #A45D5D;
                 color: white;
             }
+            .custom-message {
+                margin-top: 20px;
+                padding: 0 15px;
+                background-color: #f2f2f2;
+                border-radius: 6px;
+                color: #333;
+                white-space: pre-wrap;
+            }
+            .custom-message strong {
+                display: block;
+                margin-left: 0;
+            }
             .footer {
                 text-align: center;
                 font-size: 14px;
@@ -85,16 +97,19 @@ exports.handler = async (event, context) => {
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Attending Rehearsal</th>
                         <th>Attending Wedding</th>
                         <th>Dinner Choice</th>
                         <th>Dietary Restrictions</th>
-                        <th>Attending Rehearsal</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${rsvpEntries}
                 </tbody>
             </table>
+            <div class="custom-message">
+                <strong>Custom Message:</strong><br>${otherComments}
+            </div>
             <div class="footer">
                 With love,<br>
                 Margot & Paul
@@ -102,7 +117,7 @@ exports.handler = async (event, context) => {
         </div>
     </body>
     </html>
-    `;
+  `;
 
   // Send to ourselves
   const toUsMailOptions = {

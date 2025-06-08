@@ -44,6 +44,7 @@ function RSVPSection() {
   // Primary
   const [primaryRsvp, setPrimaryRsvp] = useState<Rsvp>(DEFAULT_RSVP);
   const primaryRsvpAllowedData = getPersonOnAllowListByName(primaryRsvp.name);
+  const [otherComments, setOtherComments] = useState<string>("");
   const [confirmationEmailAddress, setConfirmationEmailAddress] =
     useState<string>("");
 
@@ -156,6 +157,9 @@ function RSVPSection() {
 
     setIsFillingOutAdditions(false);
     setAdditionalRsvps([DEFAULT_EXTRA_RSVP]);
+
+    setOtherComments("");
+    setConfirmationEmailAddress("");
   };
 
   const handleSubmit = async (event: any) => {
@@ -200,6 +204,7 @@ function RSVPSection() {
       const res = await axios.post("/api/notify", {
         rsvps,
         confirmationEmailAddress,
+        otherComments,
       });
 
       if (res?.data?.success) {
@@ -396,6 +401,17 @@ function RSVPSection() {
           </fieldset>
         )}
 
+        <div className="rsvp-other-comments">
+          <legend>Custom Message:</legend>
+          <textarea
+            placeholder="Leave a custom message here..."
+            value={otherComments}
+            onChange={(e) => setOtherComments(e.target.value)}
+            disabled={disabled}
+            required
+          />
+        </div>
+
         <div className="rsvp-email-address">
           <legend>Your Email Address (optional for confirmation):</legend>
           <input
@@ -407,7 +423,7 @@ function RSVPSection() {
           />
         </div>
         <button
-          disabled={disabled || hasAlreadyRsvped}
+          disabled={disabled} // TODO: Disable one day for real site || hasAlreadyRsvped}
           type="submit"
           className="rsvp-submit-button"
           title={
