@@ -172,7 +172,8 @@ function RSVPSection() {
     const isValid = isValidSubmission(
       primaryRsvp,
       "Please enter your full name and whether you're attending.",
-      "Please enter your dinner choice."
+      "Please enter your dinner choice.",
+      "Please enter whether you are attending the rehearsal dinner."
     );
 
     if (!isValid) {
@@ -187,7 +188,8 @@ function RSVPSection() {
         const isValid = isValidSubmission(
           fm,
           "One of the members of your party is missing either their full name or their RSVP status.",
-          "There is a missing dinner selection for a member of your party."
+          "There is a missing dinner selection for a member of your party.",
+          "One of the members of your party is missing their RSVP to the rehearsal dinner."
         );
 
         if (!isValid) {
@@ -408,7 +410,6 @@ function RSVPSection() {
             value={otherComments}
             onChange={(e) => setOtherComments(e.target.value)}
             disabled={disabled}
-            required
           />
         </div>
 

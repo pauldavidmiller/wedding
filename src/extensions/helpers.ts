@@ -88,7 +88,8 @@ export const getPersonOnAllowListById = (id: number): AllowListMember => {
 export const isValidSubmission = (
   rsvp: Rsvp,
   nameAttendingAlertMessage: string,
-  dinnerAlertMessage: string
+  dinnerAlertMessage: string,
+  rehearsalAlertMessage: string
 ): boolean => {
   // Check if name and attending is entered
   if (!isValidFullName(rsvp.name) || !rsvp.attendingChoice) {
@@ -102,6 +103,12 @@ export const isValidSubmission = (
     (!rsvp.dinnerChoice || rsvp.dinnerChoice === DinnerChoice.None)
   ) {
     alert(dinnerAlertMessage);
+    return false;
+  }
+
+  // Check to make sure attending rehearsal was filled out if enabled
+  if (!!rsvp.allowListMember?.rehearsalDinnerRsvpEnabled && rsvp.attendingRehearsal == null) {
+    alert(rehearsalAlertMessage)
     return false;
   }
 

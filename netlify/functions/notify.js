@@ -21,18 +21,34 @@ exports.handler = async (event, context) => {
   const subject = "Margot & Paul's Wedding RSVP";
   const rsvpEntries = rsvps
     .map(
-      (rsvp) => `
+      (rsvp) =>
+        `
         <tr>
-            <td>${rsvp.name}</td>
-            <td>${rsvp.attendingRehearsal?.toString() || ""}</td>
-            <td>${rsvp.attendingChoice?.toString() || ""}</td>
+            <td>${rsvp.name}</td>` +
+        (rsvp.attendingRehearsal != null ? "<td>" : "") +
+        (rsvp.attendingRehearsal != null
+          ? rsvp.attendingRehearsal.toString() || ""
+          : "") +
+        (rsvp.attendingRehearsal != null ? "</td>" : "") +
+        `<td>${rsvp.attendingChoice?.toString() || ""}</td>
             <td>${rsvp.dinnerChoice?.toString() || ""}</td>
             <td>${rsvp.dietaryRestrictions?.toString() || ""}</td>
         </tr>
     `
     )
     .join("");
-  const rsvpBody = `
+
+  let allInvitedRehearsal = true;
+  for (let i = 0; i < rsvps.length; i++) {
+    const rsvp = rsvps[i];
+    if (rsvp.attendingRehearsal == null) {
+      allInvitedRehearsal = false;
+      break;
+    }
+  }
+
+  const rsvpBody =
+    `
     <!DOCTYPE html>
     <html>
     <head>
@@ -96,9 +112,9 @@ exports.handler = async (event, context) => {
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Attending Rehearsal</th>
-                        <th>Attending Wedding</th>
+                        <th>Name</th>` +
+    (allInvitedRehearsal ? `<th>Attending Rehearsal</th>` : "") +
+    `<th>Attending Wedding</th>
                         <th>Dinner Choice</th>
                         <th>Dietary Restrictions</th>
                     </tr>
