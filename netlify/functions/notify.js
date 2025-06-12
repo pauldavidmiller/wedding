@@ -184,7 +184,10 @@ exports.handler = async (event, context) => {
     // Send the emails using nodemailer
     let mailOptions = [transporter.sendMail(toUsMailOptions)];
 
-    if (confirmationEmailAddress != null && confirmationEmailAddress !== "") {
+    if (
+      confirmationEmailAddress != null &&
+      confirmationEmailAddress.trim() !== ""
+    ) {
       mailOptions.push(transporter.sendMail(toYouMailOptions));
     }
 
