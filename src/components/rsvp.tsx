@@ -101,7 +101,7 @@ function RSVPSection() {
               ...item,
               attendingChoice: newAttendingChoice,
               dinnerChoice: null,
-              dietaryRestrictions: null,
+              dietaryRestrictions: "",
             }
           : item
       )

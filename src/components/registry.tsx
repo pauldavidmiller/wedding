@@ -61,8 +61,9 @@ const RegistrySection = () => {
               />
             </div>
             <div className="registry-images">
-              {registries.map((r) => (
+              {registries.map((r, i) => (
                 <img
+                  key={`registry-image-${i}`}
                   src={r.img}
                   alt={r.name}
                   onClick={() => window.open(r.url, "_blank")}

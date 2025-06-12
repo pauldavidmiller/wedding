@@ -19,33 +19,60 @@ exports.handler = async (event, context) => {
   const { rsvps, confirmationEmailAddress, otherComments } = body; // Rsvps is of type Rsvp (object);
 
   const subject = "Margot & Paul's Wedding RSVP";
+
+  let anyInvitedRehearsal = false;
+  for (let i = 0; i < rsvps.length; i++) {
+    const rsvp = rsvps[i];
+    if (rsvp.attendingRehearsal != null) {
+      anyInvitedRehearsal = true;
+      break;
+    }
+  }
+
+  let anyAttending = false;
+  for (let i = 0; i < rsvps.length; i++) {
+    const rsvp = rsvps[i];
+    if (
+      rsvp.dinnerChoice != null &&
+      rsvp.attendingChoice?.toString() === "Yes"
+    ) {
+      anyAttending = true;
+      break;
+    }
+  }
+
+  let anyDietaryRestrictions = false;
+  for (let i = 0; i < rsvps.length; i++) {
+    const rsvp = rsvps[i];
+    if (
+      rsvp.dietaryRestrictions != null &&
+      rsvp.dietaryRestrictions.trim() !== ""
+    ) {
+      anyDietaryRestrictions = true;
+      break;
+    }
+  }
+
   const rsvpEntries = rsvps
     .map(
       (rsvp) =>
         `
         <tr>
             <td>${rsvp.name}</td>` +
-        (rsvp.attendingRehearsal != null ? "<td>" : "") +
-        (rsvp.attendingRehearsal != null
-          ? rsvp.attendingRehearsal.toString() || ""
+        (anyInvitedRehearsal
+          ? `<td>${rsvp.attendingRehearsal.toString() || "--"}</td>`
           : "") +
-        (rsvp.attendingRehearsal != null ? "</td>" : "") +
-        `<td>${rsvp.attendingChoice?.toString() || ""}</td>
-            <td>${rsvp.dinnerChoice?.toString() || ""}</td>
-            <td>${rsvp.dietaryRestrictions?.toString() || ""}</td>
-        </tr>
+        `<td>${rsvp.attendingChoice?.toString() || "--"}</td>` +
+        (anyAttending
+          ? `<td>${rsvp.dinnerChoice?.toString() || "--"}</td>`
+          : "") +
+        (anyAttending && anyDietaryRestrictions
+          ? `<td>${rsvp.dietaryRestrictions?.toString() || "--"}</td>`
+          : "") +
+        `</tr>
     `
     )
     .join("");
-
-  let allInvitedRehearsal = true;
-  for (let i = 0; i < rsvps.length; i++) {
-    const rsvp = rsvps[i];
-    if (rsvp.attendingRehearsal == null) {
-      allInvitedRehearsal = false;
-      break;
-    }
-  }
 
   const rsvpBody =
     `
@@ -113,11 +140,13 @@ exports.handler = async (event, context) => {
                 <thead>
                     <tr>
                         <th>Name</th>` +
-    (allInvitedRehearsal ? `<th>Attending Rehearsal</th>` : "") +
-    `<th>Attending Wedding</th>
-                        <th>Dinner Choice</th>
-                        <th>Dietary Restrictions</th>
-                    </tr>
+    (anyInvitedRehearsal ? `<th>Attending Rehearsal</th>` : "") +
+    `<th>Attending Wedding</th>` +
+    (anyAttending ? `<th>Dinner Choice</th>` : "") +
+    (anyAttending && anyDietaryRestrictions
+      ? `<th>Dietary Restrictions</th>`
+      : "") +
+    `</tr>
                 </thead>
                 <tbody>
                     ${rsvpEntries}
