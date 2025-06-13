@@ -135,7 +135,11 @@ exports.handler = async (event, context) => {
     <body>
         <div class="container">
             <h2>Wedding RSVP Confirmation</h2>
-            <p>We’re thrilled to have you celebrating with us! Below are the RSVP details provided:</p>
+            <p>` +
+    (anyAttending
+      ? "We’re thrilled to have you celebrating with us!"
+      : "We're sorry you won't be able to join!") +
+    ` Below are the RSVP details provided:</p>
             <table>
                 <thead>
                     <tr>
