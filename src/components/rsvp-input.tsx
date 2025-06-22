@@ -44,7 +44,9 @@ const RsvpInput = ({
     <>
       <fieldset disabled={disabled} className={`rsvp-input ${className}`}>
         <div className="rsvp-input-section">
-          <legend>Full Name:</legend>
+          <legend>
+            {rsvpKey === "primary" ? "Your" : "Additional"} Full Name:
+          </legend>
           <input
             type="text"
             placeholder="First and Last Name"
