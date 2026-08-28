@@ -13,7 +13,7 @@ const Signature = () => {
       <h3>
         {dateFullSpelledString} • {location}
       </h3>
-      <CountdownTimer targetDate={date} />
+      <CountdownTimer targetDate={date} countUp hasTitle />
     </section>
   );
 };

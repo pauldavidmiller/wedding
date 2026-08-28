@@ -7,8 +7,8 @@ import { isDevelopment } from "../extensions/environments";
 
 const SaveTheDate = () => {
   const {
-    hashedPassword,
-    setIsUnlocked,
+    passwordViews,
+    setUnlockedView,
     websiteReleaseDate,
     date,
     dateSpelledString,
@@ -25,8 +25,10 @@ const SaveTheDate = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hash = CryptoJS.SHA256(password).toString();
-    if (hash === hashedPassword) {
-      setIsUnlocked(true);
+    const match = passwordViews.find((pv) => pv.hashedPassword === hash);
+    if (match) {
+      setError("");
+      setUnlockedView(match.view);
     } else {
       setError("Incorrect password. Please try again.");
     }
@@ -35,9 +37,8 @@ const SaveTheDate = () => {
   return (
     <div className="password-prompt">
       <div className="password-prompt-container">
-        <h1>Save the Date!</h1>
         <h2>{dateSpelledString}</h2>
-        <CountdownTimer targetDate={date} />
+        <CountdownTimer targetDate={date} countUp hasTitle />
         <h3>The Wedding of</h3>
         <h4>Margot and Paul</h4>
         <h5>{venueName}</h5>

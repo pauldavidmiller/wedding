@@ -120,3 +120,70 @@ export const subtractDays = (date: Date, days: number): Date => {
   result.setDate(result.getDate() - days); // Subtract the days
   return result; // Return the new date
 };
+
+export type ElapsedTime = {
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+/**
+ * Calendar accurate elapsed time between two dates, broken down into
+ * years / months / days / hours / minutes / seconds. Borrows from the next
+ * larger unit whenever a unit goes negative (so "1 year, 0 months, 3 days"
+ * stays true no matter how long the months in between happened to be).
+ */
+export const getElapsedTime = (from: Date, to: Date = new Date()): ElapsedTime => {
+  // Nothing has elapsed yet if the start date is still in the future
+  if (to.getTime() <= from.getTime()) {
+    return { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  let years = to.getFullYear() - from.getFullYear();
+  let months = to.getMonth() - from.getMonth();
+  let days = to.getDate() - from.getDate();
+  let hours = to.getHours() - from.getHours();
+  let minutes = to.getMinutes() - from.getMinutes();
+  let seconds = to.getSeconds() - from.getSeconds();
+
+  if (seconds < 0) {
+    seconds += 60;
+    minutes -= 1;
+  }
+  if (minutes < 0) {
+    minutes += 60;
+    hours -= 1;
+  }
+  if (hours < 0) {
+    hours += 24;
+    days -= 1;
+  }
+  if (days < 0) {
+    // Borrow the number of days in the month just before the "to" month
+    const daysInPreviousMonth = new Date(
+      to.getFullYear(),
+      to.getMonth(),
+      0
+    ).getDate();
+    days += daysInPreviousMonth;
+    months -= 1;
+  }
+  if (months < 0) {
+    months += 12;
+    years -= 1;
+  }
+
+  return { years, months, days, hours, minutes, seconds };
+};
+
+/** Total whole days between two dates. */
+export const getTotalDaysBetween = (from: Date, to: Date = new Date()): number => {
+  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+  return Math.max(
+    0,
+    Math.floor((to.getTime() - from.getTime()) / millisecondsPerDay)
+  );
+};

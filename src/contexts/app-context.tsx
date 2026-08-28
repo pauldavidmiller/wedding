@@ -2,14 +2,25 @@
 
 import React, { createContext, useState, ReactNode } from "react";
 import { subtractDays } from "../extensions/helpers";
+import { SiteView } from "../types/site-view";
+
+/**
+ * A password and the view it unlocks. Add a new entry here (with the sha256
+ * hash of the new password) to hang another experience off the same front door.
+ */
+export type PasswordView = {
+  hashedPassword: string;
+  view: SiteView;
+};
 
 interface AppContextType {
   websiteReleaseDate: Date;
   registryReleaseDate: Date;
   rsvpReleaseDate: Date;
-  isUnlocked?: boolean;
-  setIsUnlocked?: React.Dispatch<React.SetStateAction<boolean>>;
-  hashedPassword: string;
+  isUnlocked: boolean;
+  unlockedView?: SiteView;
+  setUnlockedView?: React.Dispatch<React.SetStateAction<SiteView | undefined>>;
+  passwordViews: PasswordView[];
   venueName: string;
   venuAddress: string;
   reshearsalRsvpDateSpelledString: string;
@@ -29,10 +40,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const [websiteReleaseDate] = useState<Date>(new Date("04/01/2025"));
   const [registryReleaseDate] = useState<Date>(new Date("04/15/2025"));
   const [rsvpReleaseDate] = useState<Date>(new Date("05/11/2025"));
-  const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
-  const [hashedPassword] = useState<string>(
-    "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2"
+  const [unlockedView, setUnlockedView] = useState<SiteView | undefined>(
+    undefined
   );
+  const [passwordViews] = useState<PasswordView[]>([
+    {
+      // "mp2025" - the original 2025 wedding site, kept exactly as it was
+      hashedPassword:
+        "ebb516c0b83b18417f43bbdc46ddb0bf41ec495df0821e9936d8d38003b0bde2",
+      view: SiteView.Wedding,
+    },
+    {
+      // "mp1year" - the 1 year anniversary page
+      hashedPassword:
+        "9ad8aa16527b464f9f30321e86e7ebf60e3455b3895e2f2454b96534cce793ed",
+      view: SiteView.OneYearAnniversary,
+    },
+  ]);
   const [venueName] = useState<string>("Baltimore Museum of Art (BMA)");
   const [venuAddress] = useState<string>(
     "10 Art Museum Dr, Baltimore, MD 21218, USA"
@@ -70,9 +94,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         websiteReleaseDate,
         registryReleaseDate,
         rsvpReleaseDate,
-        isUnlocked,
-        setIsUnlocked,
-        hashedPassword,
+        isUnlocked: unlockedView != null,
+        unlockedView,
+        setUnlockedView,
+        passwordViews,
         venueName,
         venuAddress,
         reshearsalRsvpDateSpelledString,

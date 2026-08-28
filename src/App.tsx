@@ -17,9 +17,11 @@ import HeroSection from "./components/hero";
 import HamburgerHeader from "./components/hamburger-header";
 import { useAppContext } from "./contexts/app-context";
 import RegistrySection from "./components/registry";
+import Anniversary from "./components/anniversary";
+import { SiteView } from "./types/site-view";
 
 function App() {
-  const { isUnlocked } = useAppContext();
+  const { unlockedView } = useAppContext();
   const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHamburgerMenu();
 
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
@@ -50,13 +52,15 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [isUnlocked]);
+  }, [unlockedView]);
 
   return (
     <>
-      {!isUnlocked ? (
-        <SaveTheDate />
-      ) : (
+      {unlockedView == null && <SaveTheDate />}
+
+      {unlockedView === SiteView.OneYearAnniversary && <Anniversary />}
+
+      {unlockedView === SiteView.Wedding && (
         <div className="app-container">
           <HamburgerHeader />
           <Signature />

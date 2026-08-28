@@ -817,3 +817,209 @@ body {
   @apply text-left;
   @apply w-full;
 }
+
+/* Countdown / count up timer */
+.countdown-timer-title {
+  @apply montserrat-font uppercase;
+  @apply text-sm tracking-[0.25em];
+  @apply pb-1;
+}
+
+/* ------------------------------------------------------------------ */
+/* 1 Year Anniversary                                                   */
+/* ------------------------------------------------------------------ */
+
+.anniversary {
+  @apply relative w-full min-h-screen;
+  background: radial-gradient(
+      ellipse at top,
+      rgba(255, 255, 255, 0.18),
+      transparent 60%
+    ),
+    linear-gradient(160deg, #7b1d2b 0%, #a83244 45%, #d9534f 100%);
+  /* Pinned to the viewport so the wash stays even however tall the page grows */
+  background-attachment: fixed;
+  color: #fff8f0;
+  font-family: "Georgia", serif;
+}
+
+.anniversary-content {
+  @apply relative z-10;
+  @apply mx-auto px-4 pb-16;
+  @apply flex flex-col items-center;
+  max-width: 1100px;
+}
+
+/* Banner */
+.anniversary-banner {
+  @apply w-full text-center;
+  @apply pt-12 pb-10 sm:pt-16;
+}
+
+.anniversary-eyebrow {
+  @apply montserrat-font uppercase;
+  @apply text-sm sm:text-base tracking-[0.4em];
+  color: #f7d354;
+}
+
+.anniversary-headline {
+  @apply cursive-font;
+  @apply text-7xl sm:text-8xl lg:text-9xl;
+  @apply leading-none pt-2;
+  color: #fff8f0;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.anniversary-names {
+  @apply playfair-display-font uppercase;
+  @apply text-3xl sm:text-5xl tracking-[0.2em];
+  @apply pt-4;
+  color: #f7d354;
+}
+
+.anniversary-date {
+  @apply montserrat-font uppercase;
+  @apply text-xs sm:text-sm tracking-[0.25em];
+  @apply pt-4;
+  color: rgba(255, 248, 240, 0.85);
+}
+
+.anniversary-rule {
+  @apply flex items-center justify-center gap-4;
+  @apply pt-6;
+  color: #f7d354;
+}
+
+.anniversary-rule::before,
+.anniversary-rule::after {
+  content: "";
+  @apply block h-px;
+  width: clamp(48px, 18vw, 160px);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(247, 211, 84, 0.9),
+    transparent
+  );
+}
+
+.anniversary-days {
+  @apply playfair-display-font italic;
+  @apply text-lg sm:text-2xl;
+  @apply pt-6;
+  color: rgba(255, 248, 240, 0.95);
+}
+
+.anniversary-timer {
+  @apply pt-6;
+  color: #fff8f0;
+}
+
+.anniversary-timer .countdown-timer-title {
+  @apply montserrat-font uppercase;
+  @apply text-xs sm:text-sm tracking-[0.35em] font-normal;
+  color: #f7d354;
+}
+
+/* Video */
+.anniversary-video {
+  @apply w-full;
+  @apply pt-6 pb-4;
+  @apply text-center;
+}
+
+.anniversary-video-title {
+  @apply cursive-font;
+  @apply text-5xl sm:text-6xl;
+  @apply pb-5;
+  color: #fff8f0;
+}
+
+.anniversary-video-frame {
+  @apply w-full overflow-hidden;
+  @apply rounded-2xl;
+  border: 1px solid rgba(247, 211, 84, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  background-color: #000;
+  line-height: 0;
+}
+
+.anniversary-video-player {
+  @apply w-full h-auto;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+
+.anniversary-video-caption {
+  @apply montserrat-font;
+  @apply text-sm tracking-widest uppercase;
+  @apply pt-4;
+  color: rgba(255, 248, 240, 0.75);
+}
+
+/* Footer */
+.anniversary-footer {
+  @apply w-full text-center;
+  @apply pt-12;
+}
+
+.anniversary-footer p {
+  @apply cursive-font text-4xl sm:text-5xl;
+  color: #f7d354;
+}
+
+.anniversary-back-button {
+  @apply montserrat-font uppercase;
+  @apply text-xs tracking-[0.25em];
+  @apply mt-8 px-6 py-3 rounded-full;
+  @apply transition-all duration-300;
+  color: rgba(255, 248, 240, 0.9);
+  border: 1px solid rgba(255, 248, 240, 0.45);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.anniversary-back-button:hover {
+  color: #7b1d2b;
+  background-color: #f7d354;
+  border-color: #f7d354;
+}
+
+/* Confetti */
+.confetti {
+  /* Fixed so the confetti keeps falling across the viewport as you scroll */
+  @apply fixed inset-0 z-0 overflow-hidden;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  @apply absolute block;
+  top: -10vh;
+  opacity: 0;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(40px, 110vh, 0) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
