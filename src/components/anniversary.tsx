@@ -2,6 +2,7 @@ import React from "react";
 import { useAppContext } from "../contexts/app-context";
 import { getTotalDaysBetween } from "../extensions/helpers";
 import AnniversaryConfetti from "./anniversary-confetti";
+import AnniversaryCrossword from "./anniversary-crossword";
 import AnniversaryVideo from "./anniversary-video";
 import CountdownTimer from "./countdown-timer";
 
@@ -46,6 +47,9 @@ const Anniversary = () => {
           title="Our First Year"
           caption="Turn the sound on"
         />
+
+        {/* Crossword */}
+        <AnniversaryCrossword />
 
         {/* More sections to come below */}
 
