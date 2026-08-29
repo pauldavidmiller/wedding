@@ -1156,6 +1156,38 @@ body {
   @apply montserrat-font text-xs opacity-70;
 }
 
+/* Two columns on a wide screen: the grid pins itself on the left while the
+   clues run their full length on the right, so the page scrolls through the
+   clues without ever taking the puzzle off screen. Below this width
+   everything stacks, which is what phones and tablets get. */
+@media (min-width: 1280px) {
+  .crossword {
+    /* Sized so a row of 25 squares and the clue column both fit side by side,
+       and so all 24 rows fit the viewport height with the board pinned. */
+    --crossword-cell: clamp(18px, min(2.1vw, 2.9vh), 30px);
+    /* Break out of the 1100px content column; the puzzle needs the room. The
+       parent is a centred flex column, so an over-wide child centres itself
+       on the viewport without any margin trickery. */
+    width: min(1440px, calc(100vw - 3rem));
+    max-width: none;
+  }
+
+  .crossword-layout {
+    @apply grid items-start gap-10;
+    grid-template-columns: min-content minmax(340px, 1fr);
+  }
+
+  .crossword-board {
+    @apply sticky;
+    top: 1.5rem;
+  }
+
+  .crossword-clues {
+    @apply grid-cols-1 gap-y-8;
+    @apply pt-0;
+  }
+}
+
 /* Footer */
 .anniversary-footer {
   @apply w-full text-center;

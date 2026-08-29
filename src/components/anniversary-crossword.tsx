@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   CROSSWORD_ENTRIES,
   CROSSWORD_GRID,
@@ -33,6 +39,8 @@ const AnniversaryCrossword = () => {
   });
   const [checked, setChecked] = useState(false);
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const boardRef = useRef<HTMLDivElement | null>(null);
+  const clueRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   /* The number shown in the corner of a square, and which entries own it. */
   const { numbers, entriesAtCell } = useMemo(() => {
@@ -70,9 +78,9 @@ const AnniversaryCrossword = () => {
           const row = entry.dir === "down" ? entry.row + i : entry.row;
           const col = entry.dir === "across" ? entry.col + i : entry.col;
           return guesses[cellKey(row, col)] === letter;
-        })
+        }),
       ),
-    [guesses]
+    [guesses],
   );
 
   const focusCell = useCallback((row: number, col: number) => {
@@ -90,12 +98,12 @@ const AnniversaryCrossword = () => {
         sameCell && owners.some((entry) => entry.dir === other)
           ? other
           : owners.some((entry) => entry.dir === active.dir)
-          ? active.dir
-          : owners[0]?.dir ?? "across";
+            ? active.dir
+            : (owners[0]?.dir ?? "across");
       setActive({ row, col, dir });
       focusCell(row, col);
     },
-    [active, entriesAtCell, focusCell]
+    [active, entriesAtCell, focusCell],
   );
 
   const step = useCallback(
@@ -105,7 +113,7 @@ const AnniversaryCrossword = () => {
       if (isBlank(nextRow, nextCol)) return null;
       return { row: nextRow, col: nextCol };
     },
-    []
+    [],
   );
 
   const advance = useCallback(
@@ -115,7 +123,7 @@ const AnniversaryCrossword = () => {
       setActive({ ...next, dir });
       focusCell(next.row, next.col);
     },
-    [focusCell, step]
+    [focusCell, step],
   );
 
   const setLetter = useCallback((row: number, col: number, letter: string) => {
@@ -139,7 +147,7 @@ const AnniversaryCrossword = () => {
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
     row: number,
-    col: number
+    col: number,
   ) => {
     const arrows: Record<string, [Direction, number]> = {
       ArrowRight: ["across", 1],
@@ -190,7 +198,8 @@ const AnniversaryCrossword = () => {
     const next: Record<string, string> = {};
     for (let row = 0; row < CROSSWORD_HEIGHT; row++) {
       for (let col = 0; col < CROSSWORD_WIDTH; col++) {
-        if (!isBlank(row, col)) next[cellKey(row, col)] = CROSSWORD_GRID[row][col];
+        if (!isBlank(row, col))
+          next[cellKey(row, col)] = CROSSWORD_GRID[row][col];
       }
     }
     setChecked(false);
@@ -203,8 +212,10 @@ const AnniversaryCrossword = () => {
     setGuesses((prev) => {
       const next = { ...prev };
       activeEntry.answer.split("").forEach((letter, i) => {
-        const row = activeEntry.dir === "down" ? activeEntry.row + i : activeEntry.row;
-        const col = activeEntry.dir === "across" ? activeEntry.col + i : activeEntry.col;
+        const row =
+          activeEntry.dir === "down" ? activeEntry.row + i : activeEntry.row;
+        const col =
+          activeEntry.dir === "across" ? activeEntry.col + i : activeEntry.col;
         next[cellKey(row, col)] = letter;
       });
       return next;
@@ -220,24 +231,55 @@ const AnniversaryCrossword = () => {
     const set = new Set<string>();
     if (activeEntry) {
       for (let i = 0; i < activeEntry.answer.length; i++) {
-        const row = activeEntry.dir === "down" ? activeEntry.row + i : activeEntry.row;
-        const col = activeEntry.dir === "across" ? activeEntry.col + i : activeEntry.col;
+        const row =
+          activeEntry.dir === "down" ? activeEntry.row + i : activeEntry.row;
+        const col =
+          activeEntry.dir === "across" ? activeEntry.col + i : activeEntry.col;
         set.add(cellKey(row, col));
       }
     }
     return set;
   }, [activeEntry]);
 
+  /* On the wide layout the board stays pinned while the page scrolls through
+     the clues, so nudging the page to reveal the active clue never takes the
+     puzzle off screen. On the stacked layout it would, so leave it alone. */
+  useEffect(() => {
+    const board = boardRef.current;
+    if (!board || !activeEntry) return;
+    if (getComputedStyle(board).position !== "sticky") return;
+
+    const clue = clueRefs.current[`${activeEntry.number}-${activeEntry.dir}`];
+    if (!clue) return;
+
+    const clueBox = clue.getBoundingClientRect();
+    const margin = 24;
+
+    /* Jump rather than animate: the board is pinned, so only the clue column
+       appears to move, and a smooth scroll here is a no-op in some browsers. */
+    if (clueBox.top < margin) {
+      window.scrollBy(0, clueBox.top - margin);
+    } else if (clueBox.bottom > window.innerHeight - margin) {
+      window.scrollBy(0, clueBox.bottom - window.innerHeight + margin);
+    }
+  }, [activeEntry]);
+
   const renderClueList = (dir: Direction) => (
     <div className="crossword-clue-list">
-      <h4 className="crossword-clue-heading">{dir === "across" ? "Across" : "Down"}</h4>
+      <h4 className="crossword-clue-heading">
+        {dir === "across" ? "Across" : "Down"}
+      </h4>
       <ol>
         {CROSSWORD_ENTRIES.filter((entry) => entry.dir === dir).map((entry) => (
           <li key={`${entry.number}-${entry.dir}`}>
             <button
               type="button"
+              ref={(element) => {
+                clueRefs.current[`${entry.number}-${entry.dir}`] = element;
+              }}
               className={`crossword-clue${
-                activeEntry?.number === entry.number && activeEntry?.dir === entry.dir
+                activeEntry?.number === entry.number &&
+                activeEntry?.dir === entry.dir
                   ? " crossword-clue-active"
                   : ""
               }`}
@@ -245,7 +287,9 @@ const AnniversaryCrossword = () => {
             >
               <span className="crossword-clue-number">{entry.number}</span>
               <span className="crossword-clue-text">{entry.clue}</span>
-              <span className="crossword-clue-length">{entry.answer.length}</span>
+              <span className="crossword-clue-length">
+                {entry.answer.length}
+              </span>
             </button>
           </li>
         ))}
@@ -257,99 +301,113 @@ const AnniversaryCrossword = () => {
     <section className="crossword">
       <h2 className="crossword-title">The One Year Crossword</h2>
       <p className="crossword-intro">
-        Forty-eight little pieces of our first year. Tap a square, type an answer, and
-        keep an eye on the gold circles &mdash; read top to bottom, they spell
-        something out.
+        Forty-eight little pieces of our first year. Tap a square, type an
+        answer, and keep an eye on the gold circles &mdash; read top to bottom,
+        they spell something out.
       </p>
 
-      {activeEntry && (
-        <div className="crossword-current-clue">
-          <span className="crossword-current-number">
-            {activeEntry.number} {activeEntry.dir === "across" ? "Across" : "Down"}
-          </span>
-          <span>{activeEntry.clue}</span>
-        </div>
-      )}
+      <div className="crossword-layout">
+        <div className="crossword-board" ref={boardRef}>
+          {activeEntry && (
+            <div className="crossword-current-clue">
+              <span className="crossword-current-number">
+                {activeEntry.number}{" "}
+                {activeEntry.dir === "across" ? "Across" : "Down"}
+              </span>
+              <span>{activeEntry.clue}</span>
+            </div>
+          )}
 
-      <div className="crossword-grid-scroll">
-        <div
-          className="crossword-grid"
-          style={{ gridTemplateColumns: `repeat(${CROSSWORD_WIDTH}, var(--crossword-cell))` }}
-        >
-          {CROSSWORD_GRID.map((line, row) =>
-            line.split("").map((letter, col) => {
-              const key = cellKey(row, col);
-              if (letter === BLANK) return <div key={key} className="crossword-cell-blank" />;
+          <div className="crossword-grid-scroll">
+            <div
+              className="crossword-grid"
+              style={{
+                gridTemplateColumns: `repeat(${CROSSWORD_WIDTH}, var(--crossword-cell))`,
+              }}
+            >
+              {CROSSWORD_GRID.map((line, row) =>
+                line.split("").map((letter, col) => {
+                  const key = cellKey(row, col);
+                  if (letter === BLANK)
+                    return <div key={key} className="crossword-cell-blank" />;
 
-              const guess = guesses[key] ?? "";
-              const wrong = checked && guess !== "" && guess !== letter;
-              const hidden = hiddenIndexes[key] !== undefined;
-              const isActiveCell = active.row === row && active.col === col;
+                  const guess = guesses[key] ?? "";
+                  const wrong = checked && guess !== "" && guess !== letter;
+                  const hidden = hiddenIndexes[key] !== undefined;
+                  const isActiveCell = active.row === row && active.col === col;
 
-              const classes = [
-                "crossword-cell",
-                activeCells.has(key) ? "crossword-cell-in-word" : "",
-                isActiveCell ? "crossword-cell-active" : "",
-                hidden ? "crossword-cell-hidden" : "",
-                wrong ? "crossword-cell-wrong" : "",
-              ]
-                .filter(Boolean)
-                .join(" ");
+                  const classes = [
+                    "crossword-cell",
+                    activeCells.has(key) ? "crossword-cell-in-word" : "",
+                    isActiveCell ? "crossword-cell-active" : "",
+                    hidden ? "crossword-cell-hidden" : "",
+                    wrong ? "crossword-cell-wrong" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ");
 
-              return (
-                <div key={key} className={classes}>
-                  {numbers[key] && <span className="crossword-cell-number">{numbers[key]}</span>}
-                  <input
-                    ref={(element) => {
-                      inputRefs.current[key] = element;
-                    }}
-                    className="crossword-cell-input"
-                    type="text"
-                    inputMode="text"
-                    autoCapitalize="characters"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    aria-label={`Row ${row + 1}, column ${col + 1}`}
-                    value={guess}
-                    onChange={(event) => handleChange(row, col, event.target.value)}
-                    onKeyDown={(event) => handleKeyDown(event, row, col)}
-                    onFocus={() => {
-                      if (!isActiveCell) selectCell(row, col);
-                    }}
-                    onClick={() => selectCell(row, col)}
-                  />
-                </div>
-              );
-            })
+                  return (
+                    <div key={key} className={classes}>
+                      {numbers[key] && (
+                        <span className="crossword-cell-number">
+                          {numbers[key]}
+                        </span>
+                      )}
+                      <input
+                        ref={(element) => {
+                          inputRefs.current[key] = element;
+                        }}
+                        className="crossword-cell-input"
+                        type="text"
+                        inputMode="text"
+                        autoCapitalize="characters"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        aria-label={`Row ${row + 1}, column ${col + 1}`}
+                        value={guess}
+                        onChange={(event) =>
+                          handleChange(row, col, event.target.value)
+                        }
+                        onKeyDown={(event) => handleKeyDown(event, row, col)}
+                        onFocus={() => {
+                          if (!isActiveCell) selectCell(row, col);
+                        }}
+                        onClick={() => selectCell(row, col)}
+                      />
+                    </div>
+                  );
+                }),
+              )}
+            </div>
+          </div>
+
+          <div className="crossword-controls">
+            <button type="button" onClick={() => setChecked(true)}>
+              Check
+            </button>
+            <button type="button" onClick={revealWord}>
+              Reveal word
+            </button>
+            <button type="button" onClick={revealAll}>
+              Reveal all
+            </button>
+            <button type="button" onClick={clearAll}>
+              Clear
+            </button>
+          </div>
+
+          {solved && (
+            <p className="crossword-solved">
+              Every square. Of course you did. {CROSSWORD_HIDDEN_MESSAGE}.
+            </p>
           )}
         </div>
-      </div>
 
-      <div className="crossword-controls">
-        <button type="button" onClick={() => setChecked(true)}>
-          Check
-        </button>
-        <button type="button" onClick={revealWord}>
-          Reveal word
-        </button>
-        <button type="button" onClick={revealAll}>
-          Reveal all
-        </button>
-        <button type="button" onClick={clearAll}>
-          Clear
-        </button>
-      </div>
-
-      {solved && (
-        <p className="crossword-solved">
-          Every square. Of course you did. {CROSSWORD_HIDDEN_MESSAGE}.
-        </p>
-      )}
-
-      <div className="crossword-clues">
-        {renderClueList("across")}
-        {renderClueList("down")}
+        <div className="crossword-clues">
+          {renderClueList("across")}
+          {renderClueList("down")}
+        </div>
       </div>
     </section>
   );
