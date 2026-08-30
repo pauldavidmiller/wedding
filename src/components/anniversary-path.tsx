@@ -6,7 +6,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
    now. Everything is measured from the real DOM, so the line stays glued to
    the sections however the page reflows. */
 
-type Trail = { top: number; height: number };
+type Band = { top: number; height: number };
+
+const MASK_ID = "anniversary-path-mask";
 
 /* Half a bend: leaves and arrives travelling straight down, so consecutive
    halves join without a kink. */
@@ -20,7 +22,7 @@ const bend = (
   return `C ${fromX} ${fromY + pull}, ${toX} ${toY - pull}, ${toX} ${toY}`;
 };
 
-const buildPath = (width: number, height: number, trails: Trail[]) => {
+const buildPath = (width: number, height: number, trails: Band[]) => {
   if (width <= 0 || height <= 0) return "";
 
   const centre = width / 2;
@@ -44,6 +46,7 @@ const AnniversaryPath = ({ children }: { children: React.ReactNode }) => {
   const frameRef = useRef<number>();
 
   const [box, setBox] = useState({ width: 0, height: 0 });
+  const [shelters, setShelters] = useState<Band[]>([]);
   const [shape, setShape] = useState("");
   const [length, setLength] = useState(0);
   const [walked, setWalked] = useState(0);
@@ -54,15 +57,17 @@ const AnniversaryPath = ({ children }: { children: React.ReactNode }) => {
     if (!container) return;
 
     const bounds = container.getBoundingClientRect();
-    const trails: Trail[] = Array.from(
-      container.querySelectorAll("[data-anniversary-trail]")
-    ).map((trail) => {
-      const trailBounds = trail.getBoundingClientRect();
-      return {
-        top: trailBounds.top - bounds.top,
-        height: trailBounds.height,
-      };
-    });
+    const bands = (selector: string): Band[] =>
+      Array.from(container.querySelectorAll(selector)).map((element) => {
+        const elementBounds = element.getBoundingClientRect();
+        return {
+          top: elementBounds.top - bounds.top,
+          height: elementBounds.height,
+        };
+      });
+
+    const trails = bands("[data-anniversary-trail]");
+    setShelters(bands("[data-anniversary-shelter]"));
 
     setBox((current) =>
       current.width === bounds.width && current.height === bounds.height
@@ -141,19 +146,58 @@ const AnniversaryPath = ({ children }: { children: React.ReactNode }) => {
         aria-hidden="true"
         focusable="false"
       >
-        <path className="anniversary-path-track" d={shape} />
-        <path
-          className="anniversary-path-line"
-          ref={lineRef}
-          d={shape}
-          style={{
-            strokeDasharray: length || undefined,
-            strokeDashoffset: length ? length * (1 - walked) : undefined,
-          }}
-        />
-        {tip && walked > 0 && walked < 1 && (
-          <circle className="anniversary-path-tip" cx={tip.x} cy={tip.y} r={3} />
-        )}
+        {/* Sections without a solid backdrop (the crossword) would otherwise
+            have the line running straight through their clues, so black them
+            out of the mask and let the line duck behind them instead. */}
+        <defs>
+          <mask
+            id={MASK_ID}
+            maskUnits="userSpaceOnUse"
+            x={0}
+            y={0}
+            width={box.width || 1}
+            height={box.height || 1}
+          >
+            <rect
+              x={0}
+              y={0}
+              width={box.width || 1}
+              height={box.height || 1}
+              fill="#fff"
+            />
+            {shelters.map((shelter) => (
+              <rect
+                key={shelter.top}
+                x={0}
+                y={shelter.top}
+                width={box.width || 1}
+                height={shelter.height}
+                fill="#000"
+              />
+            ))}
+          </mask>
+        </defs>
+
+        <g mask={`url(#${MASK_ID})`}>
+          <path className="anniversary-path-track" d={shape} />
+          <path
+            className="anniversary-path-line"
+            ref={lineRef}
+            d={shape}
+            style={{
+              strokeDasharray: length || undefined,
+              strokeDashoffset: length ? length * (1 - walked) : undefined,
+            }}
+          />
+          {tip && walked > 0 && walked < 1 && (
+            <circle
+              className="anniversary-path-tip"
+              cx={tip.x}
+              cy={tip.y}
+              r={3}
+            />
+          )}
+        </g>
       </svg>
 
       <div className="anniversary-path-content">{children}</div>
@@ -164,6 +208,17 @@ const AnniversaryPath = ({ children }: { children: React.ReactNode }) => {
 /* An empty stretch of page where the line is free to wander. */
 export const AnniversaryTrail = () => (
   <div className="anniversary-trail" data-anniversary-trail aria-hidden="true" />
+);
+
+/* Wraps a section that the line has to pass behind rather than through. */
+export const AnniversaryShelter = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
+  <div className="anniversary-shelter" data-anniversary-shelter>
+    {children}
+  </div>
 );
 
 /* A waypoint sitting on the line, just above whatever comes next. */

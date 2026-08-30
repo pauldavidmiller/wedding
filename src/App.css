@@ -978,8 +978,12 @@ body {
   background-color: rgba(123, 29, 43, 0.6);
 }
 
+.anniversary-shelter {
+  @apply w-full;
+}
+
 /* The crossword carries its own top padding; the waypoint already gave it. */
-.anniversary-stop + .crossword {
+.anniversary-stop + .anniversary-shelter .crossword {
   @apply pt-6;
 }
 

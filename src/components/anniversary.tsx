@@ -4,6 +4,7 @@ import { getTotalDaysBetween } from "../extensions/helpers";
 import AnniversaryConfetti from "./anniversary-confetti";
 import AnniversaryCrossword from "./anniversary-crossword";
 import AnniversaryPath, {
+  AnniversaryShelter,
   AnniversaryStop,
   AnniversaryTrail,
 } from "./anniversary-path";
@@ -67,7 +68,10 @@ const Anniversary = () => {
 
           <AnniversaryTrail />
           <AnniversaryStop label="One year later" />
-          <AnniversaryCrossword />
+          {/* The grid and clues are see-through, so the line ducks behind. */}
+          <AnniversaryShelter>
+            <AnniversaryCrossword />
+          </AnniversaryShelter>
 
           <AnniversaryTrail />
         </AnniversaryPath>
