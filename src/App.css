@@ -978,8 +978,12 @@ body {
   background-color: rgba(123, 29, 43, 0.6);
 }
 
+/* Mirrors the layout of .anniversary-path-content so that wrapping a section
+   in a shelter doesn't move it. The crossword is wider than the column it
+   sits in, and without the centring it would hang off to the right. */
 .anniversary-shelter {
   @apply w-full;
+  @apply flex flex-col items-center;
 }
 
 /* The crossword carries its own top padding; the waypoint already gave it. */
