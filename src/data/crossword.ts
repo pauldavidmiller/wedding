@@ -50,7 +50,7 @@ export const CROSSWORD_ENTRIES: CrosswordEntry[] = [
     "row": 1,
     "col": 8,
     "answer": "CROZET",
-    "clue": "The little Virginia town Stinson calls home"
+    "clue": "The little Virginia town our vineyard calls home"
   },
   {
     "number": 9,
@@ -122,7 +122,7 @@ export const CROSSWORD_ENTRIES: CrosswordEntry[] = [
     "row": 9,
     "col": 15,
     "answer": "PAPERWHITE",
-    "clue": "Paper is the traditional first-anniversary gift... and this year yours is a very particular kind of paper. Kindle ___ (yes, that's a hint)"
+    "clue": "Paper is the traditional first-anniversary gift... and this year yours is a very particular kind of paper (come back to this last, Paul will help)"
   },
   {
     "number": 23,
@@ -394,7 +394,7 @@ export const CROSSWORD_ENTRIES: CrosswordEntry[] = [
     "row": 17,
     "col": 19,
     "answer": "STINSON",
-    "clue": "The vineyard in Crozet: honeymoon then, anniversary now"
+    "clue": "The vineyard: honeymoon then, anniversary now"
   },
   {
     "number": 38,
