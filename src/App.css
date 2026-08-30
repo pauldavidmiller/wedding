@@ -921,6 +921,75 @@ body {
   color: #f7d354;
 }
 
+/* The path */
+.anniversary-path {
+  @apply relative w-full;
+}
+
+.anniversary-path-svg {
+  @apply absolute inset-0 w-full h-full z-0;
+  pointer-events: none;
+}
+
+/* The path not yet walked: a faint dotted trail of where we're headed. */
+.anniversary-path-track {
+  fill: none;
+  stroke: rgba(247, 211, 84, 0.22);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1 8;
+}
+
+.anniversary-path-line {
+  fill: none;
+  stroke: rgba(247, 211, 84, 0.6);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.anniversary-path-tip {
+  fill: #f7d354;
+  opacity: 0.75;
+}
+
+.anniversary-path-content {
+  @apply relative z-10 w-full;
+  @apply flex flex-col items-center;
+}
+
+/* Open stretches where the line is free to wander between sections. */
+.anniversary-trail {
+  @apply w-full;
+  height: clamp(110px, 22vw, 190px);
+}
+
+/* Waypoints */
+.anniversary-stop {
+  @apply flex flex-col items-center text-center;
+}
+
+.anniversary-stop-marker {
+  @apply flex items-center justify-center rounded-full;
+  @apply text-xs;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: #f7d354;
+  border: 1px solid rgba(247, 211, 84, 0.5);
+  background-color: rgba(123, 29, 43, 0.6);
+}
+
+/* The crossword carries its own top padding; the waypoint already gave it. */
+.anniversary-stop + .crossword {
+  @apply pt-6;
+}
+
+.anniversary-stop-label {
+  @apply montserrat-font uppercase;
+  @apply text-xs tracking-[0.3em];
+  @apply pt-4;
+  color: rgba(255, 248, 240, 0.8);
+}
+
 /* Video */
 .anniversary-video {
   @apply w-full;
